@@ -9,6 +9,12 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 {
     public interface ISocioRepository : IRepositoryBase<Socio>
     {
-        IEnumerable<Socio> BuscarPorNome(string nome);
+        ICollection<Socio> BuscarPorNome(string nome);
+        public Socio BuscarPorId(int id);
+
+        ICollection<Socio> BuscarPorGenero(string genero);
+
+
+
     }
 }

@@ -16,3 +16,31 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/*Estlo para os Fielsets*/
+fieldset {
+    border: 1px solid #ddd !important;
+    margin: 0 0 1.5em 0 !important;
+    xmin-width: 0 !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    padding-left: 10px !important;
+    -webkit-box-shadow: 0px 0px 0px 0px #000;
+    box-shadow: 0px 0px 0px 0px #000;
+
+}
+legend {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    margin-bottom: 0px;
+    width: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 5px 5px 10px;
+    background-color: #ffffff;
+}
+.azul:hover {
+    background-color: #0763f5;
+}

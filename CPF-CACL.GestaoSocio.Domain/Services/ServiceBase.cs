@@ -3,6 +3,7 @@ using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             _repository = repository;
         }
+
         public void Add(TEntity obj)
         {
             _repository.Add(obj);
@@ -32,15 +34,17 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             return _repository.GetById(id);
         }
 
+        public void Update(TEntity obj)
+        {
+            _repository.Update(obj);
+        }
+
         public void Remove(TEntity obj)
         {
             _repository.Remove(obj);
         }
 
-        public void Update(TEntity obj)
-        {
-            _repository.Update(obj);
-        }        public void Dispose()
+        public void Dispose()
         {
             _repository.Dispose();
 

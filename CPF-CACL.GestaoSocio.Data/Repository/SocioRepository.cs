@@ -10,9 +10,26 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
 {
     public class SocioRepository : RepositoryBase<Socio>, ISocioRepository
     {
-        public IEnumerable<Socio> BuscarPorNome(string nome)
+        private readonly GSContext _gsContext;
+
+        public SocioRepository(GSContext gsContext) : base(gsContext)
         {
-            return _gsContext.Socio.Where(p => p.Nome == nome);
+            _gsContext = gsContext;
+        }
+
+        public ICollection<Socio> BuscarPorGenero(string genero)
+        {
+            return (ICollection<Socio>)_gsContext.Socio.Where(p => p.Genero == genero);
+        }
+
+        public Socio BuscarPorId(int id)
+        {
+            return (Socio)_gsContext.Socio.Where(p => p.Id == id);
+        }
+
+        public ICollection<Socio> BuscarPorNome(string nome)
+        {
+            return (ICollection<Socio>)_gsContext.Socio.Where(p => p.Nome == nome);
         }
     }
 }

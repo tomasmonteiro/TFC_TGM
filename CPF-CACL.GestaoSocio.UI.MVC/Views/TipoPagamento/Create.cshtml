@@ -1,0 +1,35 @@
+﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.TipoPagamentoViewModel
+
+@{
+    ViewData["Title"] = "Criar Tipo de Pagamento";
+}
+
+<div class="text-center">
+
+    <h1 class="display-4">Criar Tipo de Pagamento</h1>
+
+
+</div>
+
+<form asp-asp-controller="TipoPagamento" asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="nome">Nome</label>
+        <input type="text" asp-for="Nome" class="form-control"  placeholder="Digite o tipo de pagamento">
+    </div>
+
+    <div class="">
+        <label for="datacriacao">Data de Craiação</label>
+        <input type="date" asp-for="DataCriacao" class="form-control" placeholder="Data de ciação">
+    </div>
+
+    <div class="">
+        <input type="checkbox" asp-for="Status" aria-label="Checkbox for following text input">
+        <label for="telefone">Ativo?</label>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary btn-block">Adicionar</button>
+    <a role="button" class="btn btn-secondary btn-block" asp-controller="TipoPagamento" asp-action="Index"> Voltar</a>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

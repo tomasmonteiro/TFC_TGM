@@ -43,6 +43,7 @@ namespace CPF_CACL.GestaoSocio.Data.Map
                 .WithMany(a => a.Socios)
                 .HasForeignKey(x => x.CategoriaSocioId)
                 .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

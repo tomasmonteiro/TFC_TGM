@@ -1,5 +1,6 @@
 ﻿using CPF_CACL.GestaoSocio.Domain.Entities;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
+using System.Linq.Expressions;
 
 namespace CPF_CACL.GestaoSocio.Data.Repository
 {
@@ -7,18 +8,16 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
     {
         private readonly GSContext _gsContext;
 
-        //Injeção do context (GSContext)
-        public TipoPagamentoRepository(GSContext gsContext)
+        //Injeção do context(GSContext)
+        public TipoPagamentoRepository(GSContext gsContext) : base(gsContext)
         {
             _gsContext = gsContext;
         }
 
-        //Implementação dos contratos (Interfaces) de repositório
-        public TipoPagamento Adicionar(TipoPagamento tipoPagamento)
+        public IEnumerable<TipoPagamento> BuscarTodos()
         {
-            _gsContext.TipoPagamento.Add(tipoPagamento);
-            _gsContext.SaveChanges();
-            return tipoPagamento;
+            return _gsContext.TipoPagamento.Where(p => p.Status == true);
         }
+ 
     }
 }

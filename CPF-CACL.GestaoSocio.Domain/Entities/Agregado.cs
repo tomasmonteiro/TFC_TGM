@@ -12,5 +12,8 @@ namespace CPF_CACL.GestaoSocio.Domain.Entities
         public int SocioId { get; set; }
         public virtual Socio Socio { get; set; }
 
+        public int RelacaoId { get; set; }
+        public virtual Relacao Relacao { get; set; }
+
     }
 }

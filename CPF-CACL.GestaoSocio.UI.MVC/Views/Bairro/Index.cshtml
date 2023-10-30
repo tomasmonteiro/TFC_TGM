@@ -1,0 +1,56 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model IEnumerable<BairroViewModel>
+
+@{
+    ViewData["Title"] = "Listagem de Bairros";
+}
+
+<div id="PlaceHolderHere"></div>
+
+<div class="text-center">
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#bairro" data-url="@Url.Action("Create")">Adicionar Novo</button>
+    </div>
+
+    @*  *@
+    <br />
+
+    <h1 class="display-4">Listagem de Bairros</h1>
+
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Município</th>
+                <th scope="col">Data Criação</th>
+                <th scope="col">Status</th>
+                <th scope="col">Data Actualização</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (BairroViewModel bairro in Model)
+                {
+                    <tr>
+                        <th scope="row">@bairro.Id</th>
+                        <td>@bairro.Nome</td>
+                        <td>@bairro.MunicipioId</td>
+                        <td>@bairro.DataCriacao</td>
+                        <td>@bairro.Status</td>
+                        <td>@bairro.DataAtualizacao</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a role="button" class="btn btn-primary" asp-route-id="@bairro.Id" asp-controller="Bairro" asp-action="Editar">Editar</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@bairro.Id" asp-controller="Bairro" asp-action="ApagarConfirmacao">Apagar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

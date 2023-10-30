@@ -6,14 +6,14 @@ namespace CPF_CACL.GestaoSocio.Domain.Entities
     {
         public string Nome { get; set; }
         public string BI { get; set; }
-        public EGenero Genero { get; set; }
+        public string Genero { get; set; }
         public DateTime DataNascimento { get; set; }
         public string Telefone { get; set; }
         public string Email { get; set; }
 
-        public int ObterIdade()
+        public int ObterIdade( DateTime dataNascimento)
         {
-            return (DateTime.Now.Year - DataNascimento.Year);
+            return (DateTime.Now.Year - dataNascimento.Year);
         }
     }
 }

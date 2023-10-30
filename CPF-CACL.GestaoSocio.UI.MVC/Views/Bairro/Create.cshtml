@@ -1,0 +1,55 @@
+﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.BairroViewModel
+
+
+<div class="modal fade" id="bairro" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bairroLabel">Criar Bairro</h5>
+                    <br />
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" data-bs-keyboard="false" aria-label="Close"></button>
+                </div><div class="modal-body">
+                    <form asp-controller="Bairro" asp-action="Create" method="post">
+                        <div class="form-group">
+                            <label asp-for="Nome">Nome do bairro</label>
+                            <br />
+                            <input type="text" asp-for="Nome" class="form-control" placeholder="Digite o nome do bairro">
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
+                        <br />
+                       @*  <select class="form-select">
+                            <option selected>Viana</option>
+                            <option>Cazenga</option>
+                            <option>Cacuaco</option>
+                        </select> *@
+                        <label asp-for="MunicipioId" class="control-label">Município</label>
+                        <select asp-for="MunicipioId" class="form-control">
+                            @* <option value="">Selecione um ite</option> *@
+                            @foreach (var item in Model.Municipio)
+                            {
+                                <option value="@item.Id">@item.Nome</option>
+                            }
+                            <option></option>
+
+                        </select>
+
+
+                        <div class="">
+                            <input type="hidden" value="@DateTime.Now" asp-for="DataCriacao">
+                        </div>
+
+                        <div class="">
+                            <input type="hidden" value="true" asp-for="Status">
+                        </div>
+                        <br />
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary btn-block">Adicionar</button>
+                            <a role="button" class="btn btn-secondary btn-block" asp-controller="Bairro" asp-action="Index"> Voltar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,12 @@
 ﻿
 using CPF_CACL.GestaoSocio.Aplication.AutoMapper;
+using CPF_CACL.GestaoSocio.Aplication.Interfaces;
+using CPF_CACL.GestaoSocio.Aplication.Services;
 using CPF_CACL.GestaoSocio.Data.Repository;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
+using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
+using CPF_CACL.GestaoSocio.Domain.Services;
+using CPF_CACL.GestaoSocio.UI.MVC.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC
@@ -16,15 +21,16 @@ namespace CPF_CACL.GestaoSocio.UI.MVC
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Adição dos serviços
+            // Adição dos Middlewares
             services.AddControllersWithViews();
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<GSContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddAutoMapper(typeof(AutoMapperConfig).Assembly);
 
             //Resoluçaõ de injecção de dependências
-            services.AddScoped<ITipoPagamentoRepository, TipoPagamentoRepository>();
+            services.AddDependencyInjection();
 
-            services.AddAutoMapper(typeof(AutoMapperConfig));
+           
         }
         public void Configure(WebApplication app, IWebHostEnvironment environment)
         {

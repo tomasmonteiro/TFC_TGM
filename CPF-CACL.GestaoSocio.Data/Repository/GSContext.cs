@@ -29,8 +29,17 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
         public DbSet<TipoBeneficio> TipoBeneficio { get; set; }
         public DbSet<TipoPagamento> TipoPagamento { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Bairro> Bairro { get; set; }
+        public DbSet<Municipio> Municipio { get; set; }
+        public DbSet<Despesa> Despesa { get; set; }
+        public DbSet<TipoProjecto> TipoProjecto { get; set; }
+        public DbSet<Projecto> Projecto { get; set; }
+        public DbSet<ProjectoSocio> ProjectoSocio { get; set; }
+        public DbSet<PedidoApoio> PedidoApoios { get; set; }
+        public DbSet<Relacao> Relacao { get; set; }
 
-        
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

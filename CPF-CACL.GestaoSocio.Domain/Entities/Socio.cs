@@ -20,8 +20,14 @@ namespace CPF_CACL.GestaoSocio.Domain.Entities
         public int CategoriaSocioId { get; set; }
         public virtual CategoriaSocio CategoriaSocio { get; set; }
 
+
         public ICollection<Apoio> Apoios { get; set; }
         public ICollection<Agregado> Agregados { get; set; }
         public ICollection<Pagamento> Pagamentos { get; set; }
+        public ICollection<PedidoApoio> PedidoApoios { get; set; }
+        public ICollection<ProjectoSocio> ProjectoSocios { get; set; }
+
+
+
     }
 }

@@ -4,6 +4,9 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Services
 {
     public interface ITipoPagamentoService : IServiceBase<TipoPagamento>
     {
-        TipoPagamento Adicionar(TipoPagamento tipoPagamento);
+        //TipoPagamento Adicionar(TipoPagamento tipoPagamento);
+
+        IEnumerable<TipoPagamento> BuscarTipos();
+
     }
 }

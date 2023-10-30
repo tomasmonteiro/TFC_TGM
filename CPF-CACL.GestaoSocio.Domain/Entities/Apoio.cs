@@ -13,5 +13,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Entities
         public int UsuarioId { get; set; }
         public virtual Usuario Usuario { get; set; }
         public ICollection<ItemApoio> ItemApoios { get; set; }
+        public IEnumerable<Despesa> Despesas { get; set; }
     }
 }
