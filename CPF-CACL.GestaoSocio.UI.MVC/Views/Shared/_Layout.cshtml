@@ -11,36 +11,19 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/CPF_CACL.GestaoSocio.UI.MVC.styles.css" asp-append-version="true" />
-
-
-
-
-        <!-- Google Font: Source Sans Pro -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
         <!-- Font Awesome -->
-        @* <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css"> *@
-        
-    <link rel ="stylesheet" href="~/css/web/css/all.min.css" />
-        <!-- Ionicons -->
-        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-       @*  <!-- Tempusdominus Bootstrap 4 -->
-        <link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-        <!-- iCheck - customização de checkboxes e radio buttons -->
-        <link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-        <!-- JQVMap -->
-        <link rel="stylesheet" href="~/plugins/jqvmap/jqvmap.min.css">
-     *@    
- 
-        <!-- Theme style -->
+    <link rel="stylesheet" href="~/css/fontawesome/css/all.min.css" />
+        <!-- Estilo do tema -->
         <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
 
+        <!--Links-->
+        <!-- Google Font: Source Sans Pro -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        
+        
 
-       @*  <!-- overlayScrollbars -->
-        <link rel="stylesheet" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-         *@<!-- Daterange picker -->
-        @* <link rel="stylesheet" href="~/plugins/daterangepicker/daterangepicker.css"> *@
-        <!-- summernote -->
-        @* <link rel="stylesheet" href="~/plugins/summernote/summernote-bs4.min.css"> *@
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">
@@ -127,22 +110,20 @@
                         <a href="#" class="dropdown-item azul fa fa-right-from-bracket"><i class="fas fa-sign-out-alt"></i>  Sair</a>
                         </div>
                     </li>
-
-
                 </ul>
             </nav>
             <!-- /.navbar -->
-            <!-- Main Sidebar Container -->
+            <!-- Container do Menu Lateral -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
-                <!-- Brand Logo -->
+                <!-- Logotipo -->
                 <a asp-controller="Home" asp-action="Index" class="brand-link navbar-blue active">
                     <img src="dist/img/AdminLTELogo.png" alt="Gest-Prev Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                     <span class="brand-text font-weight-light">GEST-PREV</span>
                 </a>
 
-                <!-- Sidebar -->
+                <!-- Menu Lateral -->
                 <div class="sidebar">
-                    <!-- Sidebar user panel (optional) -->
+                    <!-- Painel de usuário -->
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
                             <img src="dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
@@ -155,8 +136,8 @@
                     <!-- Sidebar Menu -->
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <!-- Add icons to the links using the .nav-icon class
-                                 with font-awesome or any other icon font library -->
+                            <!-- Adicionando icones aos links usando a classe .nav-icon 
+                                com font-awesome -->
                             <li class="nav-item menu-open">
                                 <a href="#" class="nav-link active">
                                     <i class="nav-icon fas fa-users"></i>
@@ -227,97 +208,6 @@
                                 </ul>
                             </li>
 
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-tree"></i>
-                                    <p>
-                                        UI Elements
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="pages/UI/general.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>General</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/UI/icons.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Icons</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/UI/buttons.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Buttons</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/UI/sliders.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Sliders</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/UI/modals.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Modals & Alerts</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/UI/navbar.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Navbar & Tabs</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/UI/timeline.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Timeline</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/UI/ribbons.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Ribbons</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                  
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-table"></i>
-                                    <p>
-                                        Tables
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="pages/tables/simple.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Simple Tables</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/tables/data.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>DataTables</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/tables/jsgrid.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>jsGrid</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon far fa-envelope"></i>
@@ -348,7 +238,6 @@
                                 </ul>
                             </li>
 
-
                             <li class="nav-header">FERRAMENTAS</li>
                             <li class="nav-item">
                             <a asp-controller="Admin" asp-action="Index" class="nav-link">
@@ -368,31 +257,11 @@
                             </li>
                         </ul>
                     </nav>
-                    <!-- /.sidebar-menu -->
                 </div>
-                <!-- /.sidebar -->
             </aside>
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-               @*  <!-- Content Header (Page header) -->
-                <div class="content-header">
-                    <div class="container-fluid">
-                        <div class="row mb-2">
-                            <div class="col-sm-6">
-                                <h1 class="m-0">Página Inicial</h1>
-                            </div><!-- /.col -->
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                </ol>
-                            </div><!-- /.col -->
-                        </div><!-- /.row -->
-                    </div><!-- /.container-fluid -->
-                </div>
-                <!-- /.content-header --> *@
-
-
                 <!-- Corpo da Página Web -->
                 <section class="content">
                     <div class="container-fluid">
@@ -411,7 +280,6 @@
         </div>
 
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
         <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
@@ -434,25 +302,8 @@
         <script src="~/plugins/chart.js/Chart.min.js"></script>
         <!-- Sparkline -->
         <script src="~/plugins/sparklines/sparkline.js"></script>
-       @*  <!-- JQVMap -->
-        <script src="~/plugins/jqvmap/jquery.vmap.min.js"></script>
-        <script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-        <!-- jQuery Knob Chart -->
-        <script src="~/plugins/jquery-knob/jquery.knob.min.js"></script>
-        <!-- daterangepicker -->
-        <script src="~/plugins/moment/moment.min.js"></script>
-        <script src="~/plugins/daterangepicker/daterangepicker.js"></script>
-        <!-- Tempusdominus Bootstrap 4 -->
-        <script src="~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-        <!-- Summernote -->
-        <script src="~/plugins/summernote/summernote-bs4.min.js"></script>
-        <!-- overlayScrollbars -->
-        <script src="~/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-        <!-- AdminLTE App -->*@
+       <!-- AdminLTE App -->
         <script src="~/dist/js/adminlte.js"></script>
-        <!-- AdminLTE for demo purposes --> 
-        @* <script src="~/dist/js/demo.js"></script> *@
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        @* <script src="~/dist/js/pages/dashboard2.js"></script> *@
+    
     </body>
 </html>
