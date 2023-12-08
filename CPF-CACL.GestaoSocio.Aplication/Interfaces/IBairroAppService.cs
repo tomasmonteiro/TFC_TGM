@@ -9,11 +9,11 @@ namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
 {
     public interface IBairroAppService
     {
-        public void Add(BairroViewModel bairroViewModel);
+        public void Adicionar(BairroViewModel bairro);
 
-        //public IEnumerable<BairroViewModel>  GetAll();
-
-        public IEnumerable<BairroViewModel> BuscarBairros();
+        public IEnumerable<BairroViewModel> Buscar();
+        public void Atualizar(BairroViewModel bairro);
+        public void Eliminar(int id);
 
     }
 }

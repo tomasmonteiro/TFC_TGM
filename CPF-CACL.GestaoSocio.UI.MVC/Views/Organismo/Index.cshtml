@@ -1,0 +1,89 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model IEnumerable<OrganismoViewModel>
+
+@{
+    ViewData["Title"] = "Listagem de Organismos";
+}
+
+@*
+@{
+    var sucesso = TempData["Sucesso"] as string;
+    var erro = TempData["Erro"] as string;
+}
+@if (!string.IsNullOrEmpty(ViewBag.MensagemSucesso))
+{
+    <script>
+        exibirMensagemSucesso("@Html.Raw(ViewBag.MensagemSucesso)");
+    </script>
+}
+@if (!string.IsNullOrEmpty(ViewBag.MensagemErro))
+{
+    <script>
+        exibirMensagemErro("@Html.Raw(ViewBag.MensagemSucesso)");
+    </script>
+} *@
+
+
+<div class="row espaco">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <button type="button" class="btn btn-outline-primary" data-toggle="ajax-modal" data-target="#organismo" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i>Adicionar Novo</button>
+                            @* <a role="button" data-toggle="ajax-modal" data-target="#municipio" data-url="@Url.Action("Create")" class="btn btn-primary">Adicionar novo Municipio</a> *@
+                        </div>
+                        <br />
+
+                        <h3 class="display-6">Listagem de Organismos</h3>
+
+                        <table class="table table-responsive teste col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Criação</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Actualização</th>
+                                    <th scope="col"> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (OrganismoViewModel organismo in Model)
+                                    {
+                                        <tr>
+                                            <th scope="row">@organismo.Id</th>
+                                            <td>@organismo.Nome</td>
+                                            <td>@organismo.DataCriacao</td>
+                                            <td>@organismo.Status</td>
+                                            <td>@organismo.DataAtualizacao</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="" onclick="SetUser('@organismo.Id', '@organismo.Nome')" data-toggle="modal" data-target="#defaultModalEditarUser"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetUser('@organismo.Id', '@organismo.Nome')" data-toggle="modal" data-target="#defaultModalInactivateUser"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

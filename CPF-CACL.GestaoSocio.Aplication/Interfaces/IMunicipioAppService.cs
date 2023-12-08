@@ -9,10 +9,11 @@ namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
 {
     public interface IMunicipioAppService
     {
-        public void Add(MunicipioViewModel municipioViewModel);
+        public void Adicionar(MunicipioViewModel municipio);
 
-        //public IEnumerable<TipoPagamentoViewModel>  GetAllTipo();
+        public IEnumerable<MunicipioViewModel> Buscar();
+        public void Atualizar(MunicipioViewModel municipio);
+        public void Eliminar(int id);
 
-        public IEnumerable<MunicipioViewModel> BuscarMunicipios();
     }
 }

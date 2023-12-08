@@ -5,11 +5,9 @@ namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
     public interface ITipoPagamentoAppService 
     {
         
-         public void Add(TipoPagamentoViewModel tipoPagamentoViewModel);
-
-         //public IEnumerable<TipoPagamentoViewModel>  GetAllTipo();
-
-        public IEnumerable<TipoPagamentoViewModel> BuscarTodosTipo();
-
+         public void Adicionar(TipoPagamentoViewModel tipoPagamento);
+         public IEnumerable<TipoPagamentoViewModel> Buscar();
+        public void Atualizar(TipoPagamentoViewModel tipoPagamento);
+        public void Eliminar(int id);
     }
 }

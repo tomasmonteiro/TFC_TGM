@@ -1,5 +1,11 @@
 ﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.BairroViewModel
 
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
 
 <div class="modal fade" id="bairro" aria-hidden="false" data-bs-backdrop="static">
     <div class="modal-dialog" role="document">
@@ -8,23 +14,12 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="bairroLabel">Criar Bairro</h5>
                     <br />
-                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" data-bs-keyboard="false" aria-label="Close"></button>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal"  aria-label="Close">X</button>
                 </div><div class="modal-body">
-                    <form asp-controller="Bairro" asp-action="Create" method="post">
-                        <div class="form-group">
-                            <label asp-for="Nome">Nome do bairro</label>
-                            <br />
-                            <input type="text" asp-for="Nome" class="form-control" placeholder="Digite o nome do bairro">
-                            <span asp-validation-for="Nome" class="text-danger"></span>
-                        </div>
-                        <br />
-                       @*  <select class="form-select">
-                            <option selected>Viana</option>
-                            <option>Cazenga</option>
-                            <option>Cacuaco</option>
-                        </select> *@
+                    @* <form asp-controller="Bairro" asp-action="Create" method="post"> *@
+                        
                         <label asp-for="MunicipioId" class="control-label">Município</label>
-                        <select asp-for="MunicipioId" class="form-control">
+                        <select id="municipioId" class="form-control">
                             @* <option value="">Selecione um ite</option> *@
                             @foreach (var item in Model.Municipio)
                             {
@@ -33,10 +28,18 @@
                             <option></option>
 
                         </select>
+                        
+                        <br />
 
+                        <div class="form-group">
+                            <label asp-for="Nome">Nome do bairro</label>
+                            <br />
+                            <input type="text" id="Nome" class="form-control" placeholder="Digite o nome do bairro">
+                            <span asp-validation-for="Nome" class="text-danger"></span>
+                        </div>
 
                         <div class="">
-                            <input type="hidden" value="@DateTime.Now" asp-for="DataCriacao">
+                            <input type="hidden" value="@DateTime.Now" id="dataCriacao">
                         </div>
 
                         <div class="">
@@ -44,10 +47,11 @@
                         </div>
                         <br />
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary btn-block">Adicionar</button>
-                            <a role="button" class="btn btn-secondary btn-block" asp-controller="Bairro" asp-action="Index"> Voltar</a>
+                        @* <button type="button" onclick="AddWorkflowDefinition()" class="btn btn-success waves-effect">Salvar</button> *@
+                        <button type="button" onclick="AdicionarBairro()" class="btn btn-success waves-effect">Adicionar</button>
+                        <a role="button" class="btn btn-secondary btn-block" asp-controller="Bairro" asp-action="Index"> Voltar</a>
                         </div>
-                    </form>
+                    @* </form> *@
                 </div>
             </div>
         </div>

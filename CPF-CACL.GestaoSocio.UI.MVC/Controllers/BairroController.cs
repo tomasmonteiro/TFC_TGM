@@ -1,20 +1,20 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
+using CPF_CACL.GestaoSocio.Aplication.Services;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
-using CPF_CACL.GestaoSocio.Data.Repository;
-using CPF_CACL.GestaoSocio.Domain.Entities;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
-using Microsoft.AspNetCore.Http;
+using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+using CPF_CACL.GestaoSocio.Domain.Notifications;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
-    public class BairroController : Controller
+    public class BairroController : BaseController
     {
         private readonly IMunicipioAppService _municipioAppService;
         private readonly IMunicipioRepository _municipioRepository;
         private readonly IBairroAppService _bairroAppService;
-        public BairroController(IMunicipioAppService municipioAppService,IBairroAppService bairroAppService, IMunicipioRepository municipioRepository)
+        public BairroController(IMunicipioAppService municipioAppService,IBairroAppService bairroAppService, IMunicipioRepository municipioRepository, INotificador notificador) : base(notificador)
         {
             _municipioAppService = municipioAppService;
             _municipioRepository = municipioRepository;
@@ -26,7 +26,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // GET: BairroController
         public ActionResult Index()
         {
-            var bairro = _bairroAppService.BuscarBairros();
+            var bairro = _bairroAppService.Buscar();
             return View(bairro);
         }
 
@@ -40,8 +40,9 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         public ActionResult Create()
         {
             var viewModel = new BairroViewModel();
-            var dadosDaTabela = _municipioRepository.BuscarTodos();
-            viewModel.Municipio = dadosDaTabela
+            var municipios = _municipioRepository.BuscarTodos();
+            municipios = municipios.OrderBy(m => m.Nome).ToList();
+            viewModel.Municipio = municipios
                 .Select(item => new ItemDropDown
                 {
                     Id = item.Id,
@@ -54,10 +55,17 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 
         // POST: BairroController/Create
         [HttpPost]
-        public ActionResult Create(BairroViewModel bairro)
+        public ActionResult Create(BairroViewModel viewModel )
         {
-            _bairroAppService.Add(bairro);
-            return RedirectToAction("Index");
+            var bairro = new BairroViewModel()
+            {
+
+                Nome = viewModel.Nome,
+                MunicipioId = viewModel.MunicipioId
+            };
+
+            _bairroAppService.Adicionar(bairro);
+            return Json("Registo adicionado com sucesso!");
         }
 
         // GET: BairroController/Edit/5
@@ -68,16 +76,32 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 
         // POST: BairroController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int bairroId, string Nome, DateTime dataAtualizacao)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var bairro = new BairroViewModel()
+                {
+                    Id = bairroId,
+                    Nome = Nome,
+                    DataAtualizacao = dataAtualizacao
+                };
+                _bairroAppService.Atualizar(bairro);
+
+                if (!ValidOperation())
+                {
+                    var sb = new StringBuilder();
+                    foreach (var item in BuscarMensagemErro())
+                    {
+                        sb.AppendLine($"x {item}\n");
+                    }
+                    return Json(sb.ToString());
+                }
+                return Json("Registo adicionado com sucesso.");
             }
-            catch
+            catch (Exception erro)
             {
-                return View();
+                return Json($"x Ocorreu um erro: {erro.Message}");
             }
         }
 

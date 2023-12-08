@@ -1,10 +1,6 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Entities;
+﻿using CPF_CACL.GestaoSocio.Data.Context;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 
 namespace CPF_CACL.GestaoSocio.Data.Repository
 {
@@ -22,14 +18,14 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
             return (ICollection<Socio>)_gsContext.Socio.Where(p => p.Genero == genero);
         }
 
-        public Socio BuscarPorId(int id)
-        {
-            return (Socio)_gsContext.Socio.Where(p => p.Id == id);
-        }
-
         public ICollection<Socio> BuscarPorNome(string nome)
         {
             return (ICollection<Socio>)_gsContext.Socio.Where(p => p.Nome == nome);
+        }
+
+        public IEnumerable<Socio> BuscarTodos()
+        {
+            return _gsContext.Socio.Where(p => p.Status == true);
         }
     }
 }

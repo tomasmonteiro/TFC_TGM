@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
-using CPF_CACL.GestaoSocio.Domain.Entities;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
+using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,14 +25,22 @@ namespace CPF_CACL.GestaoSocio.Aplication.Services
             this.bairroRepository = bairroRepository;
         }
 
-        public void Add(BairroViewModel bairroViewModel)
+        public void Adicionar(BairroViewModel bairroViewModel)
         {
             bairroService.Add(mapper.Map<Bairro>(bairroViewModel));
         }
 
-        public IEnumerable<BairroViewModel> BuscarBairros()
+        public IEnumerable<BairroViewModel> Buscar()
         {
             return mapper.Map<IEnumerable<BairroViewModel>>(bairroService.BuscarTodos());  
+        }
+        public void Atualizar(BairroViewModel bairroViewModel)
+        {
+            bairroService.Update(mapper.Map<Bairro>(bairroViewModel));
+        }
+        public void Eliminar(int id)
+        {
+            bairroService.Eliminar(id);
         }
     }
 }

@@ -1,11 +1,5 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Entities;
-using CPF_CACL.GestaoSocio.Domain.Enums;
-using System;
-using System.Collections.Generic;
+﻿using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
 {
@@ -20,14 +14,15 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
         public string Nome { get; set; }
 
         //[ScaffoldColumn(false)]
-        public DateTime DataCriacao { get; set; }
+        public DateTime DataCriacao { get; set; } = DateTime.Now;
 
         //[ScaffoldColumn(false)]
-        public string Status { get; set; }
+        public string Status { get; set; } = "true";
 
         //[ScaffoldColumn(false)]
         public Nullable<DateTime> DataAtualizacao { get; set; }
         public int MunicipioId { get; set; }
+        public string NomeMunicipio { get; set; }
         public List<ItemDropDown> Municipio { get; set; }
 
     }

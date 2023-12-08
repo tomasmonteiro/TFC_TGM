@@ -1,8 +1,46 @@
 ﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.TipoPagamentoViewModel
 
-@{
-    ViewData["Title"] = "Criar Tipo de Pagamento";
-}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+
+<div class="modal fade" id="tipoPagamento" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tipoPagamentoLabel">Criar Tipo de Pagamento</h5>
+                    <br />
+                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                </div><div class="modal-body">
+                    @* <form asp-asp-controller="TipoPagamento" asp-action="Create" method="post"> *@
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" asp-for="Nome" class="form-control" placeholder="Digite o tipo de pagamento">
+                    </div>
+
+                    <br />
+                    <div class="">
+                        <input type="hidden" value="@DateTime.Now" id="dataCriacao">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="true" asp-for="Status" id="status">
+                    </div>
+
+                    <button type="button" onclick="AdicionarTipoPagamento()" class="btn btn-primary btn-block">Adicionar</button>
+                    <a role="button" class="btn btn-secondary btn-block" asp-controller="TipoPagamento" asp-action="Index"> Voltar</a>
+                    @* </form> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <div class="text-center">
 
@@ -11,25 +49,7 @@
 
 </div>
 
-<form asp-asp-controller="TipoPagamento" asp-action="Create" method="post">
-    <div class="form-group">
-        <label for="nome">Nome</label>
-        <input type="text" asp-for="Nome" class="form-control"  placeholder="Digite o tipo de pagamento">
-    </div>
 
-    <div class="">
-        <label for="datacriacao">Data de Craiação</label>
-        <input type="date" asp-for="DataCriacao" class="form-control" placeholder="Data de ciação">
-    </div>
-
-    <div class="">
-        <input type="checkbox" asp-for="Status" aria-label="Checkbox for following text input">
-        <label for="telefone">Ativo?</label>
-    </div>
-    <br />
-    <button type="submit" class="btn btn-primary btn-block">Adicionar</button>
-    <a role="button" class="btn btn-secondary btn-block" asp-controller="TipoPagamento" asp-action="Index"> Voltar</a>
-</form>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

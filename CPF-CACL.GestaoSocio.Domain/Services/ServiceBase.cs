@@ -1,53 +1,41 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
-using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+using CPF_CACL.GestaoSocio.Domain.Notifications;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace CPF_CACL.GestaoSocio.Domain.Services
 {
-    
-    public class ServiceBase<TEntity> : IDisposable, IServiceBase<TEntity> where TEntity : class
+
+    public class ServiceBase
     {
-        private readonly IRepositoryBase<TEntity> _repository;
+        private readonly INotificador _notificador;
 
-        public ServiceBase(IRepositoryBase<TEntity> repository)
+        protected ServiceBase(INotificador notificador)
         {
-            _repository = repository;
+            _notificador = notificador;
         }
 
-        public void Add(TEntity obj)
+        protected void Notificar(ValidationResult validationResult)
         {
-            _repository.Add(obj);
+            foreach (var erro in validationResult.Errors)
+            {
+
+                Notificar(erro.ErrorMessage);
+            }
         }
-
-        public IEnumerable<TEntity> GetAll()
+        protected void Notificar(string mensagem)
         {
-            return _repository.GetAll();
+            _notificador.Handle(new Notificacao(mensagem));
         }
-
-        public TEntity GetById(int id)
+        protected bool ExecutarValidacao<TV, TE>(TV validacao, TE entidade) where TV : AbstractValidator<TE> where TE : BaseEntity
         {
-            return _repository.GetById(id);
-        }
+            var validator = validacao.Validate(entidade);
 
-        public void Update(TEntity obj)
-        {
-            _repository.Update(obj);
-        }
+            if (validator.IsValid) return true;
 
-        public void Remove(TEntity obj)
-        {
-            _repository.Remove(obj);
-        }
+            Notificar(validator);
 
-        public void Dispose()
-        {
-            _repository.Dispose();
-
+            return false;
         }
     }
 }

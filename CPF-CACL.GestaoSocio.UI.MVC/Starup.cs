@@ -2,7 +2,7 @@
 using CPF_CACL.GestaoSocio.Aplication.AutoMapper;
 using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.Services;
-using CPF_CACL.GestaoSocio.Data.Repository;
+using CPF_CACL.GestaoSocio.Data.Context;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
 using CPF_CACL.GestaoSocio.Domain.Services;
@@ -47,7 +47,12 @@ namespace CPF_CACL.GestaoSocio.UI.MVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Bairro}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
+                name: "buscarDados",
+                pattern: "{controller=Socio}/{action=BuscarDados}/{opcaoSelecionada?}",
+                defaults: new { controller = "Socio", action="BuscarDados"});
         }
     }
 }

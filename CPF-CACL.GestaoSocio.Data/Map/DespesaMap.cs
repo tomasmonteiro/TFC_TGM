@@ -1,4 +1,4 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Entities;
+﻿using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

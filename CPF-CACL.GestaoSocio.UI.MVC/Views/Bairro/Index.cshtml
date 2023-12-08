@@ -6,51 +6,146 @@
     ViewData["Title"] = "Listagem de Bairros";
 }
 
-<div id="PlaceHolderHere"></div>
-
-<div class="text-center">
-
-    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#bairro" data-url="@Url.Action("Create")">Adicionar Novo</button>
+<div class="page-header">
+    <div class="row">
+        <div class="col-12 col-md-12 col-sm-12">
+            <div class="title">
+                <h4>Bairros</h4>
+            </div>
+            <nav class="col-12 col-md-12 col-sm-12" aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Listagem de bairros</li>
+                </ol>
+            </nav>
+        </div>
     </div>
+</div>
 
-    @*  *@
-    <br />
 
-    <h1 class="display-4">Listagem de Bairros</h1>
-
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Município</th>
-                <th scope="col">Data Criação</th>
-                <th scope="col">Status</th>
-                <th scope="col">Data Actualização</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null && Model.Any())
-            {
-                foreach (BairroViewModel bairro in Model)
-                {
-                    <tr>
-                        <th scope="row">@bairro.Id</th>
-                        <td>@bairro.Nome</td>
-                        <td>@bairro.MunicipioId</td>
-                        <td>@bairro.DataCriacao</td>
-                        <td>@bairro.Status</td>
-                        <td>@bairro.DataAtualizacao</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a role="button" class="btn btn-primary" asp-route-id="@bairro.Id" asp-controller="Bairro" asp-action="Editar">Editar</a>
-                                <a role="button" class="btn btn-danger" asp-route-id="@bairro.Id" asp-controller="Bairro" asp-action="ApagarConfirmacao">Apagar</a>
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <div class="col-12 col-sm-4 col-md-4">
+                                <button type="button" class="btn btn-primary  form-control" data-toggle="ajax-modal" data-target="#bairro" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
                             </div>
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 7;" id="myDataTable">
+                            <thead class ="navbar-primary">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Município</th>
+                                    <th scope="col">Registro</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Actualização</th>
+                                    <th scope ="col">Acão</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (BairroViewModel bairro in Model)
+                                    {
+                                        <tr>
+                                            <th scope="row">@bairro.Id</th>
+                                            <td>@bairro.Nome</td>
+                                            <td>@bairro.MunicipioId</td>
+                                            <td>@bairro.DataCriacao</td>
+                                            <td>@bairro.Status</td>
+                                            <td>@bairro.DataAtualizacao</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="" onclick="SetUser('@bairro.Id', '@bairro.Nome', '@bairro.MunicipioId')" data-toggle="modal" data-target="#defaultModalEditarUser"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetUser('@bairro.Id', '@bairro.Nome', '@bairro.MunicipioId')" data-toggle="modal" data-target="#defaultModalInactivateUser"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---------MODAL---------->
+
+<!---------Modal para Edição--------------->
+
+<div class="modal fade" id="defaultModalEditarUser" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Editar Bairro</h4>
+                <input type="hidden" id="BairroId" name="BairroId" />
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="NomeBairroEdit" class="control-label">Nome do Bairro</label>
+                        <input id="NomeBairroEdit" name="NomeBairroEdit" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="NameEdit" class="control-label">Nome</label>
+                        <input id="NameEdit" name="NameEdit" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="EmailEdit" class="control-label">Email</label>
+                        <input id="EmailEdit" name="EmailEdit" class="form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="SaveUser()" class="btn btn-success waves-effect">Salvar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para eliminar----------->
+
+<div class="modal fade" id="defaultModalInactivateUser" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Eliminar Bairro</h4>
+            </div>
+            <div class="modal-body">
+                Desejas eliminar o Bairro <b><label id="bairro"></label></b>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick=" " class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,20 +1,19 @@
-﻿using AutoMapper;
-using CPF_CACL.GestaoSocio.Aplication.Interfaces;
+﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
-using CPF_CACL.GestaoSocio.Data.Repository;
-using CPF_CACL.GestaoSocio.Domain.Entities;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
-using Microsoft.AspNetCore.Http;
+using CPF_CACL.GestaoSocio.Domain.Notifications;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using System.Xml.Linq;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
-    public class TipoPagamentoController : Controller
+    public class TipoPagamentoController : BaseController
     {
         private readonly ITipoPagamentoRepository _tipoPagamentoRepository;
         private readonly ITipoPagamentoAppService _tipoPagamentoAppService; 
         //
-        public TipoPagamentoController(ITipoPagamentoRepository tipoPagamentoRepository, ITipoPagamentoAppService tipoPagamentoAppService)
+        public TipoPagamentoController(ITipoPagamentoRepository tipoPagamentoRepository, ITipoPagamentoAppService tipoPagamentoAppService, INotificador notificador) : base(notificador)
         {
             _tipoPagamentoRepository = tipoPagamentoRepository;
             _tipoPagamentoAppService = tipoPagamentoAppService;
@@ -24,7 +23,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         public ActionResult Index()
         {
 
-            var tipoPagamento = _tipoPagamentoAppService.BuscarTodosTipo();
+            var tipoPagamento = _tipoPagamentoAppService.Buscar();
 
             return View(tipoPagamento);
         }
@@ -38,15 +37,42 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // GET: TipoPagamentoController/Create
         public ActionResult Create()
         {
-            return View();
+            TipoPagamentoViewModel tPagam = new TipoPagamentoViewModel();
+            return PartialView("Create", tPagam);
         }
 
         // POST: TipoPagamentoController/Create
         [HttpPost]
         public ActionResult Create(TipoPagamentoViewModel  tipoPagamento)
         {
-            _tipoPagamentoAppService.Add(tipoPagamento);
-            return RedirectToAction("Index");
+            try
+            {
+                var tipoPagamentoViewModel = new TipoPagamentoViewModel()
+                {
+                    Nome = tipoPagamento.Nome,
+                    DataCriacao = tipoPagamento.DataCriacao,
+                    Status = tipoPagamento.Status
+                };
+                _tipoPagamentoAppService.Adicionar(tipoPagamentoViewModel);
+
+                if (!ValidOperation())
+                {
+                    var sb = new StringBuilder();
+                    foreach (var item in BuscarMensagemErro())
+                    {
+                        sb.AppendLine($"x {item}\n");
+                    }
+                    return Json(sb.ToString());
+                }
+                return Json("Registo adicionado com sucesso");
+            }
+            catch (Exception erro)
+            {
+                return Json($"x Ocorreu um erro: {erro.Message}");
+            }
+
+            //_tipoPagamentoAppService.Add(tipoPagamento);
+            //return RedirectToAction("Index");
         }
 
         // GET: TipoPagamentoController/Edit/5

@@ -18,7 +18,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // GET: MunicipioController
         public ActionResult Index()
         {
-            var municipio = _municipioAppService.BuscarMunicipios();
+            var municipio = _municipioAppService.Buscar();
 
             return View(municipio);
         }
@@ -36,13 +36,18 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             return PartialView("Create",mn);
         }
 
-         // POST: TipoPagamentoController/Create
+        // POST: TipoPagamentoController/Create
         [HttpPost]
-        public ActionResult Create(MunicipioViewModel municipio)
+        public ActionResult Create(MunicipioViewModel viewModel)
         {
-            _municipioAppService.Add(municipio);
-            return RedirectToAction("Index");
-        
+
+            var municipio = new MunicipioViewModel()
+            {
+                Nome = viewModel.Nome
+            };
+            _municipioAppService.Adicionar(municipio);
+            return Json("Registo adiciondo com sucesso!");
+
         }
 
         // GET: MunicipioController/Edit/5
@@ -66,10 +71,27 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             }
         }
 
+        //Ação de exibir noticação
+        public ActionResult Exibir()
+        {
+            var a = "a";
+            if (a == "a")
+            {
+                ViewBag.MensagemSucesso = "Operação sucesso";
+                return View();
+            }
+            else
+            {
+                ViewBag.MensagemSucesso = "Operação erro";
+                return View();
+            }
+        }
+
         // GET: MunicipioController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            _municipioAppService.Eliminar(id);
+            return RedirectToAction("Index");
         }
 
         // POST: MunicipioController/Delete/5

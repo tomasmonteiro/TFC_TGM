@@ -1,0 +1,119 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.SocioViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Sócios";
+}
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            @* <p class="isocios"><i class=" nav-icon fas fa-users"></i> </p>*@
+                            <h3 class="card-title">Listagem de Socios</h3> 
+                            <a class="btn btn-outline-primary  ml-auto" asp-controller="Socio" asp-action="Create"><i class="dw dw-edit2"></i> Adicionar Novo</a>
+                            @* <a role="button" data-toggle="ajax-modal" data-target="#municipio" data-url="@Url.Action("Create")" class="btn btn-primary">Adicionar novo Municipio</a> *@
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- ./card-body -->
+
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
+                                <thead class="navbar-blue">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">BI</th>
+                                        <th scope="col">Data de Nascimento</th>
+                                        <th scope="col">Estado Civil</th>
+                                        <th scope="col"> Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null && Model.Any())
+                                    {
+                                        foreach (SocioViewModel socio in Model)
+                                        {
+                                            <tr>
+                                                <th scope="row">@socio.Id</th>
+                                                <td>@socio.Nome</td>
+                                                <td>@socio.BI</td>
+                                                <td>@socio.DataNascimento</td>
+                                                <td>@socio.EstadoCivil</td>
+                                                <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="/Bairro/Details/@socio.Id"><i class="dw dw-eye"></i> Detalhes</a>
+                                                        <a class="dropdown-item" href="" onclick="SetUser('@socio.Id', '@socio.Nome', '@socio.BI', '@socio.DataNascimento')" data-toggle="modal" data-target="#defaultModalEditarUser"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetUser('@socio.Id', '@socio.Nome', '@socio.BI', '@socio.DataNascimento')" data-toggle="modal" data-target="#defaultModalInactivateUser"><i class="dw dw-delete-3"></i> Inactivar</a>
+                                                    </div>
+                                                </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Main content -->
+@* <section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">jsGrid</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div id="jsGrid1"></div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</section> *@
+<!-- /.content -->
+
+
+
+@* 
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+
+ *@

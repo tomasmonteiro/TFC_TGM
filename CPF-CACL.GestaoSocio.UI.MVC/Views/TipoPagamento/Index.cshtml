@@ -1,55 +1,97 @@
 ﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel; 
-
-@* @using CPF_CACL.GestaoSocio.Domain.Entities;*@
-@* @model IEnumerable< TipoPagamentoViewModel > *@
-
 @model IEnumerable<TipoPagamentoViewModel>
 
 @{
     ViewData["Title"] = "Listagem de Tipos de Pagamento";
 }
+<!--Para abrir o Modal-->
+<div id="PlaceHolderHere"></div>
 
-
-<div class="text-center">
-
-    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <a role="button" class="btn btn-primary" asp-controller="TipoPagamento" asp-action="Create">Adicionar novo Tipo</a>
+<div class="page-header">
+    <div class="row">
+        <div class="col-12 col-md-12 col-sm-12">
+            <div class="title">
+                <h4>Tipos de Pagamentos</h4>
+            </div>
+            <nav class="col-12 col-md-12 col-sm-12" aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Listagem de Tipo de Pagamento</li>
+                </ol>
+            </nav>
+        </div>
     </div>
+</div>
 
-    <br />
 
-    <h1 class="display-4">Listagem de Tipos de Pagamentos</h1>
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Data Criação</th>
-                <th scope="col">Status</th>
-                <th scope="col">Data Actualização</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null && Model.Any())
-            {
-                foreach (TipoPagamentoViewModel contacto in Model)
-                {
-                    <tr>
-                        <th scope="row">@contacto.Id</th>
-                        <td>@contacto.Nome</td>
-                        <td>@contacto.DataCriacao</td>
-                        <td>@contacto.Status</td>
-                        <td>@contacto.DataAtualizacao</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <a role="button" class="btn btn-primary" asp-route-id="@contacto.Id" asp-controller="TipoPagamento" asp-action="Editar">Editar</a>
-                                <a role="button" class="btn btn-danger" asp-route-id="@contacto.Id" asp-controller="TipoPagamento" asp-action="ApagarConfirmacao">Apagar</a>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+
+                            <div class="col-12 col-sm-4 col-md-4">
+                                <button type="button" class="btn btn-primary  form-control" data-toggle="ajax-modal" data-target="#tipoPagamento" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
                             </div>
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
+                            <thead class="navbar-primary">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Criação</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Actualização</th>
+                                    <th scope="col">Acão</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (TipoPagamentoViewModel tipoPagamento in Model)
+                                    {
+                                        <tr>
+                                            <th scope="row">@tipoPagamento.Id</th>
+                                            <td>@tipoPagamento.Nome</td>
+                                            <td>@tipoPagamento.DataCriacao</td>
+                                            <td>@tipoPagamento.Status</td>
+                                            <td>@tipoPagamento.DataAtualizacao</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="" onclick="SetUser('@tipoPagamento.Id', '@tipoPagamento.Nome')" data-toggle="modal" data-target="#defaultModalEditarUser"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetUser('@tipoPagamento.Id', '@tipoPagamento.Nome')" data-toggle="modal" data-target="#defaultModalInactivateUser"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

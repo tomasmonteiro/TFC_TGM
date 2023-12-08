@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "View de testes";
+}
+
+@{
+    var sucesso = TempData["Sucesso"] as string;
+    var erro = TempData["Erro"] as string;
+}
+<script>
+
+    $(document).on('load', function exibirMensagemErro() {
+        $.notify(ViewBag.MensagemSucesso "sucesso");
+
+     });
+    @* exibirMensagemSucesso("@Html.Raw(ViewBag.MensagemSucesso)"); *@
+</script>
+@if (!string.IsNullOrEmpty(ViewBag.MensagemSucesso))
+{
+
+}
+@if (!string.IsNullOrEmpty(ViewBag.MensagemErro))
+{
+    <script>
+        exibirMensagemErro("@Html.Raw(ViewBag.MensagemSucesso)");
+    </script>
+}
+
+
+<a class="btn btn-primary " id="teste" onclick="exibirMensagemSucesso("teste")">Testar agora</a>

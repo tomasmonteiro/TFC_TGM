@@ -1,0 +1,210 @@
+﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.SocioViewModel
+
+@{
+    ViewData["Title"] = "Criar Sócio";
+}
+
+
+
+
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+
+                <form asp-action="Create" asp-controller="Socio" asp-action="Create" method="post"> 
+
+                    
+                        @* <div class="col-md-12"> *@
+                    <fieldset>
+                        <legend>DADOS PESSOAIS</legend>
+                        <div class="row espaco">
+                            <div class="col-12 col-sm-12 col-md-6">
+                                <label  class="control-label"> Nome Completo </label>
+                                <input asp-for="Nome" class="form-control" data-val-required="" />
+                                <span asp-validation-for="Nome" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <label  class="control-label">Nº do Bilhete </label>
+                                <input asp-for="BI" class="form-control"  />
+                                <span asp-validation-for="BI" class="text-danger"></span> 
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <label asp-for="Genero" class="control-label"> Genero </label>
+                                <select class="form-control" asp-for="Genero" data-val-required="">
+                                    <option>Feminino</option>
+                                    <option>Masculino</option>
+                                </select>
+                                <span asp-validation-for="Genero" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <label asp-for="DataNascimento" class="control-label"> Data de Nascimento </label>
+                                <input type="date" asp-for="DataNascimento" value="@DateTime.Now.ToString("dd-MM-yyyy")" class="form-control" data-val-required="" />
+                                <span asp-validation-for="DataNascimento" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <label asp-for="EstadoCivil" class="control-label"> Estado Civil </label>
+                                <select class="form-control" asp-for="EstadoCivil" data-val-required="">
+                                    <option>Solteiro</option>
+                                    <option>Casado</option>
+                                    <option>Viuvo</option>
+                                    <option>Divorciado</option>
+                                </select>
+                                <span asp-validation-for="EstadoCivil" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <label asp-for="Habilitacoes" class="control-label"> Habilitações </label>
+                                <select class="form-control" asp-for="Habilitacoes">
+                                    <option>Técnico Base</option>
+                                    <option>Técnico Médio</option>
+                                    <option>Lecenciado</option>
+                                    <option>Mestre</option>
+                                    <option>Doutor</option>
+                                </select>
+                                <span asp-validation-for="Habilitacoes" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <label asp-for="Nacionalidade" class="control-label"> Nacionalidade </label>
+                                <input asp-for="Nacionalidade" class="form-control" data-val-required="" />
+                                <span asp-validation-for="Nacionalidade" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <label asp-for="Profissao" class="control-label"> Profissão </label>
+                                <input asp-for="Profissao" class="form-control" />
+                                <span asp-validation-for="Telefone" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>FILLHAÇÃO</legend>
+                        <div class="row espaco">
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <label asp-for="NomePai" class="control-label"> Nome do Pai </label>
+                                <input asp-for="NomePai" class="form-control" />
+                                <span asp-validation-for="NomePai" class="text-danger"></span> 
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <label asp-for="NomeMae" class="control-label"> Nome da Mãe </label>
+                                <input asp-for="NomeMae" class="form-control" />
+                                <span asp-validation-for="NomeMae" class="text-danger"></span>
+                            </div>
+                        </div>
+                    
+                    </fieldset>
+
+
+
+                    <fieldset>
+                        <legend>DADOS DE CONTACTO</legend>
+                        <div class="row espaco">
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <label asp-for="Telefone" class="control-label"> Telefone </label>
+                                <input asp-for="Telefone" class="form-control" data-val-required="" />
+                                <span asp-validation-for="Telefone" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <label asp-for="Email" class="control-label"> Email </label>
+                                <input type="email" asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <!---->
+
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <label  class="control-label"> Munuicipio </label>
+                                <select id="municipio"  class="form-control">
+                                    <option>..Selecione um Município..</option>
+                                    @foreach (var item in ViewBag.Municipios)
+                                    {
+                                        <option value="@item.Id">@item.Nome</option>
+                                    }
+                                    <option></option>
+
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <label asp-for="Bairro" class="control-label"> Bairro </label>
+                                <select id="bairro" class="form-control" data-val-required="">
+                                   <option>..Selecione um Bairro..</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-8">
+                                <label asp-for="Endereco" class="control-label"> Endereço </label>
+                                <input asp-for="Endereco" class="form-control" placeholder="Ex: Casa nº 100, Rua 10..." />
+                                <span asp-validation-for="Telefone" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>DADOS PROFISSIONAIS</legend>
+                        <div class="row espaco">
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <label asp-for="OrganismoId" class="control-label">Organismo</label>
+                                <input asp-for="OrganismoId" class="form-control" data-val-required="" />
+                                <span asp-validation-for="OrganismoId" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <label asp-for="Departamento" class="control-label"> Departamento </label>
+                                <input asp-for="Departamento" class="form-control" />
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 ">
+                                <label asp-for="Funcao" class="control-label"> Função </label>
+                                <input asp-for="Funcao" class="form-control" data-val-required="" />
+                                <span asp-validation-for="Funcao" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-12">
+                                <label asp-for="LocalDeTrabalho" class="control-label"> Local de Trabalho</label>
+                                <input asp-for="LocalDeTrabalho" class="form-control" data-val-required="" />
+                                <span asp-validation-for="LocalDeTrabalho" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="col-12">
+                        <legend>Categoria </legend>
+                        <div class="row espaco">
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <label asp-for="CategoriaSocioId" class="control-label">Categoria do Sócio</label>
+                                <select asp-for="CategoriaSocioId" class="form-control" data-val-required="">
+                                    <option value="">..Selecione uma Categoria..</option>
+                                    @foreach (var item in ViewBag.Categoria)
+                                    {
+                                        <option value="@item.Id">@item.Nome</option>
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        <input type="hidden" value="Ativo" asp-for="EstadoSocio">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" value="@DateTime.Now" asp-for="DataCriacao">
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" value="true" asp-for="Status">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Adicionar" class="btn btn-primary" />
+                    </div>
+
+                </form> 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} *@

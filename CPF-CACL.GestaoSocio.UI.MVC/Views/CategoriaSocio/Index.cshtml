@@ -1,0 +1,74 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model IEnumerable<CategoriaSocioViewModel>
+
+@{
+    ViewData["Title"] = "Listagem de Categorias dos Sócios";
+}
+
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+
+            <div class="card-body">
+                <div class="row container">
+                    <div id="PlaceHolderHere"></div>
+
+                    <div class="text-center">
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                            <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#categoria" data-url="@Url.Action("Create")">Adicionar Novo</button>
+                        </div>
+
+                        @*  *@
+                        <br />
+
+                        <h1 class="display-4">Listagem de Categorias</h1>
+
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Quota</th>
+                                    <th scope="col">Data Criação</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Data Actualização</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (CategoriaSocioViewModel categoria in Model)
+                                    {
+                                        <tr>
+                                            <th scope="row">@categoria.Id</th>
+                                            <td>@categoria.Nome</td>
+                                            <td>@categoria.Quota</td>
+                                            <td>@categoria.DataCriacao</td>
+                                            <td>@categoria.Status</td>
+                                            <td>@categoria.DataAtualizacao</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="" onclick="SetUser('@categoria.Id', '@categoria.Nome')" data-toggle="modal" data-target="#defaultModalEditarUser"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetUser('@categoria.Id', '@categoria.Nome')" data-toggle="modal" data-target="#defaultModalInactivateUser"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

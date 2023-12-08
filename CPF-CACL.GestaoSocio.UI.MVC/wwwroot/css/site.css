@@ -17,9 +17,35 @@ body {
   margin-bottom: 60px;
 }
 
-/*Estlo para os Fielsets*/
+/*----Para o Círculo---*/
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    align-content: center;
+    z-index: 9999;
+}
+#loading-circle {
+    background: #fff;
+    padding: 20px;
+    margin: auto;
+    color: #0b58f6f5;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    font-size: 1em;
+}
+/*-----------------------*/
+
+/*Estlo para os Fielsets   #0c99e0 */
 fieldset {
-    border: 1px solid #ddd !important;
+    border: 1px solid #ccc !important;
     margin: 0 0 1.5em 0 !important;
     xmin-width: 0 !important;
     padding: 0 1.4em 1.4em 1.4em !important;
@@ -28,19 +54,165 @@ fieldset {
     padding-left: 10px !important;
     -webkit-box-shadow: 0px 0px 0px 0px #000;
     box-shadow: 0px 0px 0px 0px #000;
-
+    width: 100% !important;
 }
 legend {
-    font-size: 1.2em !important;
+    font-size: 1em !important;
     font-weight: bold !important;
     text-align: left !important;
     margin-bottom: 0px;
     width: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 5px 5px 5px 10px;
-    background-color: #ffffff;
+    padding: 2px 2px 2px 7px !important;                                                                                          px 7px !important;
+    background-color: #fff !important;
+    color: dodgerblue;
+    border-color: dodgerblue;
 }
-.azul:hover {
-    background-color: #0763f5;
+
+/*---Estilizando as colunas das tabelas---*/
+th, td{
+    width: calc(100%/var(--num-colunas));
+}
+
+th {
+    background-color: navbar-blue;
+}
+.margem-container {
+    padding: 1em !important;
+    margin: 2px !important;
+}
+
+.margens {
+    margin: 0px !important;
+    padding: 0px !important;
+}
+/*--------------*/
+
+.espaco{
+    padding-top: 1em;
+}
+
+.teste {
+    align-content: center;
+}
+
+.cabecalho {
+    padding: 1em !important;
+}
+
+.isocios {
+    height: 5 px;
+    width: 5px;
+    background-color:  blue;
+    margin-right: 2px;
+}
+
+.btn-adicionar {
+    position: absolute;
+    right: 0;
+}
+
+
+/*Estilo para a caixa de mensagem de erro e sucesso*/
+
+.mensagem-erro{
+    background-color: #ffcccc;
+    color: #cc0000;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #cc0000;
+}
+.mensagem-sucesso {
+    background-color: #d9f9d9;
+    color: #006600;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #006600;
+}
+
+
+/*---Estilo para a coluna Ação nas tabelas---*/
+.dw {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'dropways' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.dw-more {
+    font-size: 1.5em;
+    vertical-align: middle;
+}
+.dw-more:before {
+    content: "\e98c";
+}
+.dw-edit2:before {
+    content: "\eb0c";
+}
+
+/**Trabalhando os Dropdown*/
+
+.dropdown-menu {
+    border: 0;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 0 28px rgba(0,0,0,.1);
+    box-shadow: 0 0 28px rgba(0,0,0,.1)
+}
+.dropdown-toggle::after {
+    content: "\f107";
+    font-family: "FontAwesome";
+    vertical-align: unset;
+    width: auto;
+    height: auto;
+    border: 0 !important
+}
+.dropdown-toggle.no-arrow:after {
+    display: none
+}
+
+
+.dropdown-menu-icon-list .dropdown-item {
+    position: relative;
+    padding-left: 45px
+}
+
+.dropdown-menu-icon-list .dropdown-item i {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    font-size: 18px;
+    -webkit-transform: translate(0,-50%);
+    transform: translate(0,-50%)
+}    
+
+
+
+.dropdown-item {
+    font-size: 15px;
+    font-weight: 400;
+    padding: .657rem 1rem;
+    letter-spacing: 0;
+    color: #444;
+    font-family: 'Inter',sans-serif;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out
+}
+
+.dropdown-item:hover {
+    background: #ecf0f4 !important;
+    color: blue !important;
+}
+
+.dropdown-menu-icon-list .dropdown-item {
+    position: relative;
+    padding-left: 45px
 }

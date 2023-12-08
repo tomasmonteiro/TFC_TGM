@@ -1,32 +1,47 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-pt">
     <head>
-        <meta charset="utf-8">
-     
+        <meta charset="utf-8">     
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
    
         <title>@ViewData["Title"] - GEST-PREV</title>
-        <script src="~/js/site.js"></script>
 
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        
+
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/CPF_CACL.GestaoSocio.UI.MVC.styles.css" asp-append-version="true" />
+        <!--Vendor-->
+        <link rel="stylesheet" type="text/css" href="~/vendors/styles/icon-font.css"/> 
+        <!--Notify-->
+        <link rel="stylesheet" type="text/css" href="~/plugins/notify/css/notify.css" />
+
+        
+
         <!-- Font Awesome -->
-    <link rel="stylesheet" href="~/css/fontawesome/css/all.min.css" />
-        <!-- Estilo do tema -->
+        <link rel="stylesheet" type="text/css" href="~/css/fontawesome/css/all.min.css" />
+    <!--SweetAlert2-->
+    <link rel="stylesheet" type="text/css" href="~/plugins/sweetalert2/sweetalert2.min.css" />
+
+        <!-- Outros estilos -->
         <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
+        <link href="~/css/datatables.min.css" rel="stylesheet" />
+    
+        <!--Usando JsGrid -->
+        <link href="~/plugins/jsgrid/jsgrid.min.css" rel="stylesheet" />
+        <link href="~/plugins/jsgrid/jsgrid-theme.css" rel="stylesheet" />
 
         <!--Links-->
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
         <!-- Ionicons -->
         <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-        
-        
 
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">
+
+            <!-----Circulo de carregamento---------->
+
+            
 
             @* <!-- Preloader - Animação ao abrir a página inicial -->
             <div class="preloader flex-column justify-content-center align-items-center">
@@ -117,16 +132,15 @@
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
                 <!-- Logotipo -->
                 <a asp-controller="Home" asp-action="Index" class="brand-link navbar-blue active">
-                    <img src="dist/img/AdminLTELogo.png" alt="Gest-Prev Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <img src="~/img/logo.png" alt="Gest-Prev Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                     <span class="brand-text font-weight-light">GEST-PREV</span>
                 </a>
-
                 <!-- Menu Lateral -->
                 <div class="sidebar">
                     <!-- Painel de usuário -->
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
-                            <img src="dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
+                            <img src="~/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">
                             <a href="#" class="d-block">Tomás Gabriel Monteiro</a>
@@ -154,9 +168,9 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="./index2.html" class="nav-link">
-                                            <i class="far fa-plus-square nav-icon"></i>
-                                            <p>Criar</p>
+                                        <a asp-controller="Socio" asp-action="Create" class="nav-link">
+                                                <i class="far fa-plus-square nav-icon"></i>
+                                                <p>Criar</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -279,31 +293,66 @@
             </footer>
         </div>
 
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
         <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
         @await RenderSectionAsync("Scripts", required: false)
 
-
-        <!-- jQuery -->
+        <!--Trabalhar com as notificação-->
         <script src="~/plugins/jquery/jquery.min.js"></script>
+        <script src="~/js/notify.min.js"></script>
+    <script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+    
+        <script src="~/js/datatables.min.js"></script>
+        <script src="~/plugins/pdfmake-0.2.7/pdfmake.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @if (TempData.ContainsKey("Erro"))
+    {
+        <script>
+            exibirMensagem('@TempData["Erro"]', 'erro');
+        </script>
+    }
+    @if (TempData.ContainsKey("Sucesso"))
+    {
+        <script>
+            exibirMensagem('@TempData["Sucesso"]', 'sucesso');
+        </script>
+    }
+
+
+        <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>    
+        <script src="~/plugins/jquery/jquery.validate.min.js"></script>
+        <script src="~/plugins/jquery/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/plugins/jquery/messages_pt_pt.js"></script>
+
+
+    <!--Usando JsGrid-->
+    <script src="~/plugins/jsgrid/demos/db.js"></script>
+    <script src="~/plugins/jsgrid/jsgrid.js"></script>
+    
+
+
+
+
+    <script>
+        function exibirMensagemSucesso(mensagem) {
+            $.notify(mensagem, "sucess");
+
+        };
+        function exibirMensagemErro(mensagem) {
+            $.notify(mensagem, "error");
+
+        };
+    </script>
+
+
+        <!-- AdminLTE App -->
+        <script src="~/dist/js/adminlte.js"></script>
         <!-- jQuery UI 1.11.4 -->
-        @* <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script> *@
-        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
             $.widget.bridge('uibutton', $.ui.button)
         </script>
-        <!-- Bootstrap 4 -->
-        <!--Trabalhar com as notificação-->
-        <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- ChartJS -->
-        <!--Trabalhar com gráficos-->
-        <script src="~/plugins/chart.js/Chart.min.js"></script>
         <!-- Sparkline -->
         <script src="~/plugins/sparklines/sparkline.js"></script>
-       <!-- AdminLTE App -->
-        <script src="~/dist/js/adminlte.js"></script>
-    
     </body>
 </html>
