@@ -6,6 +6,12 @@
     ViewData["Title"] = "Listagem de Bairros";
 }
 
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
 <div class="page-header">
     <div class="row">
         <div class="col-12 col-md-12 col-sm-12">
@@ -79,8 +85,8 @@
                                                         <i class="dw dw-more"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                        <a class="dropdown-item" href="" onclick="SetUser('@bairro.Id', '@bairro.Nome', '@bairro.MunicipioId')" data-toggle="modal" data-target="#defaultModalEditarUser"><i class="dw dw-edit2"></i> Editar</a>
-                                                        <a class="dropdown-item" href="#" onclick="SetUser('@bairro.Id', '@bairro.Nome', '@bairro.MunicipioId')" data-toggle="modal" data-target="#defaultModalInactivateUser"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                        <a class="dropdown-item" href="" onclick="SetBairro('@bairro.Id', '@bairro.MunicipioId', '@bairro.DataCriacao', '@bairro.Nome')" data-toggle="modal" data-target="#editarBairro"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetBairro('@bairro.Id', , '@bairro.MunicipioId', '@bairro.DataCriacao', '@bairro.Nome')" data-toggle="modal" data-target="#eliminarBairro"><i class="dw dw-delete-3"></i> Eliminar</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -100,31 +106,35 @@
 
 <!---------Modal para Edição--------------->
 
-<div class="modal fade" id="defaultModalEditarUser" tabindex="-1" role="dialog" style="display: none;">
+<div class="modal fade" id="editarBairro" tabindex="-1" role="dialog" style="display: none;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Editar Bairro</h4>
+                <h4 class="modal-title" id="cabecalhoModalEditarBairro">Editar Bairro</h4>
                 <input type="hidden" id="BairroId" name="BairroId" />
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="NomeBairroEdit" class="control-label">Nome do Bairro</label>
-                        <input id="NomeBairroEdit" name="NomeBairroEdit" class="form-control" />
+                        <input type="hidden" id="bairroId"  class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label for="NameEdit" class="control-label">Nome</label>
-                        <input id="NameEdit" name="NameEdit" class="form-control" />
+                        <input type="hidden" id="municipioId" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label for="EmailEdit" class="control-label">Email</label>
-                        <input id="EmailEdit" name="EmailEdit" class="form-control" />
+                        <label for="nomeBairro" class="control-label">Nome do Bairro</label>
+                        <input id="nomeBairro" name="nomeBairro" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="dataCriacao" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="dataAtualizacao" value="@DateTime.Now" class="form-control" />
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="SaveUser()" class="btn btn-success waves-effect">Salvar</button>
+                <button type="button" onclick="EditarBairro()" class="btn btn-success waves-effect">Salvar</button>
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -133,11 +143,11 @@
 
 <!--------Modal para eliminar----------->
 
-<div class="modal fade" id="defaultModalInactivateUser" tabindex="-1" role="dialog" style="display: none;">
+<div class="modal fade" id="eliminarBairro" tabindex="-1" role="dialog" style="display: none;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Eliminar Bairro</h4>
+                <h4 class="modal-title" id="eliminarBairroLabel">Eliminar Bairro</h4>
             </div>
             <div class="modal-body">
                 Desejas eliminar o Bairro <b><label id="bairro"></label></b>?

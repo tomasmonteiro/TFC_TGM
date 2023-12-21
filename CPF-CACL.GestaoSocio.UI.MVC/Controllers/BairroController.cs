@@ -76,14 +76,16 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 
         // POST: BairroController/Edit/5
         [HttpPost]
-        public ActionResult Edit(int bairroId, string Nome, DateTime dataAtualizacao)
+        public ActionResult Edit(int bairroId, int municipioId, string Nome, DateTime dataCriacao, DateTime dataAtualizacao)
         {
             try
             {
                 var bairro = new BairroViewModel()
                 {
                     Id = bairroId,
+                    MunicipioId = municipioId,
                     Nome = Nome,
+                    DataCriacao = dataCriacao,
                     DataAtualizacao = dataAtualizacao
                 };
                 _bairroAppService.Atualizar(bairro);
@@ -97,7 +99,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
                     }
                     return Json(sb.ToString());
                 }
-                return Json("Registo adicionado com sucesso.");
+                return Json("Registo actualizado com sucesso.");
             }
             catch (Exception erro)
             {

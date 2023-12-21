@@ -4,9 +4,7 @@ $(document).ready(function () {
         "language": {
             "url": "/js/pt-PT.json" 
         }
-
     });
-
     table.buttons().container()
         .appendTo('#myDataTable_wrapper .col-md-6:eq(0)');
 });
@@ -20,13 +18,11 @@ function iniciarProcesso() {
 }
 //-------Notificar ------------------
 function Notificar(icone, cabecalho, resultado ) {
-    //window.location = "/Bairro/Index";
-
-    $('#loading-overlay').show();
+    $('#loading-overlay').show();    
     setTimeout(function () {
-        $('#loading-overlay').hide();
+        $('#loading-overlay').hide();        
         Notificacao("" + icone, "" + cabecalho, "" + resultado);
-    }, 4000);
+    }, 2500);
 }
 //-------SweetAlert2-----------------
 function Notificacao(icone, titulo, mensagem) {
@@ -40,12 +36,38 @@ function Notificacao(icone, titulo, mensagem) {
     });
 }
 
-/*-------Bairro-----------*/
+function NotificarErro(icone, titulo, mensagem) {
+    Swal.fire({
+        icon: icone,
+        title: titulo,
+        text: mensagem,
+        showConfirmButton: false,
+        iconSize: "10px",
+        timer: 2500
+    });
+}
 
+/*-------Bairro-----------*/
+function NotificarBairro(icone, titulo, mensagem) {
+    $('#loading-overlay').show();
+    setTimeout(function () {
+        $('#loading-overlay').hide();
+        Swal.fire({
+            icon: icone,
+            title: titulo,
+            text: mensagem,
+            showConfirmButton: false,
+            iconSize: "10px",
+            timer: 2500
+        }).then((result) => {
+            window.location = "/Bairro/Index";
+        });
+    }, 2500);
+}
 //-------Adicionar----
 function AdicionarBairro() {
     if ($("#Nome").val() == "") {
-        Notificar("error", "Erro", "O nome é obrigatório!");
+        NotificarErro("error", "Erro!", "O Nome do Bairro deve ser preenchido.");
     }
     else {
         $.ajax({
@@ -61,7 +83,7 @@ function AdicionarBairro() {
                     Notificar("error", "Erro!", result);
                     return false;
                 }
-                Notificar("success", "Sucesso!", result);
+                NotificarBairro("success", "Sucesso!", result);
                 $("#Nome").val("");
             },
             error: function (result) {
@@ -73,17 +95,27 @@ function AdicionarBairro() {
     
 }
 //---------Editar-------
+function SetBairro(bairroId, municipioId,dataCriacao, nomeBairro) {
+    $("#bairroId").val(bairroId);
+    $("#municipioId").val(municipioId);
+    $("#nomeBairro").val(nomeBairro);
+    $("#dataCriacao").val(dataCriacao);
+}
 function EditarBairro() {
-    if ($("#Nome").val() == "") {
-        Notificar("error", "Erro", "O Nome do Bairro deve ser preenchido.");
+    
+    if ($("#nomeBairro").val() == "") {
+        NotificarErro("error", "Erro!", "O Nome do Bairro deve ser preenchido.");
         return;
     }
+    
     $.ajax({
         type: "POST",
         url: "/Bairro/Edit",
         data: {
             bairroId: $("#bairroId").val(),
-            Nome: $("#Nome").val(),
+            municipioId: $("#municipioId").val(),
+            Nome: $("#nomeBairro").val(),
+            dataCriacao: $("#dataCriacao").val(),
             dataAtualizacao: $("#dataAtualizacao").val()
         },
         success: function (result) {
@@ -91,11 +123,10 @@ function EditarBairro() {
                 Notificar("error", "Erro!", result);
                 return false;
             }
-            Notificar("success", "Sucesso!", result);
+            NotificarBairro("success", "Sucesso!", result);
         },
         error: function (result) {
             Notificar("error", "Erro!", result);
-
         } 
     });
 }
@@ -106,7 +137,7 @@ function EditarBairro() {
 //---------Adicionar----
 function AdicionarMunicipio() {
     if ($("#Nome").val() == "") {
-        $.notify("O nome é obrigatório!", "error");
+        NotificarErro("error", "Erro!", "O Nome do Bairro deve ser preenchido.");
     }
     else {
         $.ajax({
@@ -137,7 +168,7 @@ function AdicionarMunicipio() {
 //----------Adicionar----
 function AdicionarTipoPagamento() {
     if ($("#Nome").val() == "") {
-        Notificar("error", "Erro!", "O nome é obrigatório!");
+        NotificarErro("error", "Erro!", "O Nome do Bairro deve ser preenchido.");
     }
     else {
         $.ajax({

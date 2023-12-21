@@ -27,6 +27,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
 
         public void Add(Bairro bairro)
         {
+            bairro.DataCriacao = DateTime.Now;
             if (!ExecutarValidacao(new BairroValidation(), bairro)) return;
             if (_bairroRepository.Find(a => a.Nome == bairro.Nome && a.MunicipioId == bairro.MunicipioId && a.Status == true).Count() > 0)
             {
@@ -48,8 +49,8 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
 
         public void Update(Bairro bairro)
         {
-            if (!ExecutarValidacao(new BairroValidation(), bairro)) return;
             bairro.DataAtualizacao = DateTime.Now;
+            if (!ExecutarValidacao(new BairroValidation(), bairro)) return;
             _bairroRepository.Update(bairro);
         }
         public void Eliminar(int id)

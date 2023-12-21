@@ -14,7 +14,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
         public string Nome { get; set; }
 
         //[ScaffoldColumn(false)]
-        public DateTime DataCriacao { get; set; } = DateTime.Now;
+        public DateTime DataCriacao { get; set; }
 
         //[ScaffoldColumn(false)]
         public string Status { get; set; } = "true";
