@@ -1,13 +1,14 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+using CPF_CACL.GestaoSocio.Domain.Notifications;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
-    public class CategoriaSocioController : Controller
+    public class CategoriaSocioController : BaseController
     {
         private readonly ICategoriaSocioAppService _categoriaSocioAppService;
-        public CategoriaSocioController(ICategoriaSocioAppService categoriaSocioAppService)
+        public CategoriaSocioController(ICategoriaSocioAppService categoriaSocioAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _categoriaSocioAppService = categoriaSocioAppService;
         }
@@ -29,7 +30,8 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // GET: CategoriaSocioController/Create
         public ActionResult Create()
         {
-            return View();
+            CategoriaSocioViewModel cs = new CategoriaSocioViewModel();
+            return PartialView("Create", cs);
         }
 
         // POST: CategoriaSocioController/Create

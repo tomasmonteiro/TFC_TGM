@@ -6,35 +6,61 @@
     ViewData["Title"] = "Listagem de Categorias dos Sócios";
 }
 
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-12 col-md-12 col-sm-12">
+            <nav class="col-12 col-md-12 col-sm-12" aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Listagem de Categorias do Sócio</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
 
 <div class="row espaco">
     <div class="col-md-12">
         <div class="card">
-
-            <div class="card-body">
-                <div class="row container">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
                     <div id="PlaceHolderHere"></div>
-
-                    <div class="text-center">
-
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                            <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#categoria" data-url="@Url.Action("Create")">Adicionar Novo</button>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <div class="col-12 col-sm-4 col-md-4">
+                                <button type="button" class="btn btn-primary  form-control" data-toggle="ajax-modal" data-target="#categoria" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
+                            </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                        @*  *@
-                        <br />
-
-                        <h1 class="display-4">Listagem de Categorias</h1>
-
-                        <table class="table table-responsive">
-                            <thead>
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
+                            <thead class="navbar-primary">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Quota</th>
-                                    <th scope="col">Data Criação</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Data Actualização</th>
+                                    <th scope="col">Registo</th>
+                                    <th scope="col">Actualização</th>
+                                    <th scope="col">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,7 +73,6 @@
                                             <td>@categoria.Nome</td>
                                             <td>@categoria.Quota</td>
                                             <td>@categoria.DataCriacao</td>
-                                            <td>@categoria.Status</td>
                                             <td>@categoria.DataAtualizacao</td>
                                             <td>
                                                 <div class="dropdown">
@@ -55,8 +80,8 @@
                                                         <i class="dw dw-more"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                        <a class="dropdown-item" href="" onclick="SetUser('@categoria.Id', '@categoria.Nome')" data-toggle="modal" data-target="#defaultModalEditarUser"><i class="dw dw-edit2"></i> Editar</a>
-                                                        <a class="dropdown-item" href="#" onclick="SetUser('@categoria.Id', '@categoria.Nome')" data-toggle="modal" data-target="#defaultModalInactivateUser"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                        <a class="dropdown-item" href="" onclick="SetUser('@categoria.Id', '@categoria.Nome')" data-toggle="modal" data-target="#editarCategoriaSocio"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetUser('@categoria.Id', '@categoria.Nome')" data-toggle="modal" data-target="#eliminarCatgoriaSocio"><i class="dw dw-delete-3"></i> Eliminar</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -67,6 +92,65 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---------MODAL---------->
+<!---------Modal para Edição--------------->
+
+<div class="modal fade" id="editarCategoriaSocio" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="cabecalhoModalEditarCategoriaSocio">Editar Bairro</h4>
+                <input type="hidden" id="CategoriaSocioId" name="CategoriaSocioId" />
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input type="hidden" id="categoriaSocioId" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeCategoriaSocio" class="control-label">Nome da Categoria</label>
+                        <input id="nomeCategoriaSocio" name="nomeCategoriaSocio" readonly="true" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="quotaCategoria" class="control-label">Quota</label>
+                        <input id="quotaCategoria" name="quotaCategoria" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="dataCriacao" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="dataAtualizacao" value="@DateTime.Now" class="form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EditarCategoriaSocio()" class="btn btn-success waves-effect">Salvar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para eliminar----------->
+
+<div class="modal fade" id="eliminarCatgoriaSocio" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarCategoriaSocioLabel">Eliminar Categoria</h4>
+            </div>
+            <div class="modal-body">
+                <label id="id" name="id" />
+                Desejas eliminar esta Categoria <b><label id="nome"></label></b>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EliminarCategoriaSocio()" class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>

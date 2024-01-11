@@ -15,7 +15,7 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
 
         public IEnumerable<Bairro> BuscarTodos()
         {
-            return _gsContext.Bairro.Where(p => p.Status == true);
+            return _gsContext.Bairro.Include(b => b.Municipio).Where(p => p.Status == true);
             //_gsContext.Bairro.Include(b => b.Municipio).ToList();
         }
         public IEnumerable<Bairro> BuscarPorMunicipio(int municipioId)

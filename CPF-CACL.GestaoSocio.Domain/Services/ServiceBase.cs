@@ -25,7 +25,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         }
         protected void Notificar(string mensagem)
         {
-            _notificador.Handle(new Notificacao(mensagem));
+            _notificador.Handle(new Notification(mensagem));
         }
         protected bool ExecutarValidacao<TV, TE>(TV validacao, TE entidade) where TV : AbstractValidator<TE> where TE : BaseEntity
         {

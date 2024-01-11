@@ -28,16 +28,16 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             return _socioRepository.BuscarTodos();
         }
-
-        public void Add(Socio socio)
+        public int Add(Socio socio)
         {
             //if (!ExecutarValidacao(new SocioValidation(), socio)) return;
             if (_socioRepository.Find(a => a.Nome == socio.Nome && a.Status == true).Count() > 0)
             {
                 Notificar("Já existe um Sócio definido com este nome.");
-                return;
+                return 0;
             }
             _socioRepository.Add(socio);
+            return socio.Id;
         }
         public IEnumerable<Socio> GetAll()
         {

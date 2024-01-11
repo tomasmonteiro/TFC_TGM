@@ -1,8 +1,8 @@
 ﻿namespace CPF_CACL.GestaoSocio.Domain.Notifications
 {
-    public class Notificacao
+    public class Notification
     {
-        public Notificacao(string mensagem)
+        public Notification(string mensagem)
         {
             Mensagem = mensagem;
         }

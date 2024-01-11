@@ -1,15 +1,18 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.Services;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+using CPF_CACL.GestaoSocio.Domain.Notifications;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
-    public class MunicipioController : Controller
+    public class MunicipioController : BaseController
     {
         private readonly IMunicipioAppService _municipioAppService;
-        public MunicipioController(IMunicipioAppService municipioAppService)
+        public MunicipioController(IMunicipioAppService municipioAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _municipioAppService = municipioAppService;
         }
@@ -40,13 +43,30 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         [HttpPost]
         public ActionResult Create(MunicipioViewModel viewModel)
         {
-
-            var municipio = new MunicipioViewModel()
+            try
             {
-                Nome = viewModel.Nome
-            };
-            _municipioAppService.Adicionar(municipio);
-            return Json("Registo adiciondo com sucesso!");
+                var municipio = new MunicipioViewModel()
+                {
+                    Nome = viewModel.Nome,
+                    Status = "true"
+                };
+                _municipioAppService.Adicionar(municipio);
+
+                if (!ValidOperation())
+                {
+                    var sb = new StringBuilder();
+                    foreach (var item in BuscarMensagemErro())
+                    {
+                        sb.AppendLine($"x {item}\n");
+                    }
+                    return Json(sb.ToString());
+                }
+                return Json("Registo adiciondo com sucesso!");
+            }
+            catch (Exception erro)
+            {
+                return Json($"x Ocorreu um erro: {erro.Message}");
+            }
 
         }
 
@@ -58,16 +78,33 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 
         // POST: MunicipioController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int municipioId, string Nome, DateTime dataCriacao, DateTime dataAtualizacao)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var municipio = new MunicipioViewModel()
+                {
+                    Id = municipioId,
+                    Nome = Nome,
+                    DataCriacao = dataCriacao,
+                    DataAtualizacao = dataAtualizacao
+                };
+                _municipioAppService.Atualizar(municipio);
+
+                if (!ValidOperation())
+                {
+                    var sb = new StringBuilder();
+                    foreach (var item in BuscarMensagemErro())
+                    {
+                        sb.AppendLine($"x {item}\n");
+                    }
+                    return Json(sb.ToString());
+                }
+                return Json("Registo actualizado com sucesso.");
             }
-            catch
+            catch (Exception erro)
             {
-                return View();
+                return Json($"x Ocorreu um erro: {erro.Message}");
             }
         }
 
@@ -88,24 +125,33 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         }
 
         // GET: MunicipioController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete()
         {
-            _municipioAppService.Eliminar(id);
-            return RedirectToAction("Index");
+            return RedirectToAction();
         }
 
         // POST: MunicipioController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _municipioAppService.Eliminar(id);
+
+                if (!ValidOperation())
+                {
+                    var sb = new StringBuilder();
+                    foreach (var item in BuscarMensagemErro())
+                    {
+                        sb.AppendLine($"x {item}\n");
+                    }
+                    return Json(sb.ToString());
+                }
+                return Json("Registo eliminado com sucesso.");
             }
-            catch
+            catch (Exception erro)
             {
-                return View();
+                return Json($"x Ocorreu um erro: {erro.Message}");
             }
         }
     }

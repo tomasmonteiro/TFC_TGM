@@ -2,17 +2,17 @@
 {
     public class Notificador : INotificador
     {
-        private List<Notificacao> _notificacoes;
+        private List<Notification> _notificacoes;
         public Notificador()
         {
-            _notificacoes = new List<Notificacao>();
+            _notificacoes = new List<Notification>();
         }
-        public List<Notificacao> BuscarNotificacoes()
+        public List<Notification> BuscarNotificacoes()
         {
             return _notificacoes;
         }
 
-        public void Handle(Notificacao notificacao)
+        public void Handle(Notification notificacao)
         {
             _notificacoes.Add(notificacao);
         }

@@ -1,0 +1,105 @@
+﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.SocioViewModel
+
+
+<div class="pd-ltr-20">
+	<div class="min-height-200px">
+		<div class="page-header">
+			<div class="row">
+				<div class="col-md-6 col-sm-12">
+					<div class="title">
+						<h4>Sócios</h4>
+					</div>
+					<nav aria-label="breadcrumb" role="navigation">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
+							<li class="breadcrumb-item"><a href="/Socio/Index">Sócios</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Detalhe do sócio</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
+				<div class="pd-20 card-box height-100-p">
+					<div class="profile-photo testev">
+						<a href="modal" data-toggle="modal" data-target="#modal" class="edit-avatar"><i class="dw dw-pencil"></i></a>
+						<img src="~/@Model.CaminhoFoto" alt="Foto do Sócio" class="avatar-photo imagem-perfil">
+						<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true" style="display: none;">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-body pd-5">
+										<div class="img-container">
+											<img id="image" src="~/@Model.CaminhoFoto" alt="Picture" class="">
+										</div>
+									</div>
+									<div class="modal-footer">
+										<input type="submit" value="Update" class="btn btn-primary">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<h5 class="text-center h5 mb-0">@Model.Nome</h5>
+					<p class="text-center text-muted font-14">@Model.Genero</p>
+					<div class="profile-info">
+						<h5 class="mb-20 h5 text-blue">Contacto</h5>
+						<ul>
+							<li>
+								<span>Email:</span>
+								@Model.Email
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">
+				<div class="card-box height-100-p overflow-hidden">
+					<div class="profile-tab height-100-p">
+						<div class="tab height-100-p">
+							<ul class="nav nav-tabs customtab" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#grupos" role="tab" aria-selected="true">Informações</a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane fade show active" id="grupos" role="tabpanel">
+									<div class="pd-20 profile-task-wrap">
+										<div class="container pd-0">
+@* 											<!-- Open Task start -->
+											<div class="task-title row align-items-center">
+												<div class="col-md-8 col-sm-12">
+												</div>
+												<div class="col-md-4 col-sm-12 text-right">
+													<a href="task-add" data-toggle="modal" data-target="#task-add" class="bg-light-blue btn text-blue weight-500"><i class="ion-plus-round"></i> Adicionar</a>
+												</div>
+											</div>
+											<div class="profile-task-list pb-30">
+												<ul>
+													@if (ViewBag.Groups != null)
+													{
+														foreach (var item in ViewBag.Groups)
+														{
+															<li>
+																@item.Group.Name
+																<span>
+																	<a href="#" data-toggle="modal" data-target="#group-remove" class="btn btn-danger text-white weight-500" onclick="SetUserGroup('@item.Group.Id', '@item.Group.Name')"><i class="fa fa-delete"></i> Remover</a>
+																</span>
+																<div class="task-assign"><div class="due-date">data de concessão <span>@item.InsertedDate</span></div></div>
+															</li>
+														}
+													}
+												</ul>
+											</div> *@
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

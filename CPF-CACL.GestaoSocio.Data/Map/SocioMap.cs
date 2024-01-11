@@ -15,9 +15,11 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.BI).HasColumnType("varchar(14)");
             builder.Property(x => x.Genero).HasColumnType("varchar(9)").IsRequired();
             builder.Property(x => x.DataNascimento).HasColumnType("date").IsRequired();
+            builder.Property(x => x.CaminhoFoto).HasColumnType("varchar(1000)");
             builder.Property(x => x.EstadoCivil).HasColumnType("varchar(20)").IsRequired();
             builder.Property(x => x.Telefone).HasColumnType("varchar(12)").IsRequired();
             builder.Property(x => x.Email).HasColumnType("varchar(300)");
+            builder.Property(x => x.Endereco).HasColumnType("varchar(300)");
             builder.Property(x => x.Profissao).HasColumnType("varchar(100)");
             builder.Property(x => x.Habilitacoes).HasColumnType("varchar(20)");
             builder.Property(x => x.Nacionalidade).HasColumnType("varchar(20)").IsRequired();
@@ -31,6 +33,12 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");
             builder.Property(x => x.Status).HasColumnType("bit").IsRequired();
+
+            //Relacionamento: um Bairro para vários Sócios
+            builder.HasOne(x => x.Bairros)
+                .WithMany(a => a.Socios)
+                .HasForeignKey(x => x.BairroId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //Relacionamento: um Organismo possui varios Socios
             builder.HasOne(x => x.Organismo)

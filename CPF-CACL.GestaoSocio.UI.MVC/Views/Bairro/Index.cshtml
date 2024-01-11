@@ -55,14 +55,13 @@
             <div class="margem-container card-body">
                 <div class="margens col-12 col-md-12 col-lg-12">
                     <div class="text-center col-12 col-md-12 col-lg-12">
-                        <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 7;" id="myDataTable">
+                        <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
                             <thead class ="navbar-primary">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Município</th>
-                                    <th scope="col">Registro</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Registo</th>
                                     <th scope="col">Actualização</th>
                                     <th scope ="col">Acão</th>
                                 </tr>
@@ -75,9 +74,8 @@
                                         <tr>
                                             <th scope="row">@bairro.Id</th>
                                             <td>@bairro.Nome</td>
-                                            <td>@bairro.MunicipioId</td>
+                                            <td>@bairro.NomeMunicipio</td>
                                             <td>@bairro.DataCriacao</td>
-                                            <td>@bairro.Status</td>
                                             <td>@bairro.DataAtualizacao</td>
                                             <td>
                                                 <div class="dropdown">
@@ -86,7 +84,7 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                         <a class="dropdown-item" href="" onclick="SetBairro('@bairro.Id', '@bairro.MunicipioId', '@bairro.DataCriacao', '@bairro.Nome')" data-toggle="modal" data-target="#editarBairro"><i class="dw dw-edit2"></i> Editar</a>
-                                                        <a class="dropdown-item" href="#" onclick="SetBairro('@bairro.Id', , '@bairro.MunicipioId', '@bairro.DataCriacao', '@bairro.Nome')" data-toggle="modal" data-target="#eliminarBairro"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetBairroEliminar('@bairro.Id', '@bairro.Nome')" data-toggle="modal" data-target="#eliminarBairro"><i class="dw dw-delete-3"></i> Eliminar</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -150,10 +148,11 @@
                 <h4 class="modal-title" id="eliminarBairroLabel">Eliminar Bairro</h4>
             </div>
             <div class="modal-body">
-                Desejas eliminar o Bairro <b><label id="bairro"></label></b>?
+                <label  id="id" name="id" />
+                Desejas eliminar o Bairro <b><label id="nome"></label></b>?
             </div>
             <div class="modal-footer">
-                <button type="button" onclick=" " class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" onclick="EliminarBairro()" class="btn btn-danger waves-effect">Eliminar</button>
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
             </div>
         </div>

@@ -26,4 +26,8 @@
     <ProjectReference Include="..\CPF-CACL.GestaoSocio.Domain\CPF-CACL.GestaoSocio.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\vendors\images\" />
+  </ItemGroup>
+
 </Project>

@@ -13,7 +13,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         private readonly ITipoPagamentoRepository _tipoPagamentoRepository;
         private readonly ITipoPagamentoAppService _tipoPagamentoAppService; 
         //
-        public TipoPagamentoController(ITipoPagamentoRepository tipoPagamentoRepository, ITipoPagamentoAppService tipoPagamentoAppService, INotificador notificador) : base(notificador)
+        public TipoPagamentoController(ITipoPagamentoRepository tipoPagamentoRepository, ITipoPagamentoAppService tipoPagamentoAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _tipoPagamentoRepository = tipoPagamentoRepository;
             _tipoPagamentoAppService = tipoPagamentoAppService;

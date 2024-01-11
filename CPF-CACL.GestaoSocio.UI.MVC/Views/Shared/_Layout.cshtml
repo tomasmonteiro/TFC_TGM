@@ -10,7 +10,11 @@
 
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
         <!--Vendor-->
-        <link rel="stylesheet" type="text/css" href="~/vendors/styles/icon-font.css"/> 
+        @* <link rel="stylesheet" type="text/css" href="~/vendors/styles/icon-font.css"/> *@
+        <link href="~/vendors/styles/icon-font.min.css" rel="stylesheet" />
+        <link href="~/vendors/styles/core.css" rel="stylesheet" />
+        <link href="~/vendors/styles/style.css" rel="stylesheet" />
+    
         <!--Notify-->
         <link rel="stylesheet" type="text/css" href="~/plugins/notify/css/notify.css" />
 
@@ -18,8 +22,8 @@
 
         <!-- Font Awesome -->
         <link rel="stylesheet" type="text/css" href="~/css/fontawesome/css/all.min.css" />
-    <!--SweetAlert2-->
-    <link rel="stylesheet" type="text/css" href="~/plugins/sweetalert2/sweetalert2.min.css" />
+        <!--SweetAlert2-->
+        <link rel="stylesheet" type="text/css" href="~/plugins/sweetalert2/sweetalert2.min.css" />
 
         <!-- Outros estilos -->
         <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
@@ -65,7 +69,7 @@
 
                 <!-- Topo - Links da direita -->
                 <ul class="navbar-nav ml-auto">
-                    <!-- Barra de pesquisa -->
+@*                     <!-- Barra de pesquisa -->
                     <li class="nav-item">
                         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                             <i class="fas fa-search"></i>
@@ -85,15 +89,12 @@
                                 </div>
                             </form>
                         </div>
-                    </li>
+                    </li> *@
 
                 
                     <!-- Menu Dropdown das Notificações -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="far fa-bell"></i>
-                            <span class="badge badge-warning navbar-badge">9+</span>
-                        </a>
+                        @await Component.InvokeAsync("Notificacoes")
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <span class="dropdown-item dropdown-header">9+ Notifications</span>
                             <div class="dropdown-divider"></div>
@@ -128,6 +129,7 @@
                 </ul>
             </nav>
             <!-- /.navbar -->
+
             <!-- Container do Menu Lateral -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
                 <!-- Logotipo -->
@@ -138,7 +140,7 @@
                 <!-- Menu Lateral -->
                 <div class="sidebar">
                     <!-- Painel de usuário -->
-                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="user-panel mt-3 pb-3 mb-3">
                         <div class="image">
                             <img src="~/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                         </div>
@@ -299,25 +301,12 @@
 
         <!--Trabalhar com as notificação-->
         <script src="~/plugins/jquery/jquery.min.js"></script>
-        <script src="~/js/notify.min.js"></script>
-    <script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+        <script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
     
         <script src="~/js/datatables.min.js"></script>
         <script src="~/plugins/pdfmake-0.2.7/pdfmake.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @if (TempData.ContainsKey("Erro"))
-    {
-        <script>
-            exibirMensagem('@TempData["Erro"]', 'erro');
-        </script>
-    }
-    @if (TempData.ContainsKey("Sucesso"))
-    {
-        <script>
-            exibirMensagem('@TempData["Sucesso"]', 'sucesso');
-        </script>
-    }
 
 
         <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>    
@@ -330,22 +319,6 @@
     <script src="~/plugins/jsgrid/demos/db.js"></script>
     <script src="~/plugins/jsgrid/jsgrid.js"></script>
     
-
-
-
-
-    <script>
-        function exibirMensagemSucesso(mensagem) {
-            $.notify(mensagem, "sucess");
-
-        };
-        function exibirMensagemErro(mensagem) {
-            $.notify(mensagem, "error");
-
-        };
-    </script>
-
-
         <!-- AdminLTE App -->
         <script src="~/dist/js/adminlte.js"></script>
         <!-- jQuery UI 1.11.4 -->

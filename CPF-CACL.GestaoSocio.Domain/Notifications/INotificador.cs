@@ -3,7 +3,7 @@
     public interface INotificador
     {
         bool HaNotificacao();
-        List<Notificacao> BuscarNotificacoes();
-        void Handle(Notificacao notificacao);
+        List<Notification> BuscarNotificacoes();
+        void Handle(Notification notificacao);
     }
 }

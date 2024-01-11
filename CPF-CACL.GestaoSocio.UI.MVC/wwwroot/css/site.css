@@ -12,9 +12,64 @@ html {
   position: relative;
   min-height: 100%;
 }
+.testev {
+    box-sizing: border-box !important;
+    
+}
+.imagem-perfil {
+    max-width: 100%;
+    height: inherit;
+    width: inherit;
+    display: block;
+}
+.caixa-sombreada {
+    box-shadow: 0 0 28px rgba(0,0,0,.08);
+}
+
+#irAoTopoBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+#irAoTopoBtn:hover {
+    background-color: #0056b3;
+}
+
+/*Estilo para o botão de Upload de Imagens*/
+/*input[type="file"] {
+    display: none;
+}
+
+.imagem-upload {
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+.imagem-upload:hover {
+    background-color: #0056b3;
+}
+.imagem-content {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}*/
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    scroll-behavior: smooth;
 }
 
 /*----Para o Círculo---*/
@@ -87,9 +142,33 @@ th {
     margin: 0px !important;
     padding: 0px !important;
 }
+
+/*--Estilo para campos obrigatórios---*/
+.required {
+    position: relative;
+}
+
+.required::after {
+    content: '*';
+    color: #e21d1d;
+    position: absolute;
+    top: -0.1em;
+    margin-left: 4px;
+}
+.espaco-input {
+    margin-bottom: 1em;
+}
+
+
 /*--------------*/
 
-.espaco{
+.edit-avatar:hover {
+    background-color: rgb(38, 38, 252);
+    color: #fff;
+    /*box-shadow: 0 2px 4px rgb(38, 38, 252, 0,40);*/
+}
+
+.espaco {
     padding-top: 1em;
 }
 

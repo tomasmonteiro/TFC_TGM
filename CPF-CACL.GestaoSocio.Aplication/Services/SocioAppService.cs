@@ -24,9 +24,10 @@ namespace CPF_CACL.GestaoSocio.Aplication.Services
             this.socioService = municipioService;
         }
 
-        public void Adicionar(SocioViewModel socioViewModel)
+        public int Adicionar(SocioViewModel socioViewModel)
         {
-            socioService.Add(mapper.Map<Socio>(socioViewModel));
+            var socio = mapper.Map<Socio>(socioViewModel);
+            return socioService.Add(socio);
         }
 
         public void Atualizar(SocioViewModel socio)
@@ -39,7 +40,12 @@ namespace CPF_CACL.GestaoSocio.Aplication.Services
             return mapper.Map<IEnumerable<SocioViewModel>>(socioService.BuscarTodos());
         }
 
-        public void Eliminar(int id)
+		public SocioViewModel BuscarPorId(int id)
+		{
+			return mapper.Map<SocioViewModel>(socioService.GetById(id));
+		}
+
+		public void Eliminar(int id)
         {
             socioService.Eliminar(id);
         }

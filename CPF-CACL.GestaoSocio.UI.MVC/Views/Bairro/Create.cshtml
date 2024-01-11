@@ -25,12 +25,8 @@
                             {
                                 <option value="@item.Id">@item.Nome</option>
                             }
-                            <option></option>
-
-                        </select>
-                        
+                        </select>                        
                         <br />
-
                         <div class="form-group">
                             <label asp-for="Nome">Nome do bairro</label>
                             <br />
@@ -47,7 +43,6 @@
                         </div>
                         <br />
                         <div class="modal-footer">
-                        @* <button type="button" onclick="AddWorkflowDefinition()" class="btn btn-success waves-effect">Salvar</button> *@
                         <button type="button" onclick="AdicionarBairro()" class="btn btn-success waves-effect">Adicionar</button>
                         <a role="button" class="btn btn-secondary btn-block" asp-controller="Bairro" asp-action="Index"> Voltar</a>
                         </div>

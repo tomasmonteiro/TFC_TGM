@@ -23,6 +23,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
         public Nullable<DateTime> DataAtualizacao { get; set; }
         public int MunicipioId { get; set; }
         public string NomeMunicipio { get; set; }
+        public List<Municipio> Municipios { get; set; }
         public List<ItemDropDown> Municipio { get; set; }
 
     }

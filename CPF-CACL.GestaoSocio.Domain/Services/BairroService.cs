@@ -62,7 +62,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
                 return;
             }
             bairro.Status = false;
-            _bairroRepository.Update(bairro);
+            Update(bairro);
         }
 
         public void Dispose()

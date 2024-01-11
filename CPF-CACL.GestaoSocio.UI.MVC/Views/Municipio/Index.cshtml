@@ -6,51 +6,63 @@
     ViewData["Title"] = "Listagem de Municipio";
 }
 
-@* 
-@{
-    var sucesso = TempData["Sucesso"] as string;
-    var erro = TempData["Erro"] as string;
-}
-@if (!string.IsNullOrEmpty(ViewBag.MensagemSucesso))
-{
-    <script>
-        exibirMensagemSucesso("@Html.Raw(ViewBag.MensagemSucesso)");
-    </script>
-}
-@if (!string.IsNullOrEmpty(ViewBag.MensagemErro))
-{
-    <script>
-        exibirMensagemErro("@Html.Raw(ViewBag.MensagemSucesso)");
-    </script>
-} *@
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-12 col-md-12 col-sm-12">
+            <div class="title">
+                <h4>Município</h4>
+            </div>
+            <nav class="col-12 col-md-12 col-sm-12" aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Listagem de municípios</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
 
 
 <div class="row espaco">
-    <div class="col-12 col-md-12 col-lg-12">
-        <div class="card" >
-            <div class="margem-container card-body" >
-                <div class="margens col-12 col-md-12 col-lg-12" >
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
                     <!--Para abrir o Modal-->
                     <div id="PlaceHolderHere"></div>
-                    <div class="text-center col-12 col-md-12 col-lg-12">
-
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                            <button type="button" class="btn btn-outline-primary" data-toggle="ajax-modal" data-target="#municipio" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
-                            @* <a role="button" data-toggle="ajax-modal" data-target="#municipio" data-url="@Url.Action("Create")" class="btn btn-primary">Adicionar novo Municipio</a> *@
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <div class="col-12 col-sm-4 col-md-4">
+                                <button type="button" class="btn btn-primary  form-control" data-toggle="ajax-modal" data-target="#municipio" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
+                            </div>
                         </div>
-                        <br />
-                      
-                        <h3 class="display-6">Listagem de Municipios</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                        <table class="table table-responsive teste col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 5;" id="myDataTable">
                             <thead class="navbar-blue">
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Nome</th>
-                                    <th scope="col">Criação</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Registo</th>
                                     <th scope="col">Actualização</th>
-                                    <th scope="col"> </th>
+                                    <th scope="col">Ação</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,7 +74,6 @@
                                             <th scope="row">@municipio.Id</th>
                                             <td>@municipio.Nome</td>
                                             <td>@municipio.DataCriacao</td>
-                                            <td>@municipio.Status</td>
                                             <td>@municipio.DataAtualizacao</td>
                                             <td>
                                                 <div class="dropdown">
@@ -70,8 +81,8 @@
                                                         <i class="dw dw-more"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                        <a class="dropdown-item" href="" onclick="SetUser('@municipio.Id', '@municipio.Nome')" data-toggle="modal" data-target="#defaultModalEditarUser"><i class="dw dw-edit2"></i> Editar</a>
-                                                        <a class="dropdown-item" href="#" onclick="SetUser('@municipio.Id', '@municipio.Nome')" data-toggle="modal" data-target="#defaultModalInactivateUser"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                        <a class="dropdown-item" href="" onclick="SetMunicipio('@municipio.Id', '@municipio.Nome', '@municipio.DataCriacao')" data-toggle="modal" data-target="#editarMunicipio"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetMunicipioEliminar('@municipio.Id', '@municipio.Nome')" data-toggle="modal" data-target="#eliminarMunicipio"><i class="dw dw-delete-3"></i> Eliminar</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -87,3 +98,57 @@
     </div>
 </div>
 
+<!---------MODAL---------->
+<!---------Modal para Edição--------------->
+
+<div class="modal fade" id="editarMunicipio" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="cabecalhoModalEditarMunicipio">Editar Município</h4>
+                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input type="hidden" id="municipioId" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeMunicipio" class="control-label">Nome do Município</label>
+                        <input id="nomeMunicipio" name="nomeMunicipio" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="dataCriacao" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="dataAtualizacao" value="@DateTime.Now" class="form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EditarMunicipio()" class="btn btn-success btn-block waves-effect">Salvar</button>
+                <button type="button" class="btn btn-secondary waves-effect btn-block" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para eliminar----------->
+
+<div class="modal fade" id="eliminarMunicipio" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarMunicipioLabel">Eliminar Município</h4>
+            </div>
+            <div class="modal-body">
+                <label id="id" name="id" />
+                Desejas eliminar o Município <b><label id="nome"></label></b>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EliminarMunicipio()" class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

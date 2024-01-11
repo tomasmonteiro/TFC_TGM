@@ -1,14 +1,15 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+using CPF_CACL.GestaoSocio.Domain.Notifications;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
-    public class OrganismoController : Controller
+    public class OrganismoController : BaseController
     {
         private readonly IOrganismoAppService _organismoAppService;
 
-        public OrganismoController(IOrganismoAppService organismoAppService)
+        public OrganismoController(IOrganismoAppService organismoAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _organismoAppService = organismoAppService;
         }

@@ -26,7 +26,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC
             services.AddEntityFrameworkSqlServer()
                 .AddDbContext<GSContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper(typeof(AutoMapperConfig).Assembly);
-
+            services.AddMvcCore().AddRazorViewEngine();
             //Resoluçaõ de injecção de dependências
             services.AddDependencyInjection();
 
@@ -47,7 +47,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Bairro}/{action=Index}/{id?}");
+                pattern: "{controller=Socio}/{action=Create}/{id?}");
 
             app.MapControllerRoute(
                 name: "buscarDados",

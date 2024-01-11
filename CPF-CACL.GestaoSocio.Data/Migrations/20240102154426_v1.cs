@@ -33,10 +33,10 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "varchar(150)", nullable: false),
-                    NIF = table.Column<string>(type: "varchar(15)", nullable: false),
-                    Endereco = table.Column<string>(type: "varchar(300)", nullable: false),
+                    NIF = table.Column<string>(type: "varchar(15)", nullable: true),
+                    Endereco = table.Column<string>(type: "varchar(300)", nullable: true),
                     Telefone = table.Column<string>(type: "varchar(12)", nullable: false),
-                    Email = table.Column<string>(type: "varchar(300)", nullable: false),
+                    Email = table.Column<string>(type: "varchar(300)", nullable: true),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
@@ -116,10 +116,10 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Nome = table.Column<string>(type: "varchar(50)", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -182,51 +182,6 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Socio",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EstadoCivil = table.Column<string>(type: "varchar(20)", nullable: false),
-                    Profissao = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Habilitacoes = table.Column<string>(type: "varchar(20)", nullable: false),
-                    Nacionalidade = table.Column<string>(type: "varchar(20)", nullable: false),
-                    NomeDoPai = table.Column<string>(type: "varchar(150)", nullable: false),
-                    NomeDaMae = table.Column<string>(type: "varchar(150)", nullable: false),
-                    LocalDeTrabalho = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Funcao = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Departamento = table.Column<string>(type: "varchar(100)", nullable: false),
-                    OrganismoId = table.Column<int>(type: "int", nullable: false),
-                    EstadoSocio = table.Column<string>(type: "varchar(10)", nullable: false),
-                    CategoriaSocioId = table.Column<int>(type: "int", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true),
-                    Nome = table.Column<string>(type: "varchar(150)", nullable: false),
-                    BI = table.Column<string>(type: "varchar(14)", nullable: false),
-                    Genero = table.Column<string>(type: "varchar(9)", nullable: false),
-                    DataNascimento = table.Column<DateTime>(type: "date", nullable: false),
-                    Telefone = table.Column<string>(type: "varchar(12)", nullable: false),
-                    Email = table.Column<string>(type: "varchar(300)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Socio", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Socio_CategoriaSocio_CategoriaSocioId",
-                        column: x => x.CategoriaSocioId,
-                        principalTable: "CategoriaSocio",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Socio_Organismo_OrganismoId",
-                        column: x => x.OrganismoId,
-                        principalTable: "Organismo",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
@@ -234,7 +189,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "varchar(150)", nullable: false),
                     Telefone = table.Column<string>(type: "varchar(12)", nullable: false),
-                    Email = table.Column<string>(type: "varchar(300)", nullable: false),
+                    Email = table.Column<string>(type: "varchar(300)", nullable: true),
                     UserName = table.Column<string>(type: "varchar(100)", nullable: false),
                     Senha = table.Column<string>(type: "text", nullable: false),
                     PerfilUsuarioId = table.Column<int>(type: "int", nullable: false),
@@ -302,6 +257,90 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Socio",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EstadoCivil = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Profissao = table.Column<string>(type: "varchar(100)", nullable: true),
+                    Habilitacoes = table.Column<string>(type: "varchar(20)", nullable: true),
+                    Nacionalidade = table.Column<string>(type: "varchar(20)", nullable: false),
+                    NomeDoPai = table.Column<string>(type: "varchar(150)", nullable: false),
+                    NomeDaMae = table.Column<string>(type: "varchar(150)", nullable: false),
+                    LocalDeTrabalho = table.Column<string>(type: "varchar(100)", nullable: true),
+                    Funcao = table.Column<string>(type: "varchar(100)", nullable: true),
+                    Departamento = table.Column<string>(type: "varchar(100)", nullable: true),
+                    OrganismoId = table.Column<int>(type: "int", nullable: false),
+                    EstadoSocio = table.Column<string>(type: "varchar(10)", nullable: false),
+                    CategoriaSocioId = table.Column<int>(type: "int", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Nome = table.Column<string>(type: "varchar(150)", nullable: false),
+                    BI = table.Column<string>(type: "varchar(14)", nullable: true),
+                    CaminhoFoto = table.Column<string>(type: "varchar(1000)", nullable: true),
+                    Genero = table.Column<string>(type: "varchar(9)", nullable: false),
+                    DataNascimento = table.Column<DateTime>(type: "date", nullable: false),
+                    Telefone = table.Column<string>(type: "varchar(12)", nullable: false),
+                    Email = table.Column<string>(type: "varchar(300)", nullable: true),
+                    BairroId = table.Column<int>(type: "int", nullable: false),
+                    Endereco = table.Column<string>(type: "varchar(300)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Socio", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Socio_Bairro_BairroId",
+                        column: x => x.BairroId,
+                        principalTable: "Bairro",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Socio_CategoriaSocio_CategoriaSocioId",
+                        column: x => x.CategoriaSocioId,
+                        principalTable: "CategoriaSocio",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Socio_Organismo_OrganismoId",
+                        column: x => x.OrganismoId,
+                        principalTable: "Organismo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Capital",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BeneficioId = table.Column<int>(type: "int", nullable: false),
+                    CategoriaSocioId = table.Column<int>(type: "int", nullable: false),
+                    Valor = table.Column<decimal>(type: "smallmoney", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Capital", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Capital_Beneficio_BeneficioId",
+                        column: x => x.BeneficioId,
+                        principalTable: "Beneficio",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Capital_CategoriaSocio_CategoriaSocioId",
+                        column: x => x.CategoriaSocioId,
+                        principalTable: "CategoriaSocio",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Agregado",
                 columns: table => new
                 {
@@ -314,15 +353,24 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Nome = table.Column<string>(type: "varchar(150)", nullable: false),
-                    BI = table.Column<string>(type: "varchar(14)", nullable: false),
+                    BI = table.Column<string>(type: "varchar(14)", nullable: true),
+                    CaminhoFoto = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Genero = table.Column<string>(type: "varchar(9)", nullable: false),
                     DataNascimento = table.Column<DateTime>(type: "date", nullable: false),
                     Telefone = table.Column<string>(type: "varchar(12)", nullable: false),
-                    Email = table.Column<string>(type: "varchar(300)", nullable: false)
+                    Email = table.Column<string>(type: "varchar(300)", nullable: true),
+                    BairroId = table.Column<int>(type: "int", nullable: false),
+                    Endereco = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Agregado", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Agregado_Bairro_BairroId",
+                        column: x => x.BairroId,
+                        principalTable: "Bairro",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Agregado_Relacao_RelacaoId",
                         column: x => x.RelacaoId,
@@ -331,30 +379,6 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Agregado_Socio_SocioId",
-                        column: x => x.SocioId,
-                        principalTable: "Socio",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PedidoApoio",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Descricao = table.Column<string>(type: "varchar(300)", nullable: false),
-                    EstadoPedido = table.Column<string>(type: "varchar(50)", nullable: false),
-                    SocioId = table.Column<int>(type: "int", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PedidoApoio", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PedidoApoio_Socio_SocioId",
                         column: x => x.SocioId,
                         principalTable: "Socio",
                         principalColumn: "Id",
@@ -434,31 +458,25 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Capital",
+                name: "PedidoApoio",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BeneficioId = table.Column<int>(type: "int", nullable: false),
-                    CategoriaSocioId = table.Column<int>(type: "int", nullable: false),
-                    Valor = table.Column<decimal>(type: "smallmoney", nullable: false),
+                    Descricao = table.Column<string>(type: "varchar(300)", nullable: true),
+                    EstadoPedido = table.Column<string>(type: "varchar(50)", nullable: false),
+                    SocioId = table.Column<int>(type: "int", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Capital", x => x.Id);
+                    table.PrimaryKey("PK_PedidoApoio", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Capital_Beneficio_BeneficioId",
-                        column: x => x.BeneficioId,
-                        principalTable: "Beneficio",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Capital_CategoriaSocio_CategoriaSocioId",
-                        column: x => x.CategoriaSocioId,
-                        principalTable: "CategoriaSocio",
+                        name: "FK_PedidoApoio_Socio_SocioId",
+                        column: x => x.SocioId,
+                        principalTable: "Socio",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -557,6 +575,11 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Agregado_BairroId",
+                table: "Agregado",
+                column: "BairroId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Agregado_RelacaoId",
                 table: "Agregado",
                 column: "RelacaoId");
@@ -652,6 +675,11 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 column: "SocioId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Socio_BairroId",
+                table: "Socio",
+                column: "BairroId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Socio_CategoriaSocioId",
                 table: "Socio",
                 column: "CategoriaSocioId");
@@ -673,9 +701,6 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Agregado");
 
             migrationBuilder.DropTable(
-                name: "Bairro");
-
-            migrationBuilder.DropTable(
                 name: "Capital");
 
             migrationBuilder.DropTable(
@@ -695,9 +720,6 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Relacao");
-
-            migrationBuilder.DropTable(
-                name: "Municipio");
 
             migrationBuilder.DropTable(
                 name: "Apoio");
@@ -727,6 +749,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "TipoProjecto");
 
             migrationBuilder.DropTable(
+                name: "Bairro");
+
+            migrationBuilder.DropTable(
                 name: "CategoriaSocio");
 
             migrationBuilder.DropTable(
@@ -734,6 +759,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "PerfilUsuario");
+
+            migrationBuilder.DropTable(
+                name: "Municipio");
         }
     }
 }

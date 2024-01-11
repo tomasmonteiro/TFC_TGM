@@ -1,20 +1,24 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
+using CPF_CACL.GestaoSocio.Domain.Notifications;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
-    public class SocioController : Controller
+    public class SocioController : BaseController
     {
         private readonly ISocioAppService _socioAppService;
+        private readonly IOrganismoRepository _organismoRepository;
         private readonly IBairroRepository _bairroRepository;
         private readonly IMunicipioRepository _municipioRepository;
         private readonly ICategoriaSocioRepository _categoriaRepository;
-
-        public SocioController(ISocioAppService socioAppService,  IBairroRepository bairroRepository, ICategoriaSocioRepository categoriaRepository, IMunicipioRepository municipioRepository)
+        
+        public SocioController(ISocioAppService socioAppService, IOrganismoRepository organismoRepository,  IBairroRepository bairroRepository, ICategoriaSocioRepository categoriaRepository, IMunicipioRepository municipioRepository, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _socioAppService = socioAppService;
+            _organismoRepository = organismoRepository;
             _bairroRepository = bairroRepository;
             _categoriaRepository = categoriaRepository;
             _municipioRepository = municipioRepository;
@@ -32,7 +36,8 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // GET: SocioController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var socio = _socioAppService.BuscarPorId(id);
+            return View(socio);
         }
 
         // GET: SocioController/Create
@@ -52,6 +57,18 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
                 .ToList();
 
             //Buscar Categorias para preencher o Select
+            var organismos = _organismoRepository.BuscarTodos();
+            organismos = organismos.OrderBy(m => m.Nome).ToList();
+            ViewBag.Organismo = viewModel.Organismo
+                = organismos
+                .Select(item => new ItemDropDown
+                {
+                    Id = item.Id,
+                    Nome = item.Nome
+                })
+                .ToList();
+
+            //Buscar Categorias para preencher o Select
             var categorias = _categoriaRepository.BuscarTodos();
             categorias = categorias.OrderBy(m => m.Nome).ToList();
             ViewBag.Categoria = viewModel.CategoriaSocio 
@@ -62,11 +79,12 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
                     Nome = item.Nome
                 })
                 .ToList();
-
+            
             //Buscar Municipios
             var municipios = _municipioRepository.BuscarTodos();
             municipios = municipios.OrderBy(m => m.Nome).ToList();
-            ViewBag.Municipios = municipios
+            ViewBag.Municipios = viewModel.Municipio
+                = municipios
                 .Select(item => new ItemDropDown
                 {
                     Id = item.Id,
@@ -79,17 +97,38 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             return View("Create", viewModel);
         }
 
+
         // POST: SocioController/Create
         [HttpPost]
         public ActionResult Create(SocioViewModel socio )
         {
-            if (ModelState.IsValid)
+            try
             {
+                //if (ModelState.IsValid)
+                //{
+                    if (socio.Foto != null)
+                    {
+                        socio.CaminhoFoto = SalvarFoto(socio.Foto);
+                    }
+                    
+                    var novoSocioId = _socioAppService.Adicionar(socio);
+                    var detalhesUrl = Url.Action("Details", new { id = novoSocioId });
+                    //var resultado = Json( new { id = novoSocioId, url = detalhesUrl});
+                    var mensagem = "Registo adicionado com sucesso.";
+                    var jsonData = new
+                    {
+                        novoSocioId,
+                        mensagem
+                    };
+                    return Json(jsonData);
 
-                _socioAppService.Adicionar(socio);
-                return RedirectToAction("Index");
+                //}
+                //return View(socio);
             }
-            return View(socio);
+            catch (Exception erro)
+            {
+                return Json($"x Ocorreu um erro: {erro.Message}");
+            }
         }
 
         // GET: SocioController/Edit/5
@@ -133,12 +172,6 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
                 return View();
             }
         }
-        
-        
-        
-        
-        
-        
         
         
         //Buscar Bairtros por Municipio
