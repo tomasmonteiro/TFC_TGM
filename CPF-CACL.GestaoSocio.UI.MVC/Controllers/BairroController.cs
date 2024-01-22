@@ -19,7 +19,6 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             _municipioAppService = municipioAppService;
             _municipioRepository = municipioRepository;
             _bairroAppService = bairroAppService;
-
         }
 
 
@@ -31,7 +30,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         }
 
         // GET: BairroController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
             return View();
         }
@@ -85,14 +84,14 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         }
 
         // GET: BairroController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
             return View();
         }
 
         // POST: BairroController/Edit/5
         [HttpPost]
-        public ActionResult Edit(int bairroId, int municipioId, string Nome, DateTime dataCriacao, DateTime dataAtualizacao)
+        public ActionResult Edit(Guid bairroId, Guid municipioId, string Nome, DateTime dataCriacao, DateTime dataAtualizacao)
         {
             try
             {
@@ -132,7 +131,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 
         // POST: BairroController/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             try
             {

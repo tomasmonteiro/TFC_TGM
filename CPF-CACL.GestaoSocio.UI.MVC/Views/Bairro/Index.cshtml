@@ -39,7 +39,7 @@
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
                             <div class="col-12 col-sm-4 col-md-4">
-                                <button type="button" class="btn btn-primary  form-control" data-toggle="ajax-modal" data-target="#bairro" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
+                                <button type="button" class="btn btn-success  form-control" data-toggle="ajax-modal" data-target="#bairro" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
                             </div>
                         </div>
                     </div>
@@ -109,10 +109,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="cabecalhoModalEditarBairro">Editar Bairro</h4>
-                <input type="hidden" id="BairroId" name="BairroId" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                
             </div>
             <div class="modal-body">
                 <form>
+                    
+                    <input type="hidden" id="BairroId" name="BairroId" />
+
                     <div class="form-group">
                         <input type="hidden" id="bairroId"  class="form-control" />
                     </div>
@@ -146,10 +152,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="eliminarBairroLabel">Eliminar Bairro</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <label  id="id" name="id" />
-                Desejas eliminar o Bairro <b><label id="nome"></label></b>?
+                <label  id="id" name="id"/>
+                <p>Desejas eliminar o bairro <label id="nome"></label>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="EliminarBairro()" class="btn btn-danger waves-effect">Eliminar</button>

@@ -27,7 +27,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         }
 
         // GET: MunicipioController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
             return View();
         }
@@ -71,14 +71,14 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         }
 
         // GET: MunicipioController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
             return View();
         }
 
         // POST: MunicipioController/Edit/5
         [HttpPost]
-        public ActionResult Edit(int municipioId, string Nome, DateTime dataCriacao, DateTime dataAtualizacao)
+        public ActionResult Edit(Guid municipioId, string Nome, DateTime dataCriacao, DateTime dataAtualizacao)
         {
             try
             {
@@ -108,21 +108,6 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             }
         }
 
-        //Ação de exibir noticação
-        public ActionResult Exibir()
-        {
-            var a = "a";
-            if (a == "a")
-            {
-                ViewBag.MensagemSucesso = "Operação sucesso";
-                return View();
-            }
-            else
-            {
-                ViewBag.MensagemSucesso = "Operação erro";
-                return View();
-            }
-        }
 
         // GET: MunicipioController/Delete/5
         public ActionResult Delete()
@@ -132,7 +117,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 
         // POST: MunicipioController/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             try
             {

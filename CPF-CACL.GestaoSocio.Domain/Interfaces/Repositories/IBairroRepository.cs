@@ -11,6 +11,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
     public interface IBairroRepository : IRepositoryBase<Bairro>
     {
         IEnumerable<Bairro> BuscarTodos();
-        IEnumerable<Bairro> BuscarPorMunicipio(int idMunicipio);
+        IEnumerable<Bairro> BuscarPorMunicipio(Guid idMunicipio);
     }
 }

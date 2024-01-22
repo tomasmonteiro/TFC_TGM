@@ -20,6 +20,10 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");
             builder.Property(x => x.Status).HasColumnType("bit").IsRequired();
 
+            builder.Property(x => x.ForneceorId).HasColumnType("uniqueidentifier").IsRequired(true);
+            builder.Property(x => x.ApoioId).HasColumnType("uniqueidentifier").IsRequired(true);
+            builder.Property(x => x.BeneficioId).HasColumnType("uniqueidentifier").IsRequired(true);
+
             //Relacionamento: um Fornecedor fornece varios Itens
             builder.HasOne(x => x.Fornecedor)
                 .WithMany(a => a.ItemApoios)

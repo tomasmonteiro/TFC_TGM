@@ -2,11 +2,6 @@
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
 using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CPF_CACL.GestaoSocio.Domain.Services
 {
@@ -28,22 +23,21 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             return _socioRepository.BuscarTodos();
         }
-        public int Add(Socio socio)
+        public void Add(Socio socio)
         {
             //if (!ExecutarValidacao(new SocioValidation(), socio)) return;
             if (_socioRepository.Find(a => a.Nome == socio.Nome && a.Status == true).Count() > 0)
             {
                 Notificar("Já existe um Sócio definido com este nome.");
-                return 0;
+                return;
             }
             _socioRepository.Add(socio);
-            return socio.Id;
         }
         public IEnumerable<Socio> GetAll()
         {
             return _socioRepository.GetAll();
         }
-        public Socio GetById(int id)
+        public Socio GetById(Guid id)
         {
             return _socioRepository.GetById(id);
         }
@@ -57,7 +51,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             _socioRepository.Remove(socio);
         }
-        public void Eliminar(int id)
+        public void Eliminar(Guid id)
         {
             Socio socio = GetById(id);
             if (socio == null)
@@ -71,6 +65,35 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         public void Dispose()
         {
             _socioRepository.Dispose();
+        }
+
+        public Socio BuscarPorCod(string codigo)
+        {
+            return _socioRepository.BuscarPorCodigo(codigo);
+        }
+
+
+        public Guid Adicionar(Socio socio)
+        {
+            socio.Cod = GerarDodigoSocio();
+            _socioRepository.Add(socio);
+            return socio.Id;
+        }
+
+        public string GerarDodigoSocio()
+        {
+            string tipoEntidade = "S";
+            int anoAtual = DateTime.Now.Year % 100;
+
+            var ultimoCodigo = _socioRepository.ConsultarUltimoCodigo(tipoEntidade, anoAtual);
+
+            int proximoNumero = 1;
+
+            if (ultimoCodigo != null)
+            {
+                proximoNumero = int.Parse(ultimoCodigo.Substring(2 + tipoEntidade.Length)) + 1;
+            }
+            return $"{tipoEntidade}{anoAtual:D2}{proximoNumero:D3}";
         }
     }
 }

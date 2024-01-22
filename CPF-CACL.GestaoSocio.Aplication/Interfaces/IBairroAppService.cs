@@ -13,7 +13,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
 
         public IEnumerable<BairroViewModel> Buscar();
         public void Atualizar(BairroViewModel bairro);
-        public void Eliminar(int id);
+        public void Eliminar(Guid id);
 
     }
 }

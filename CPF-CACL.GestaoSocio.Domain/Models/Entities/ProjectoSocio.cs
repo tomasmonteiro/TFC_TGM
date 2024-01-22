@@ -10,9 +10,9 @@ namespace CPF_CACL.GestaoSocio.Domain.Models.Entities
     {
         public string? Descricao { get; set; }
         public DateTime DataAtribuicao { get; set; }
-        public int SocioId { get; set; }
+        public Guid SocioId { get; set; }
         public virtual Socio Socio { get; set; }
-        public int ProjectoId { get; set; }
+        public Guid ProjectoId { get; set; }
         public virtual Projecto Projecto { get; set; }
 
     }

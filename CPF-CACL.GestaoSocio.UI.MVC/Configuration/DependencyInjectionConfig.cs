@@ -39,6 +39,14 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Configuration
 
             services.AddScoped<INotificador, Notificador>();
 
+            services.AddScoped<IAgregadoRepository, AgregadoRepository>();
+            services.AddScoped<IAgregadoAppService, AgregadoAppService>();
+            services.AddScoped<IAgregadoService, AgregadoService>();
+
+            services.AddScoped<IRelacaoRepository, RelacaoRepository>();
+            services.AddScoped<IRelacaoAppService, RelacaoAppService>();
+            services.AddScoped<IRelacaoService, RelacaoService>();
+
             return services;
         }
     }

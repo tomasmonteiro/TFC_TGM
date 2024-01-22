@@ -1,5 +1,12 @@
+
 html {
+  position: relative;
+  min-height: 100%;
   font-size: 14px;
+}
+body {
+    margin-bottom: 60px;
+    scroll-behavior: smooth;
 }
 
 @media (min-width: 768px) {
@@ -8,10 +15,7 @@ html {
   }
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
+
 .testev {
     box-sizing: border-box !important;
     
@@ -24,6 +28,10 @@ html {
 }
 .caixa-sombreada {
     box-shadow: 0 0 28px rgba(0,0,0,.08);
+}
+
+.sweetAlertButtonMargin {
+    margin-right: 1em;
 }
 
 #irAoTopoBtn {
@@ -67,10 +75,20 @@ html {
     height: 100vh;
 }*/
 
-body {
-    margin-bottom: 60px;
-    scroll-behavior: smooth;
+
+.modal-header {
+    color: #ffF !important;
+    background-color: #007bff !important;
 }
+/*----View - Cadastro de Sócio-----*/
+.cabecalho-sessao {
+    color: #007bff !important;
+    border: 0 !important;
+    border-bottom: 2px solid #007bff !important;
+}
+/*.custom-file-label::after {
+    content: "Procurar" !important;
+}*/
 
 /*----Para o Círculo---*/
 #loading-overlay {
@@ -191,7 +209,9 @@ th {
     position: absolute;
     right: 0;
 }
-
+button.close {
+    color: #ff0000 !important;
+}
 
 /*Estilo para a caixa de mensagem de erro e sucesso*/
 
@@ -272,8 +292,6 @@ th {
     -webkit-transform: translate(0,-50%);
     transform: translate(0,-50%)
 }    
-
-
 
 .dropdown-item {
     font-size: 15px;

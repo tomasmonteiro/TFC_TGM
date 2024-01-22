@@ -33,11 +33,11 @@ namespace CPF_CACL.GestaoSocio.Aplication.Services
 
         public IEnumerable<TipoPagamentoViewModel> Buscar()
         {
-            return mapper.Map<IEnumerable<TipoPagamentoViewModel>>(tipoPagamentoService.BuscarTipos());
+            return mapper.Map<IEnumerable<TipoPagamentoViewModel>>(tipoPagamentoService.BuscarTodos());
         }
-        public void Eliminar(int id)
+        public void Eliminar(Guid id)
         {
-            throw new NotImplementedException();
+            tipoPagamentoService.Eliminar(id);
         }
     }
 }

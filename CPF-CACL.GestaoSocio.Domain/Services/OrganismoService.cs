@@ -39,7 +39,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             return _organismoRepository.GetAll();
         }
-        public Organismo GetById(int id)
+        public Organismo GetById(Guid id)
         {
             return _organismoRepository.GetById(id);
         }
@@ -53,7 +53,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             _organismoRepository.Remove(organismo);
         }
-        public void Eliminar(int id)
+        public void Eliminar(Guid id)
         {
             Organismo organismo = GetById(id);
             if (organismo == null)

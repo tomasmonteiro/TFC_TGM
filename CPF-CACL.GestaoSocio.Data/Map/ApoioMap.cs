@@ -22,7 +22,13 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.DataApoio).HasColumnType("date").IsRequired();
             builder.Property(x => x.Valor).HasColumnType("smallmoney").HasDefaultValue("0.00");
             builder.Property(x => x.EstadoApoio).HasColumnType("varchar(300)");
-            builder.Property(x => x.Status).HasColumnType("bit");
+
+            builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
+            builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");
+            builder.Property(x => x.Status).HasColumnType("bit").IsRequired();
+
+            builder.Property(x => x.UsuarioId).HasColumnType("uniqueidentifier").IsRequired(true);
+            builder.Property(x => x.SocioId).HasColumnType("uniqueidentifier").IsRequired(true);
 
             //Relacionamento: um Usuário realiza vários Apoios
             builder.HasOne(x => x.Usuario)

@@ -1,18 +1,14 @@
 ﻿using CPF_CACL.GestaoSocio.Domain.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 {
     public interface ISocioRepository : IRepositoryBase<Socio>
     {
         ICollection<Socio> BuscarPorNome(string nome);
-
+        Socio BuscarPorCodigo(string cod);
         ICollection<Socio> BuscarPorGenero(string genero);
         IEnumerable<Socio> BuscarTodos();
+        public string ConsultarUltimoCodigo(string tipoEntidade, int anoAtual);
 
 
 

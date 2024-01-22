@@ -7,8 +7,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="categoriaLabel">Criar Categoria de Sócio</h5>
-                    <br />
-                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" data-bs-keyboard="false" aria-label="Close"></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    
                 </div><div class="modal-body">
                     <form asp-controller="CategoriaSocio" asp-action="Create" method="post">
                         <div class="form-group">
@@ -17,7 +19,6 @@
                             <input type="text" asp-for="Nome" class="form-control" placeholder="Digite o Nome da Categoria">
                             <span asp-validation-for="Nome" class="text-danger"></span>
                         </div>
-                        <br />
 
                         <div class="form-group">
                             <label asp-for="Quota">Quota </label>
@@ -25,7 +26,6 @@
                             <input type="text" asp-for="Quota" class="form-control" placeholder="Digite a Quota da Categoria">
                             <span asp-validation-for="Quota" class="text-danger"></span>
                         </div>
-                        <br />
 
 
                         <div class="">
@@ -37,8 +37,8 @@
                         </div>
                         <br />
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary btn-block">Adicionar</button>
-                            <a role="button" class="btn btn-secondary btn-block" asp-controller="CategoriaSocio" asp-action="Index"> Voltar</a>
+                            <button type="submit" class="btn btn-success waves-effect">Adicionar</button>
+                            <a role="button" class="btn btn-link waves-effect" asp-controller="CategoriaSocio" asp-action="Index"> Cancelar</a>
                         </div>
                     </form>
                 </div>

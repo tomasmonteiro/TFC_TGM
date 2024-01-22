@@ -11,11 +11,11 @@ namespace CPF_CACL.GestaoSocio.Domain.Models.Entities
         public DateTime DataNascimento { get; set; }
         public string Telefone { get; set; }
         public string? Email { get; set; }
-        public int BairroId { get; set; }
+        public Guid BairroId { get; set; }
         public virtual Bairro Bairros { get; set; }
         public string? Endereco { get; set; }
 
-        public int ObterIdade(DateTime dataNascimento)
+        public int CalcularIdade(DateTime dataNascimento)
         {
             return DateTime.Now.Year - dataNascimento.Year;
         }

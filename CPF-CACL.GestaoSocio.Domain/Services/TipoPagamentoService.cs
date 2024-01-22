@@ -3,12 +3,6 @@ using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
 using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Models.Validation;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CPF_CACL.GestaoSocio.Domain.Services
 {
@@ -19,11 +13,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             : base(notificador)
         {
             _tipoPagamentoRepository = tipoPagamentoRepository;
-        }
-
-        public IEnumerable<TipoPagamento> BuscarTipos()
-        {
-            return _tipoPagamentoRepository.BuscarTodos();
         }
 
 
@@ -41,7 +30,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             return _tipoPagamentoRepository.GetAll();
         }
-        public TipoPagamento GetById(int id)
+        public TipoPagamento GetById(Guid id)
         {
             return _tipoPagamentoRepository.GetById(id);
         }
@@ -55,7 +44,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             _tipoPagamentoRepository.Remove(tipoPagamento);
         }
-        public void Eliminar(int id)
+        public void Eliminar(Guid id)
         {
             TipoPagamento tipoPagamento = GetById(id);
             if (tipoPagamento == null)
@@ -70,6 +59,11 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             _tipoPagamentoRepository.Dispose();
 
+        }
+
+        public IEnumerable<TipoPagamento> BuscarTodos()
+        {
+            return _tipoPagamentoRepository.BuscarTodos();
         }
     }
 }

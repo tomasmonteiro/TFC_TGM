@@ -13,6 +13,11 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
             _gsContext = gsContext;
         }
 
+        public Socio BuscarPorCodigo(string cod)
+        {
+            return _gsContext.Socio.Where(p => p.Cod == cod).FirstOrDefault();
+        }
+
         public ICollection<Socio> BuscarPorGenero(string genero)
         {
             return (ICollection<Socio>)_gsContext.Socio.Where(p => p.Genero == genero);
@@ -26,6 +31,17 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
         public IEnumerable<Socio> BuscarTodos()
         {
             return _gsContext.Socio.Where(p => p.Status == true);
+        }
+
+        public string ConsultarUltimoCodigo(string tipoEntidade, int anoAtual)
+        {
+            var ultimoCodigo = _gsContext.Socio
+                .Where(p => p.Cod.StartsWith($"{tipoEntidade}{anoAtual}"))
+                .OrderByDescending(p => p.Cod)
+                .Select(p => p.Cod)
+                .FirstOrDefault();
+
+            return ultimoCodigo;
         }
     }
 }

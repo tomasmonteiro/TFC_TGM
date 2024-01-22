@@ -34,7 +34,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         }
 
         // GET: SocioController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
             var socio = _socioAppService.BuscarPorId(id);
             return View(socio);
@@ -132,7 +132,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         }
 
         // GET: SocioController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
             return View();
         }
@@ -140,7 +140,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // POST: SocioController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
             {
@@ -153,7 +153,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         }
 
         // GET: SocioController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             return View();
         }
@@ -176,33 +176,12 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         
         //Buscar Bairtros por Municipio
         [HttpGet]
-        public IActionResult GetBairrosByMunicipio(int municipioId)
+        public IActionResult GetBairrosByMunicipio(Guid municipioId)
         {
             var bairros = _bairroRepository.BuscarPorMunicipio(municipioId);
             bairros = bairros.OrderBy(m => m.Nome).ToList();
             return Json(bairros);
 
         }
-
-
-
-
-        //public IActionResult BuscarDados(int opcaoSelecionada)
-        //{
-        //  //var dados = _bairroRepository.BuscarPorMunicipio(opcaoSelecionada);
-
-        //    var viewModel3 = new BairroViewModel();
-        //    var dadosDaTabela = _bairroRepository.BuscarPorMunicipio(opcaoSelecionada);
-        //    viewModel3.Municipio = dadosDaTabela
-        //        .Select(item => new ItemDropDown
-        //        {
-        //            Id = item.Id,
-        //            Nome = item.Nome
-        //        })
-        //        .ToList();
-
-
-        //    return Json(viewModel3);
-        //}
     }
 }

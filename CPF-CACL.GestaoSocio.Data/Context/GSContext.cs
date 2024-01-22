@@ -8,10 +8,7 @@ namespace CPF_CACL.GestaoSocio.Data.Context
 {
     public class GSContext : DbContext
     {
-        public GSContext(DbContextOptions<GSContext> options)
-            : base(options)
-        {
-        }
+        public GSContext(DbContextOptions<GSContext> options) : base(options){}
 
         //Tabelas
         public DbSet<Agregado> Agregado { get; set; }

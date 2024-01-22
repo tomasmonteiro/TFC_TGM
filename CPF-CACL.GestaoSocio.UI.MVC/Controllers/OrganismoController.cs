@@ -23,7 +23,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         }
 
         // GET: OrganismoController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
             return View();
         }
@@ -52,7 +52,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         }
 
         // GET: OrganismoController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
             return View();
         }
@@ -60,7 +60,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // POST: OrganismoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         }
 
         // GET: OrganismoController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             return View();
         }
@@ -81,7 +81,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // POST: OrganismoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try
             {

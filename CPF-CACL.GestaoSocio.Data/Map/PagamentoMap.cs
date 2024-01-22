@@ -22,6 +22,10 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");
             builder.Property(x => x.Status).HasColumnType("bit").IsRequired();
 
+            builder.Property(x => x.TipoPagamentoId).HasColumnType("uniqueidentifier").IsRequired(true);
+            builder.Property(x => x.UsuarioId).HasColumnType("uniqueidentifier").IsRequired(true);
+            builder.Property(x => x.SocioId).HasColumnType("uniqueidentifier").IsRequired(true);
+
             //Relacionamento: um Tipo de Pagamento pertence a varios Pagamentos
             builder.HasOne(x => x.TipoPagamento)
                 .WithMany(a => a.Pagamentos)

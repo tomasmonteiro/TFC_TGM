@@ -23,6 +23,9 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.Telefone).HasColumnType("varchar(12)").IsRequired();
             builder.Property(x => x.UserName).HasColumnType("varchar(100)").IsRequired();
             builder.Property(x => x.Senha).HasColumnType("text");
+            builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
+            builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");
+            builder.Property(x => x.Status).HasColumnType("bit").IsRequired();
 
 
         }

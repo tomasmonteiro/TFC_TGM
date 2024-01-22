@@ -4,6 +4,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Models.Entities
 {
     public class Socio : Pessoa
     {
+        public string Cod { get; set; } 
         public EEstadoCivil EstadoCivil { get; set; }
         public string? Profissao { get; set; }
         public string? Habilitacoes { get; set; }
@@ -13,11 +14,11 @@ namespace CPF_CACL.GestaoSocio.Domain.Models.Entities
         public string? LocalDeTrabalho { get; set; }
         public string? Funcao { get; set; }
         public string? Departamento { get; set; }
-        public int OrganismoId { get; set; }
+        public Guid OrganismoId { get; set; }
         public virtual Organismo Organismo { get; set; }
         public EEstadoSocio EstadoSocio { get; set; }
 
-        public int CategoriaSocioId { get; set; }
+        public Guid CategoriaSocioId { get; set; }
         public virtual CategoriaSocio CategoriaSocio { get; set; }
 
 

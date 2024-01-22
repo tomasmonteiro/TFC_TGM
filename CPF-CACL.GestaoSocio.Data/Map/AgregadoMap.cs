@@ -15,9 +15,19 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.BI).HasColumnType("varchar(14)");
             builder.Property(x => x.Genero).HasColumnType("varchar(9)").IsRequired();
             builder.Property(x => x.DataNascimento).HasColumnType("date").IsRequired();
-            builder.Property(x => x.Telefone).HasColumnType("varchar(12)").IsRequired();
-            builder.Property(x => x.Email).HasColumnType("varchar(300)");
             builder.Property(x => x.Nacionalidade).HasColumnType("varchar(20)").IsRequired();
+            builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
+            builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");
+            builder.Property(x => x.Status).HasColumnType("bit").IsRequired();
+
+            builder.Property(x => x.RelacaoId).HasColumnType("uniqueidentifier").IsRequired(true);
+            builder.Property(x => x.SocioId).HasColumnType("uniqueidentifier").IsRequired(true);
+
+            //Relacionamento: uma Relação pertence a vários Agregados
+            builder.HasOne(x => x.Relacao)
+                .WithMany(b => b.Agregados)
+                .HasForeignKey(x => x.RelacaoId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //Relacionamento: um Socio possui vários Agregados
             builder.HasOne(x => x.Socio)

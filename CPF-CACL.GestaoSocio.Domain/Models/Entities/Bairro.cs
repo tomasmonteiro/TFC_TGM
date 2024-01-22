@@ -9,7 +9,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Models.Entities
     public class Bairro : BaseEntity
     {
         public string Nome { get; set; }
-        public int MunicipioId { get; set; }        
+        public Guid MunicipioId { get; set; }        
         public virtual Municipio Municipio { get; set; }
 
         public ICollection<Socio> Socios { get; set; }

@@ -6,7 +6,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
     public class BairroViewModel
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Preencha o campo Nome")]
         [MaxLength(50, ErrorMessage = "O Nome precisa ter o márixo de {0} caracteres")]
@@ -21,7 +21,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
 
         //[ScaffoldColumn(false)]
         public Nullable<DateTime> DataAtualizacao { get; set; }
-        public int MunicipioId { get; set; }
+        public Guid MunicipioId { get; set; }
         public string NomeMunicipio { get; set; }
         public List<Municipio> Municipios { get; set; }
         public List<ItemDropDown> Municipio { get; set; }

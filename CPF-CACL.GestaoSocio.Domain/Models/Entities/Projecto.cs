@@ -11,7 +11,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Models.Entities
         public string Nome { get; set; }
         public int Quantidade { get; set; }
         public DateTime DataLancamento { get; set; }
-        public int TipoProjectoId { get; set; }
+        public Guid TipoProjectoId { get; set; }
         public virtual TipoProjecto TipoProjecto { get; set; }
 
         public ICollection<ProjectoSocio> ProjectoSocios { get; set; }

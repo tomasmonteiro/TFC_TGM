@@ -39,7 +39,7 @@
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
                             <div class="col-12 col-sm-4 col-md-4">
-                                <button type="button" class="btn btn-primary  form-control" data-toggle="ajax-modal" data-target="#municipio" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
+                                <button type="button" class="btn btn-success  form-control" data-toggle="ajax-modal" data-target="#municipio" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="cabecalhoModalEditarMunicipio">Editar Município</h4>
-                <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <form>
@@ -126,8 +128,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="EditarMunicipio()" class="btn btn-success btn-block waves-effect">Salvar</button>
-                <button type="button" class="btn btn-secondary waves-effect btn-block" data-dismiss="modal">Cancelar</button>
+                <button type="button" onclick="EditarMunicipio()" class="btn btn-success waves-effect">Salvar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
@@ -140,10 +142,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="eliminarMunicipioLabel">Eliminar Município</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <label id="id" name="id" />
                 Desejas eliminar o Município <b><label id="nome"></label></b>?
+
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="EliminarMunicipio()" class="btn btn-danger waves-effect">Eliminar</button>

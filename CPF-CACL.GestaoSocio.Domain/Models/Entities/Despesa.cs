@@ -10,7 +10,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Models.Entities
     public class Despesa : BaseEntity
     {
         public double Total { get; set; }
-        public int ApoioId { get; set; }
+        public Guid ApoioId { get; set; }
         public virtual Apoio Apoio { get; set; }
         public EEstadoDespesa EstadoDespesa { get; set; }
 

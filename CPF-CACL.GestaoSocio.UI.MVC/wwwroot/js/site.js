@@ -11,7 +11,7 @@ $(document).ready(function () {
 });
 
 
-//------Script do btnTopo
+//------Script do btnTopo para regressar no topo da página
 document.addEventListener("DOMContentLoaded", function () {
     var irAoTopoBtn = document.getElementById("irAoTopoBtn");
 
@@ -74,8 +74,19 @@ function NotificarErro(icone, titulo, mensagem) {
 
 
 
-/*--------------*/
-/*-----SOCIO---*/
+/*---------------------------------------------*/
+/*-----------------SOCIO----------------------*/
+
+/*---Notificação com botão---*/
+const swalSocio1 = Swal.mixin({
+    customClass: {
+        confirmButton: "btn btn-success sweetAlertButtonMargin",
+        denyButton: "btn btn-primary"
+    },
+    buttonsStyling: false
+});
+
+
 
 function AdicionarSocio() {
 
@@ -151,10 +162,31 @@ function AdicionarSocio() {
                         title: "Sucesso!",
                         text: data.mensagem,
                         showConfirmButton: false,
+                        allowOutsideClick: false,
                         iconSize: "10px",
                         timer: 2500
                     }).then((result) => {
-                        window.location = "/Socio/Details/" + data.novoSocioId;
+                        swalSocio1.fire({
+                            title: "",
+                            text: "Pretende cadastrar o agregado do Sócio que acabou de ragistar?",
+                            icon: "question",
+                            allowOutsideClick: false,
+                            showDenyButton: true,
+                            confirmButtonText: "Sim, cadatrar",
+                            denyButtonText: "Concluir",
+
+                            //reverseButtons: true
+                        }).then((result => {
+                            if (result.isConfirmed) {
+
+                                $('#adicionarAgregado').modal('show');
+                            }
+                            else if (result.isDenied) {
+                                window.location = "/Socio/Index";
+                                //window.location = "/Socio/Details/" + data.novoSocioId;
+                            }
+                        }));
+                       
                     });
                 }, 2500);
             },
@@ -165,9 +197,6 @@ function AdicionarSocio() {
         })
     }
 } 
-
-                
-
 
 function validarFormSocio() {
     if ($("#Nome").val() == "") {
@@ -221,8 +250,40 @@ function validarFormSocio() {
     return true;
 }
 
+function preencherSelectRelacao() {
+    $.ajax({
+        type: "GET",
+        url: "/Agregado/ObterRelacao",
+        success: function (data) {
+            $('#relacaoAgregado').empty();
+            $.each(data, function (index, relacao) {
+                $('#relacaoAgregado').append($('<option>', {
+                    value: relacao.Id,
+                    text: relacao.Nome
+                }));
+            });
+        },
+        error: function (result) {
+            Notificar("error", "Erro!", result);
+        }
+    });
+}
+$('#relacaoAgregado').on('shown.bs.modal', function () {
+    debugger;
+    preencherSelectRelacao();
+});
+
+$('#botaoAbrir').on('click', function () {
+
+    $('#adicionarAgregado').modal('show');
+    preencherSelectRelacao();
+})
+
+
+
 /*------------------------------------------*/
 /*---------Bairro-----------*/
+
 function NotificarBairro(icone, titulo, mensagem) {
     $('#loading-overlay').show();
     setTimeout(function () {
@@ -239,6 +300,7 @@ function NotificarBairro(icone, titulo, mensagem) {
         });
     }, 2500);
 }
+
 //------------------Adicionar----
 function AdicionarBairro() {
     if ($("#Nome").val() == "") {
@@ -269,6 +331,7 @@ function AdicionarBairro() {
     }
     
 }
+
 //------------------Editar-------
 function SetBairro(bairroId, municipioId,dataCriacao, nomeBairro) {
     $("#bairroId").val(bairroId);
@@ -276,7 +339,6 @@ function SetBairro(bairroId, municipioId,dataCriacao, nomeBairro) {
     $("#nomeBairro").val(nomeBairro);
     $("#dataCriacao").val(dataCriacao);
 }
-
 function EditarBairro() {
     
     if ($("#nomeBairro").val() == "") {
@@ -306,12 +368,13 @@ function EditarBairro() {
         } 
     });
 }
+
 /*------------------Eliminar-------*/
 function SetBairroEliminar(bairroId, nomeBairro) {
 
     $("#id").val(bairroId);
 
-    $("#nome").val(nomeBairro);
+    $("#nome").text(nomeBairro);
 }
 function EliminarBairro() {
     $.ajax({
@@ -412,12 +475,12 @@ function EditarMunicipio() {
         }
     });
 }
+
 /*-----------------Eliminar-------*/
 function SetMunicipioEliminar(municipioId, nomeMunicipio) {
     $("#id").val(municipioId);
-    $("#nome").val(nomeMunicipio);
+    $("#nome").text(nomeMunicipio);
 }
-
 function EliminarMunicipio() {
     $.ajax({
         type: "POST",

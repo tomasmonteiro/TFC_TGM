@@ -6,6 +6,12 @@
     ViewData["Title"] = "Lista de Sócios";
 }
 
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
 <div class="row espaco">
     <div class="col-md-12">
         <div class="card">
@@ -17,7 +23,7 @@
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
                             <h3 class="card-title testev">Listagem de Socios</h3>
-                            <a class="btn btn-primary ml-auto testev" asp-controller="Socio" asp-action="Create"><i class="dw dw-add-user"></i>Novo Sócio</a>
+                            <a class="btn btn-success ml-auto testev" asp-controller="Socio" asp-action="Create"><i class="dw dw-add-user" style="margin-right: 1em;"></i> Novo Sócio</a>
                         </div>
                     </div>
                 </div>
@@ -36,7 +42,7 @@
                         <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
                             <thead class="navbar-blue">
                                 <tr>
-                                    <th scope="col">#</th>
+                                    <th scope="col">#COD</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">BI</th>
                                     <th scope="col">Data de Nascimento</th>
@@ -50,7 +56,7 @@
                                     foreach (SocioViewModel socio in Model)
                                     {
                                         <tr role="row" class="">
-                                            <th scope="row">@socio.Id</th>
+                                            <th scope="row">@socio.Cod</th>
                                             <td class="table-plus sorting_1" tabindex="0">@socio.Nome</td>
                                             <td class="table-plus sorting_1" tabindex="0">@socio.BI</td>
                                             <td class="table-plus sorting_1" tabindex="0">@socio.DataNascimento</td>

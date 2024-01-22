@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CPF_CACL.GestaoSocio.Data.Migrations
 {
-    public partial class v1 : Migration
+    public partial class V1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "CategoriaSocio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(50)", nullable: false),
                     Quota = table.Column<decimal>(type: "smallmoney", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -30,8 +29,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Fornecedor",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Cod = table.Column<string>(type: "varchar(10)", nullable: false),
                     Nome = table.Column<string>(type: "varchar(150)", nullable: false),
                     NIF = table.Column<string>(type: "varchar(15)", nullable: true),
                     Endereco = table.Column<string>(type: "varchar(300)", nullable: true),
@@ -50,8 +49,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Municipio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
@@ -66,8 +64,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Organismo",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
@@ -82,8 +79,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "PerfilUsuario",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(50)", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
@@ -98,8 +94,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Relacao",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(30)", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
@@ -114,8 +109,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "TipoBeneficio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(50)", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
@@ -130,8 +124,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "TipoPagamento",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(50)", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
@@ -146,8 +139,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "TipoProjecto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(50)", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
@@ -162,10 +154,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Bairro",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
-                    MunicipioId = table.Column<int>(type: "int", nullable: false),
+                    MunicipioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
@@ -185,17 +176,16 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Usuario",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(150)", nullable: false),
                     Telefone = table.Column<string>(type: "varchar(12)", nullable: false),
                     Email = table.Column<string>(type: "varchar(300)", nullable: true),
                     UserName = table.Column<string>(type: "varchar(100)", nullable: false),
                     Senha = table.Column<string>(type: "text", nullable: false),
-                    PerfilUsuarioId = table.Column<int>(type: "int", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PerfilUsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -212,10 +202,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Beneficio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
-                    TipoBeneficioId = table.Column<int>(type: "int", nullable: false),
+                    TipoBeneficioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
@@ -235,12 +224,11 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Projecto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
                     Quantidade = table.Column<int>(type: "int", nullable: false),
                     DataLancamento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TipoProjectoId = table.Column<int>(type: "int", nullable: false),
+                    TipoProjectoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
@@ -260,8 +248,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Socio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Cod = table.Column<string>(type: "varchar(10)", nullable: false),
                     EstadoCivil = table.Column<string>(type: "varchar(20)", nullable: false),
                     Profissao = table.Column<string>(type: "varchar(100)", nullable: true),
                     Habilitacoes = table.Column<string>(type: "varchar(20)", nullable: true),
@@ -271,9 +259,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     LocalDeTrabalho = table.Column<string>(type: "varchar(100)", nullable: true),
                     Funcao = table.Column<string>(type: "varchar(100)", nullable: true),
                     Departamento = table.Column<string>(type: "varchar(100)", nullable: true),
-                    OrganismoId = table.Column<int>(type: "int", nullable: false),
+                    OrganismoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EstadoSocio = table.Column<string>(type: "varchar(10)", nullable: false),
-                    CategoriaSocioId = table.Column<int>(type: "int", nullable: false),
+                    CategoriaSocioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true),
@@ -284,7 +272,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     DataNascimento = table.Column<DateTime>(type: "date", nullable: false),
                     Telefone = table.Column<string>(type: "varchar(12)", nullable: false),
                     Email = table.Column<string>(type: "varchar(300)", nullable: true),
-                    BairroId = table.Column<int>(type: "int", nullable: false),
+                    BairroId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Endereco = table.Column<string>(type: "varchar(300)", nullable: true)
                 },
                 constraints: table =>
@@ -314,10 +302,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Capital",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    BeneficioId = table.Column<int>(type: "int", nullable: false),
-                    CategoriaSocioId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BeneficioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoriaSocioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Valor = table.Column<decimal>(type: "smallmoney", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
@@ -344,39 +331,27 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Agregado",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nacionalidade = table.Column<string>(type: "varchar(20)", nullable: false),
-                    SocioId = table.Column<int>(type: "int", nullable: false),
-                    RelacaoId = table.Column<int>(type: "int", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(150)", nullable: false),
                     BI = table.Column<string>(type: "varchar(14)", nullable: true),
-                    CaminhoFoto = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Genero = table.Column<string>(type: "varchar(9)", nullable: false),
+                    Nacionalidade = table.Column<string>(type: "varchar(20)", nullable: false),
                     DataNascimento = table.Column<DateTime>(type: "date", nullable: false),
-                    Telefone = table.Column<string>(type: "varchar(12)", nullable: false),
-                    Email = table.Column<string>(type: "varchar(300)", nullable: true),
-                    BairroId = table.Column<int>(type: "int", nullable: false),
-                    Endereco = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    SocioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RelacaoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Agregado", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Agregado_Bairro_BairroId",
-                        column: x => x.BairroId,
-                        principalTable: "Bairro",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Agregado_Relacao_RelacaoId",
                         column: x => x.RelacaoId,
                         principalTable: "Relacao",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Agregado_Socio_SocioId",
                         column: x => x.SocioId,
@@ -389,17 +364,16 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Apoio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataApoio = table.Column<DateTime>(type: "date", nullable: false),
                     Descricao = table.Column<string>(type: "varchar(300)", nullable: false),
                     Valor = table.Column<decimal>(type: "smallmoney", nullable: false, defaultValue: 0m),
                     EstadoApoio = table.Column<string>(type: "varchar(300)", nullable: false),
-                    SocioId = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SocioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -422,14 +396,14 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Pagamento",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Cod = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataPagamento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Valor = table.Column<double>(type: "float", nullable: false),
-                    TipoPagamentoId = table.Column<int>(type: "int", nullable: false),
-                    SocioId = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    TipoPagamentoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SocioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
@@ -461,11 +435,10 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "PedidoApoio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Descricao = table.Column<string>(type: "varchar(300)", nullable: true),
                     EstadoPedido = table.Column<string>(type: "varchar(50)", nullable: false),
-                    SocioId = table.Column<int>(type: "int", nullable: false),
+                    SocioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
@@ -485,12 +458,11 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "ProjectoSocio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Descricao = table.Column<string>(type: "varchar(100)", nullable: false),
                     DataAtribuicao = table.Column<DateTime>(type: "Datetime", nullable: false),
-                    SocioId = table.Column<int>(type: "int", nullable: false),
-                    ProjectoId = table.Column<int>(type: "int", nullable: false),
+                    SocioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProjectoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
@@ -516,10 +488,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Despesa",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Total = table.Column<decimal>(type: "money", nullable: false),
-                    ApoioId = table.Column<int>(type: "int", nullable: false),
+                    ApoioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EstadoDespesa = table.Column<string>(type: "varchar(20)", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
@@ -540,13 +511,12 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "ItemApoio",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Valor = table.Column<decimal>(type: "smallmoney", nullable: false),
                     Quantidade = table.Column<int>(type: "int", nullable: false),
-                    BeneficioId = table.Column<int>(type: "int", nullable: false),
-                    ApoioId = table.Column<int>(type: "int", nullable: false),
-                    ForneceorId = table.Column<int>(type: "int", nullable: false),
+                    BeneficioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ApoioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ForneceorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
@@ -573,11 +543,6 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Agregado_BairroId",
-                table: "Agregado",
-                column: "BairroId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Agregado_RelacaoId",
@@ -623,6 +588,12 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "IX_Despesa_ApoioId",
                 table: "Despesa",
                 column: "ApoioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Fornecedor_Cod",
+                table: "Fornecedor",
+                column: "Cod",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ItemApoio_ApoioId",
@@ -683,6 +654,12 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "IX_Socio_CategoriaSocioId",
                 table: "Socio",
                 column: "CategoriaSocioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Socio_Cod",
+                table: "Socio",
+                column: "Cod",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Socio_OrganismoId",

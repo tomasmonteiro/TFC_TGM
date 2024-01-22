@@ -3,11 +3,6 @@ using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
 using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Models.Validation;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CPF_CACL.GestaoSocio.Domain.Services
 {
@@ -42,7 +37,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             return _bairroRepository.GetAll();
         }
 
-        public Bairro GetById(int id)
+        public Bairro GetById(Guid id)
         {
             return _bairroRepository.GetById(id);
         }
@@ -53,7 +48,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             if (!ExecutarValidacao(new BairroValidation(), bairro)) return;
             _bairroRepository.Update(bairro);
         }
-        public void Eliminar(int id)
+        public void Eliminar(Guid id)
         {
             Bairro bairro = GetById(id);
             if (bairro == null)
@@ -68,6 +63,11 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         public void Dispose()
         {
             _bairroRepository.Dispose();
+        }
+
+        public void Remove(Bairro bairro)
+        {
+            _bairroRepository.Remove(bairro);
         }
     }
 }

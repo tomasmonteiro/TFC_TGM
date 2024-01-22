@@ -11,7 +11,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Models.Entities
     {
         public string? Descricao { get; set; }
         public EEstadoPedido EstadoPedido { get; set; }
-        public int SocioId { get; set; }
+        public Guid SocioId { get; set; }
         public virtual Socio Socio { get; set; }
 
     }

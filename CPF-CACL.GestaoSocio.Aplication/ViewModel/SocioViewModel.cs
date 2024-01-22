@@ -8,7 +8,11 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
     public class SocioViewModel
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+
+        [MaxLength(10, ErrorMessage = "O Código precisa ter no márixo {1} caracteres")]
+        [MinLength(2, ErrorMessage = "O Código precisa ter no mínimo {1} caracteres")]
+        public string Cod { get; set; }
 
         //[Required(ErrorMessage = "Preencha o campo Nome")]
         [MaxLength(300, ErrorMessage = "O nome precisa ter no márixo {1} caracteres")]
@@ -86,7 +90,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
 
 
         //[MaxLength(300, ErrorMessage = "O organismo precisa ter no márixo {1} caracteres")]
-        public int OrganismoId { get; set; }
+        public Guid OrganismoId { get; set; }
         public List<ItemDropDown>? Organismo { get; set; }
 
         [MaxLength(300, ErrorMessage = "O Local de Trabalho precisa ter o márixo de {0} caracteres")]
@@ -95,11 +99,11 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
 
         public EEstadoSocio EstadoSocio { get; set; } = EEstadoSocio.Ativo;
                 
-        public int CategoriaSocioId { get; set; }
+        public Guid CategoriaSocioId { get; set; }
         public List<ItemDropDown>? CategoriaSocio { get; set; }
 
                 
-        public int BairroId { get; set; }
+        public Guid BairroId { get; set; }
         public List<ItemDropDown>? Bairro { get; set; }
         public List<ItemDropDown>? Municipio { get; set; }
 

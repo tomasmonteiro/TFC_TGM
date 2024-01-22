@@ -1,7 +1,6 @@
 ﻿using CPF_CACL.GestaoSocio.Data.Context;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 //Classe abstrata contendo a base do CRUD para as classes concretas do Repositório
@@ -21,7 +20,7 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
             _gsContext.Set<TEntity>().Add(obj);
             _gsContext.SaveChanges();
         }
-        public TEntity GetById(int id)
+        public TEntity GetById(Guid id)
         {
             return _gsContext.Set<TEntity>().Find(id);
         }

@@ -1,13 +1,7 @@
 ﻿using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
 using CPF_CACL.GestaoSocio.Domain.Models.Entities;
-using CPF_CACL.GestaoSocio.Domain.Models.Validation;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CPF_CACL.GestaoSocio.Domain.Services
 {
@@ -40,7 +34,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             return _municipioRepository.GetAll();
         }
-        public Municipio GetById(int id)
+        public Municipio GetById(Guid id)
         {
             return _municipioRepository.GetById(id);
         }
@@ -54,7 +48,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             _municipioRepository.Remove(municipio);
         }
-        public void Eliminar(int id)
+        public void Eliminar(Guid id)
         {
             Municipio municipio = GetById(id);
             if (municipio == null)

@@ -8,7 +8,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Models.Entities
 {
     public class Relacao : BaseEntity
     {
-        public string Nome { get; set; }
+        public string Nome { get; set; } 
         public ICollection<Agregado> Agregados { get; set; }
     }
 }

@@ -1,21 +1,16 @@
 ﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.TipoPagamentoViewModel
 
 
-<div id="loading-overlay" style="display: none;">
-    <div id="loading-circle">
-        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
-    </div>
-</div>
-
-
 <div class="modal fade" id="tipoPagamento" aria-hidden="false" data-bs-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="tipoPagamentoLabel">Criar Tipo de Pagamento</h5>
-                    <br />
-                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    
                 </div><div class="modal-body">
                     @* <form asp-asp-controller="TipoPagamento" asp-action="Create" method="post"> *@
                     <div class="form-group">
@@ -31,8 +26,8 @@
                         <input type="hidden" value="true" asp-for="Status" id="status">
                     </div>
 
-                    <button type="button" onclick="AdicionarTipoPagamento()" class="btn btn-primary btn-block">Adicionar</button>
-                    <a role="button" class="btn btn-secondary btn-block" asp-controller="TipoPagamento" asp-action="Index"> Voltar</a>
+                    <button type="button" onclick="AdicionarTipoPagamento()" class="btn btn-success waves-effect">Adicionar</button>
+                    <a role="button" class="btn btn-link waves-effect" asp-controller="TipoPagamento" asp-action="Index"> Cancelar</a>
                     @* </form> *@
                 </div>
             </div>
@@ -42,12 +37,6 @@
 
 
 
-<div class="text-center">
-
-    <h1 class="display-4">Criar Tipo de Pagamento</h1>
-
-
-</div>
 
 
 @section Scripts {

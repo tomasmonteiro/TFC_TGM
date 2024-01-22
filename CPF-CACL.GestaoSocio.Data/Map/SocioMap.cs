@@ -11,6 +11,9 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.ToTable("Socio");
             builder.HasKey(x => x.Id);
 
+            builder.Property(x => x.Cod).HasColumnType("varchar(10)").IsRequired(true);
+            builder.HasIndex(i => i.Cod).IsUnique(true); // Setar a propriedade como única
+
             builder.Property(x => x.Nome).HasColumnType("varchar(150)").IsRequired();
             builder.Property(x => x.BI).HasColumnType("varchar(14)");
             builder.Property(x => x.Genero).HasColumnType("varchar(9)").IsRequired();
@@ -33,6 +36,10 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");
             builder.Property(x => x.Status).HasColumnType("bit").IsRequired();
+
+            builder.Property(x => x.BairroId).HasColumnType("uniqueidentifier").IsRequired(true);
+            builder.Property(x => x.OrganismoId).HasColumnType("uniqueidentifier").IsRequired(true);
+            builder.Property(x => x.CategoriaSocioId).HasColumnType("uniqueidentifier").IsRequired(true);
 
             //Relacionamento: um Bairro para vários Sócios
             builder.HasOne(x => x.Bairros)

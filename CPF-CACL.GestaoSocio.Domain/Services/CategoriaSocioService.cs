@@ -33,7 +33,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             return _categoriaSocioRepository.GetAll();
         }
-        public CategoriaSocio GetById(int id)
+        public CategoriaSocio GetById(Guid id)
         {
             return _categoriaSocioRepository.GetById(id);
         }
@@ -47,7 +47,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             _categoriaSocioRepository.Remove(categoriaSocio);
         }
-        public void Eliminar(int id)
+        public void Eliminar(Guid id)
         {
             CategoriaSocio categoria = GetById(id);
             if (categoria == null)
@@ -61,7 +61,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         public void Dispose()
         {
             _categoriaSocioRepository.Dispose();
-
         }
     }
 }

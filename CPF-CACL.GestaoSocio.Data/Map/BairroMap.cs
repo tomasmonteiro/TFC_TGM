@@ -18,6 +18,8 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");
             builder.Property(x => x.Status).HasColumnType("bit").IsRequired();
 
+            builder.Property(x => x.MunicipioId).HasColumnType("uniqueidentifier").IsRequired(true);
+
             builder.HasOne(x => x.Municipio)
                 .WithMany(a => a.Bairros)
                 .HasForeignKey(x => x.MunicipioId)

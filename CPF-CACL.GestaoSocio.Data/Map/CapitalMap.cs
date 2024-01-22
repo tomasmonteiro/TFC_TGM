@@ -24,6 +24,9 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");
             builder.Property(x => x.Status).HasColumnType("bit").IsRequired();
 
+            builder.Property(x => x.CategoriaSocioId).HasColumnType("uniqueidentifier").IsRequired(true);
+            builder.Property(x => x.BeneficioId).HasColumnType("uniqueidentifier").IsRequired(true);
+
             //Relacionamento: uma Categoria pertence a varios Capitais
             builder.HasOne(x => x.CategoriaSocio)
                 .WithMany(a => a.Capitais)

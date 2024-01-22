@@ -9,10 +9,11 @@ namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
 {
     public interface ISocioAppService 
     {
-        public int Adicionar(SocioViewModel socio);
+        public Guid Adicionar(SocioViewModel socio);
         public IEnumerable<SocioViewModel> Buscar();
-        public SocioViewModel BuscarPorId(int id);
+        public SocioViewModel BuscarPorId(Guid id);
+        public SocioViewModel BuscarPorCod(string codigo);
         public void Atualizar(SocioViewModel socio);
-        public void Eliminar(int id);
+        public void Eliminar(Guid id);
     }
 }

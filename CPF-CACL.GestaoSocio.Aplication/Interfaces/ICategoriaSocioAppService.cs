@@ -14,6 +14,6 @@ namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
         public IEnumerable<CategoriaSocioViewModel> Buscar();
 
         public void Atualizar(CategoriaSocioViewModel categoria);
-        public void Eliminar(int id);
+        public void Eliminar(Guid id);
     }
 }

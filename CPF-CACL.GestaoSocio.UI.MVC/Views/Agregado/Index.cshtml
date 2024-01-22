@@ -1,0 +1,181 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model IEnumerable<AgregadoViewModel>
+
+@{
+    ViewData["Title"] = "Listagem de Agregados";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-12 col-md-12 col-sm-12">
+            <div class="title">
+                <h4>Bairros</h4>
+            </div>
+            <nav class="col-12 col-md-12 col-sm-12" aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Listagem de Agregados</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+@* <div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <div class="col-12 col-sm-4 col-md-4">
+                                <button type="button" class="btn btn-success  form-control" data-toggle="ajax-modal" data-target="#bairro" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> *@
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 10;" id="myDataTable">
+                            <thead class="navbar-primary">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">BI</th>
+                                    <th scope="col">Gênero</th>
+                                    <th scope="col">Data de Nascimento</th>
+                                    <th scope="col">Sócio</th>
+                                    <th scope="col">Relação</th>
+                                    <th scope="col">Registo</th>
+                                    <th scope="col">Actualização</th>
+                                    <th scope="col">Acão</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (AgregadoViewModel agregado in Model)
+                                    {
+                                        <tr>
+                                            <th scope="row">@agregado.Id</th>
+                                            <td>@agregado.Nome</td>
+                                            <td>@agregado.BI</td>
+                                            <td>@agregado.Genero</td>
+                                            <td>@agregado.DataNascimento</td>
+                                            <td>@agregado.NomeSocio</td>
+                                            <td>@agregado.NomeRelacao</td>
+                                            <td>@agregado.DataCriacao</td>
+                                            <td>@agregado.DataAtualizacao</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="" onclick="SetBairro('@agregado.Id', '@agregado.Nome','@agregado.Genero', '@agregado.SocioId','@agregado.RelacaoId','@agregado.DataCriacao','@agregado.DataNascimento' )" data-toggle="modal" data-target="#editarAgregado"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetBairroEliminar('@agregado.Id', '@agregado.Nome')" data-toggle="modal" data-target="#eliminarAgregado"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---------MODAL---------->
+
+
+<!---------Modal para Edição--------------->
+
+<div class="modal fade" id="editarAgregado" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="cabecalhoModalEditarBairro">Editar Bairro</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    <input type="hidden" id="BairroId" name="BairroId" />
+
+                    <div class="form-group">
+                        <input type="hidden" id="bairroId" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="municipioId" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeBairro" class="control-label">Nome do Bairro</label>
+                        <input id="nomeBairro" name="nomeBairro" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="dataCriacao" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="dataAtualizacao" value="@DateTime.Now" class="form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EditarBairro()" class="btn btn-success waves-effect">Salvar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--------Modal para eliminar----------->
+
+<div class="modal fade" id="eliminarAgregado" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarBairroLabel">Eliminar Bairro</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="id" name="id" />
+                <p>Desejas eliminar o bairro <label id="nome"></label>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EliminarBairro()" class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

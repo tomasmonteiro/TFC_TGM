@@ -3,7 +3,7 @@
     public class Beneficio : BaseEntity
     {
         public string Nome { get; set; }
-        public int TipoBeneficioId { get; set; }
+        public Guid TipoBeneficioId { get; set; }
         public virtual TipoBeneficio TipoBeneficio { get; set; }
 
         public ICollection<ItemApoio> ItemApoios { get; set; }

@@ -6,23 +6,11 @@
     ViewData["Title"] = "Listagem de Organismos";
 }
 
-@*
-@{
-    var sucesso = TempData["Sucesso"] as string;
-    var erro = TempData["Erro"] as string;
-}
-@if (!string.IsNullOrEmpty(ViewBag.MensagemSucesso))
-{
-    <script>
-        exibirMensagemSucesso("@Html.Raw(ViewBag.MensagemSucesso)");
-    </script>
-}
-@if (!string.IsNullOrEmpty(ViewBag.MensagemErro))
-{
-    <script>
-        exibirMensagemErro("@Html.Raw(ViewBag.MensagemSucesso)");
-    </script>
-} *@
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
 
 
 <div id="loading-overlay" style="display: none;">
@@ -55,7 +43,7 @@
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
                             <div class="col-12 col-sm-4 col-md-4">
-                                <button type="button" class="btn btn-primary  form-control" data-toggle="ajax-modal" data-target="#organismo" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
+                                <button type="button" class="btn btn-success  form-control" data-toggle="ajax-modal" data-target="#organismo" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
                             </div>
                         </div>
                     </div>
@@ -122,10 +110,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="cabecalhoModalEditarOrganismo">Editar Organismo</h4>
-                <input type="hidden" id="OrganismoId" name="OrganismoId" />
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <form>
+                    <input type="hidden" id="OrganismoId" name="OrganismoId" />
+
                     <div class="form-group">
                         <input type="hidden" id="organismoId" class="form-control" />
                     </div>
@@ -156,6 +148,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="eliminarOrganismoLabel">Eliminar Organismo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <label id="id" name="id" />

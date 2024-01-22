@@ -28,13 +28,14 @@
                 </div>
             </div>
         </div>
+
         <div class="col-md-12 col-sm-12 " style="padding-right: 0px !important; margin-bottom: 5px; padding-left: 0 !important;">
             <div class="card-box height-100-p overflow-hidden">
                 <div class="profile-tab height-100-p">
                     <div class="tab height-100-p">
                         <ul class="nav nav-tabs customtab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#dadospessoais" role="tab" aria-selected="true">DADOS PESSOAIS</a>
+                                <a class="nav-link cabecalho-sessao" data-toggle="tab" href="#dadospessoais" role="tab" aria-selected="true">DADOS PESSOAIS</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -103,8 +104,17 @@
                                             </div>
                                             <div class="col-12 col-sm-6 col-md-6 espaco-input">
                                                 <label asp-for="Foto" name="Foto" class="control-label imagem-upload">Adicionar Foto </label>
-                                                <input asp-for="Foto" type="file" accept=".jpg, .jpeg, png" id="Foto" class="form-control btn-file" />
+                                                <input asp-for="Foto" type="file" accept=".jpg, .jpeg, .png" id="Foto" class="form-control btn-file" />
                                             </div>
+                         @*                    <div class="form-group col-12 col-sm-6 col-md-6 espaco-input">
+                                                <label for="exampleInputFile">Foto</label>
+                                                <div class="input-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" accept=".jpeg, .jpg, .png" class="custom-file-input" id="exampleInputFile">
+                                                        <label class="custom-file-label" for="exampleInputFile">Escolha uma foto</label>
+                                                    </div>
+                                                </div>
+                                            </div> *@
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +132,7 @@
                     <div class="tab height-100-p">
                         <ul class="nav nav-tabs customtab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#filiacao" role="tab" aria-selected="true">FILLHAÇÃO</a>
+                                <a class="nav-link cabecalho-sessao" data-toggle="tab" href="#filiacao" role="tab" aria-selected="true">FILLHAÇÃO</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -157,7 +167,7 @@
                     <div class="tab height-100-p">
                         <ul class="nav nav-tabs customtab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#contacos" role="tab" aria-selected="true">DADOS DE CONTACTO</a>
+                                <a class="nav-link cabecalho-sessao" data-toggle="tab" href="#contacos" role="tab" aria-selected="true">DADOS DE CONTACTO</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -217,7 +227,7 @@
                     <div class="tab height-100-p">
                         <ul class="nav nav-tabs customtab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#dadosprofissionais" role="tab" aria-selected="true">DADOS PROFISSIONAIS</a>
+                                <a class="nav-link cabecalho-sessao" data-toggle="tab" href="#dadosprofissionais" role="tab" aria-selected="true">DADOS PROFISSIONAIS</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -267,7 +277,7 @@
                     <div class="tab height-100-p">
                         <ul class="nav nav-tabs customtab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#categoria" role="tab" aria-selected="true">CATEGORIA</a>
+                                <a class="nav-link cabecalho-sessao" data-toggle="tab" href="#categoria" role="tab" aria-selected="true">CATEGORIA</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -324,6 +334,76 @@
 <!--Botão para ir ao topo da Página-->
 
 <button id="irAoTopoBtn" title="Ir ao Topo""><i class="fas fa-arrow-circle-up"></i></button>
+
+
+<!---------Modal para Adicionar Agregado--------------->
+
+<div class="modal fade" id="adicionarAgregado" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cabecalhoModalAdicionarAgregado">CADASTRAR AGREGADO</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    <input type="hidden" id="SocioId" name="SocioId" />
+
+                    <div class="form-group">
+                        <label for="generoAgregado" class="control-label">RELAÇÃO:</label>
+                        <select for="Relacao" id="relacaoAgregado" class="form-control" data-val-required="">
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nomeAgregado" class="control-label">NOME COMPLETO:</label>
+                        <input id="nomeAgregado" name="nomeAgregado" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="biAgregado" class="control-label">BI</label>
+                        <input id="biAgregado" name="biAgregado" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="generoAgregado" class="control-label">GÉNERO:</label>
+                        <select for="Genero" id="generoAgregado" class="form-control" data-val-required="">
+                            <option>Feminino</option>
+                            <option>Masculino</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataNascimentoAgregado" class="control-label required"> DATA DE NASCIMENTO: </label>
+                        <input type="date" for="dataNascimentoAgregado" value="@DateTime.Now.ToString("dd-MM-yyyy")" id="dataNascimentoAgregado" class="form-control" data-val-required="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nacionalidadeAgregado" class="control-label">NACIONALIDADE:</label>
+                        <input id="nacionalidadeAgregado" name="nacionalidadeAgregado" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="dataCriacaoAgregado" value="@DateTime.Now" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="dataAtualizacaoAgregado" class="form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="AdicionarAgregado()" class="btn btn-success waves-effect">Salvar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

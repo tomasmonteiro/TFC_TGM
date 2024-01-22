@@ -12,6 +12,6 @@ namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
         public void Adicionar(OrganismoViewModel organismo);
         public IEnumerable<OrganismoViewModel> Buscar();
         public void Atualizar(OrganismoViewModel organismo);
-        public void Eliminar(int id);
+        public void Eliminar(Guid id);
     }
 }

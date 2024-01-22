@@ -10,10 +10,9 @@ namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
     public interface IMunicipioAppService
     {
         public void Adicionar(MunicipioViewModel municipio);
-
         public IEnumerable<MunicipioViewModel> Buscar();
         public void Atualizar(MunicipioViewModel municipio);
-        public void Eliminar(int id);
+        public void Eliminar(Guid id);
 
     }
 }

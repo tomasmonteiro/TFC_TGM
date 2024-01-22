@@ -16,6 +16,9 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
             CreateMap<SocioViewModel, Socio>().ReverseMap();
             CreateMap<CategoriaSocioViewModel, CategoriaSocio>().ReverseMap();
             CreateMap<OrganismoViewModel, Organismo>().ReverseMap();
+            CreateMap<AgregadoViewModel, Agregado>().ReverseMap();
+            CreateMap<RelacaoViewModel, Relacao>().ReverseMap();
+
 
             #endregion
 
@@ -35,7 +38,16 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
             CreateMap<CategoriaSocio, CategoriaSocioViewModel>().ReverseMap()
                 .ForMember(c => c.Socios, opt => opt.Ignore());
 
-            CreateMap<Organismo, OrganismoViewModel>().ReverseMap().ForMember(c => c.Socios, opt => opt.Ignore());
+            CreateMap<Organismo, OrganismoViewModel>().ReverseMap()
+                .ForMember(c => c.Socios, opt => opt.Ignore());
+
+            CreateMap<Agregado, AgregadoViewModel>()
+                .ForMember(c => c.Relacao, opt => opt.Ignore())
+                .ForMember(dest => dest.NomeSocio, opt => opt.MapFrom(src => src.Socio.Nome))
+                .ForMember(dest => dest.NomeRelacao, opt => opt.MapFrom(src => src.Relacao.Nome));
+
+            CreateMap<Relacao, RelacaoViewModel>().ReverseMap()
+                .ForMember(c => c.Agregados, opt => opt.Ignore());
 
             #endregion
         }

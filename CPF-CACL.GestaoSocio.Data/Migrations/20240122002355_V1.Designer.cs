@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CPF_CACL.GestaoSocio.Data.Migrations
 {
     [DbContext(typeof(GSContext))]
-    [Migration("20240102154426_v1")]
-    partial class v1
+    [Migration("20240122002355_V1")]
+    partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,35 +26,21 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Agregado", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BI")
                         .HasColumnType("varchar(14)");
 
-                    b.Property<int>("BairroId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CaminhoFoto")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("date");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("varchar(300)");
-
-                    b.Property<string>("Endereco")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Genero")
                         .IsRequired()
@@ -68,22 +54,16 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<int>("RelacaoId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RelacaoId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SocioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SocioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Telefone")
-                        .IsRequired()
-                        .HasColumnType("varchar(12)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BairroId");
 
                     b.HasIndex("RelacaoId");
 
@@ -94,20 +74,18 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Apoio", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataApoio")
                         .HasColumnType("date");
 
                     b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -117,14 +95,14 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(300)");
 
-                    b.Property<int>("SocioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SocioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Valor")
                         .ValueGeneratedOnAdd()
@@ -142,11 +120,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Bairro", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -154,8 +130,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("MunicipioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("MunicipioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -173,11 +149,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Beneficio", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -192,8 +166,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<int>("TipoBeneficioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("TipoBeneficioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -204,17 +178,15 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Capital", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<Guid>("BeneficioId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("BeneficioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoriaSocioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CategoriaSocioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -239,11 +211,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.CategoriaSocio", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -268,14 +238,12 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Despesa", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ApoioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ApoioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -302,11 +270,13 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Fornecedor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<string>("Cod")
+                        .IsRequired()
+                        .HasColumnType("varchar(10)");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -336,22 +306,23 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Cod")
+                        .IsUnique();
+
                     b.ToTable("Fornecedor", (string)null);
                 });
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.ItemApoio", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<Guid>("ApoioId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ApoioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BeneficioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BeneficioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -359,8 +330,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("ForneceorId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ForneceorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantidade")
                         .HasColumnType("int");
@@ -384,11 +355,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Municipio", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -410,11 +379,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Organismo", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -436,11 +403,13 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Pagamento", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<string>("Cod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -455,17 +424,17 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SocioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SocioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<int>("TipoPagamentoId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("TipoPagamentoId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Valor")
                         .HasColumnType("float");
@@ -483,11 +452,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.PedidoApoio", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -502,8 +469,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int>("SocioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SocioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -517,11 +484,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.PerfilUsuario", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -543,11 +508,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Projecto", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -568,8 +531,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<int>("TipoProjectoId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("TipoProjectoId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -580,11 +543,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.ProjectoSocio", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataAtribuicao")
                         .HasColumnType("Datetime");
@@ -599,11 +560,11 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("ProjectoId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProjectoId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SocioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SocioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -619,11 +580,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Relacao", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -645,23 +604,25 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Socio", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BI")
                         .HasColumnType("varchar(14)");
 
-                    b.Property<int>("BairroId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BairroId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CaminhoFoto")
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<int>("CategoriaSocioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CategoriaSocioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Cod")
+                        .IsRequired()
+                        .HasColumnType("varchar(10)");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -719,8 +680,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<int>("OrganismoId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OrganismoId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Profissao")
                         .HasColumnType("varchar(100)");
@@ -738,6 +699,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.HasIndex("CategoriaSocioId");
 
+                    b.HasIndex("Cod")
+                        .IsUnique();
+
                     b.HasIndex("OrganismoId");
 
                     b.ToTable("Socio", (string)null);
@@ -745,11 +709,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoBeneficio", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -771,11 +733,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoPagamento", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -797,11 +757,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoProjecto", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -823,17 +781,15 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Usuario", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Email")
                         .HasColumnType("varchar(300)");
@@ -842,8 +798,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<int>("PerfilUsuarioId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PerfilUsuarioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Senha")
                         .IsRequired()
@@ -869,16 +825,10 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Agregado", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Bairro", "Bairros")
-                        .WithMany()
-                        .HasForeignKey("BairroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Relacao", "Relacao")
                         .WithMany("Agregados")
                         .HasForeignKey("RelacaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Socio", "Socio")
@@ -886,8 +836,6 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .HasForeignKey("SocioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Bairros");
 
                     b.Navigation("Relacao");
 
