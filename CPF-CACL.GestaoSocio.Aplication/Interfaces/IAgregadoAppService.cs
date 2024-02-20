@@ -1,4 +1,5 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 
 namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
 {
@@ -7,7 +8,8 @@ namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
         public void Adicionar(AgregadoViewModel agregado);
 
         public IEnumerable<AgregadoViewModel> Buscar();
-        public void Atualizar(AgregadoViewModel bairro);
+        IEnumerable<AgregadoViewModel> BuscarAgregadoPorSocio(Guid socioId);
+		public void Atualizar(AgregadoViewModel bairro);
         public void Eliminar(Guid id);
     }
 }

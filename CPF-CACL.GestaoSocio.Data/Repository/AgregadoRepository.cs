@@ -1,6 +1,8 @@
 ﻿using CPF_CACL.GestaoSocio.Data.Context;
 using CPF_CACL.GestaoSocio.Data.Repository;
+using CPF_CACL.GestaoSocio.Domain.Enums;
 using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 {
@@ -12,7 +14,22 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
             _gsContext = gsContext;
         }
 
-        public IEnumerable<Agregado> BuscarTodos()
+        public Agregado BuscarConjuge(Guid idSocio)
+        {
+
+            var relacao = _gsContext.Relacao.Where(p => p.Nome == "Cônjuge" && p.Status == true).FirstOrDefault();
+
+            return _gsContext.Agregado.Where(b => b.SocioId == idSocio && b.RelacaoId == relacao.Id && b.Status ==true).FirstOrDefault();
+        }
+
+		public IEnumerable<Agregado> BuscarAgregadoPorSocio(Guid socioId)
+		{
+			return _gsContext.Agregado
+				.Include(s => s.Relacao)
+				.Where(p => p.SocioId == socioId && p.Status == true);
+		}
+
+		public IEnumerable<Agregado> BuscarTodos()
         {
             return _gsContext.Agregado.Where(p => p.Status == true);
         }

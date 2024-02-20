@@ -8,7 +8,8 @@ namespace CPF_CACL.GestaoSocio.Domain.Enums
 {
     public enum EEstadoSocio
     {
-        Ativo = 1,
+        Ativo = 0,
+        Pendente = 1,
         Suspenso = 2
     }
 }

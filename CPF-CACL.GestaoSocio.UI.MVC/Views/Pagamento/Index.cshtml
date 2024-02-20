@@ -1,0 +1,93 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+@using CPF_CACL.GestaoSocio.Domain.Enums;
+
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.PagamentoViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Pagamentos";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev">Listagem de Pagamentos</h3>
+                            @* <button type="button" class="btn btn-success waves-effect ml-auto" data-toggle="ajax-modal" data-target="#pagamentos" data-url="@Url.Action("Criar")"><i class="fa fa-plus"></i>Efectuar Pagamento</button> *@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 7;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">#Recíbo</th>
+                                    <th scope="col">Valor (Kz)</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Data de Pagamento</th>
+                                    <th scope="col">Sócio</th>
+                                    <th scope="col">Registo</th>
+                                    <th scope="col">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (PagamentoViewModel pagamento in Model)
+                                    {
+                                        <tr role="row" class="">
+                                            <th class="text-left" scope="row">@pagamento.Recibo</th>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@pagamento.Valor</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0"><p class="p-1" style="@(pagamento.Estado == EEstadoPagamento.Usado ? "background-color: yellow; color: black;" :
+                                            pagamento.Estado == EEstadoPagamento.Disponivel ? "background-color: green; color: #fff;" : "")">
+                                                @pagamento.Estado
+                                                </p>
+                                            </td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@pagamento.DataPagamento</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@pagamento.NomeSocio</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@pagamento.DataCriacao</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="/Pagamento/Detalhes/@pagamento.Id"><i class="dw dw-eye"></i> Detalhes</a>
+                                                        <a class="dropdown-item" href="" onclick="SetPagamento('@pagamento.Id', '@pagamento.Recibo',  '@pagamento.Valor' , '@pagamento.DataPagamento', '@pagamento.SocioId','@pagamento.DataCriacao')" data-toggle="modal" data-target="#editarPagamento"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetPagamento('@pagamento.Id', '@pagamento.Recibo',  '@pagamento.SocioId')" data-toggle="modal" data-target="#eliminarPagamento"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.PeriodoViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Periodos";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev">Listagem de Periodos</h3>
+                            @* <a class="btn btn-success waves-effect ml-auto testev" asp-controller="Periodo" asp-action="Criar"><i class="dw dw-add" style="margin-right: 1em;"></i> Novo Período</a> *@
+                            <button type="button" class="btn btn-success waves-effect ml-auto" data-toggle="ajax-modal" data-target="#periodo" data-url="@Url.Action("Criar")"><i class="fa fa-plus"></i>Novo Parído</button>
+
+                            <a class="btn btn-success waves-effect ml-auto" asp-controller="Item" asp-action="Index"><i class="fa fa-plus"></i>Itens</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">#COD</th>
+                                    <th scope="col">Ano</th>
+                                    <th scope="col">Início</th>
+                                    <th scope="col">Fim</th>
+                                    <th scope="col">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (PeriodoViewModel periodo in Model)
+                                    {
+                                        <tr role="row" class="">
+                                            <th scope="row">@periodo.Cod</th>
+                                            <td class="table-plus sorting_1" tabindex="0">@periodo.Ano</td>
+                                            <td class="table-plus sorting_1" tabindex="0">@periodo.DataInicio</td>
+                                            <td class="table-plus sorting_1" tabindex="0">@periodo.DataFim</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="" onclick="SetPeriodo('@periodo.Id', '@periodo.Cod', '@periodo.Ano', '@periodo.DataInicio', '@periodo.DataFim', '@periodo.DataCriacao', '@periodo.DataAtualizacao')" data-toggle="modal" data-target="#editarSocio"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetPeriodo('@periodo.Id', '@periodo.Cod', '@periodo.Ano')" data-toggle="modal" data-target="#eliminarSocio"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

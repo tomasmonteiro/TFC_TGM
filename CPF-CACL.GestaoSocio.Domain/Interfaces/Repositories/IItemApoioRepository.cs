@@ -4,5 +4,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 {
     public interface IItemApoioRepository : IRepositoryBase<ItemApoio>
     {
+        IEnumerable<ItemApoio> BuscarTodos();
     }
 }

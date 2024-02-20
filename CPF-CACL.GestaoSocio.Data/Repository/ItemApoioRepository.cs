@@ -11,5 +11,10 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
         {
             _gsContext = gsContext;
         }
+
+        public IEnumerable<ItemApoio> BuscarTodos()
+        {
+            return _gsContext.ItemApoio.Where(p => p.Status == true);
+        }
     }
 }

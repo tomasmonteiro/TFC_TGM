@@ -1,6 +1,8 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
+using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
+using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -14,14 +16,21 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         private readonly IBairroRepository _bairroRepository;
         private readonly IMunicipioRepository _municipioRepository;
         private readonly ICategoriaSocioRepository _categoriaRepository;
-        
-        public SocioController(ISocioAppService socioAppService, IOrganismoRepository organismoRepository,  IBairroRepository bairroRepository, ICategoriaSocioRepository categoriaRepository, IMunicipioRepository municipioRepository, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+        private readonly ISaldoAppService _saldoAppService;
+        private readonly IItemAppService _itemAppService;
+
+		private readonly IAgregadoAppService _agregadoAppService;
+
+		public SocioController(ISocioAppService socioAppService, IItemAppService itemAppService, IOrganismoRepository organismoRepository,  IBairroRepository bairroRepository, ICategoriaSocioRepository categoriaRepository, IMunicipioRepository municipioRepository, ISaldoAppService saldoAppService, IAgregadoAppService agregadoAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _socioAppService = socioAppService;
             _organismoRepository = organismoRepository;
             _bairroRepository = bairroRepository;
             _categoriaRepository = categoriaRepository;
             _municipioRepository = municipioRepository;
+            _saldoAppService = saldoAppService;
+            _itemAppService = itemAppService;
+            _agregadoAppService = agregadoAppService;
         }
 
 
@@ -29,6 +38,8 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // GET: SocioController
         public ActionResult Index()
         {
+            
+
             var socio = _socioAppService.Buscar();
             return View(socio);
         }
@@ -36,7 +47,17 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // GET: SocioController/Details/5
         public ActionResult Details(Guid id)
         {
-            var socio = _socioAppService.BuscarPorId(id);
+            //IEnumerable<PagamentoViewModel> pagamentos = _pagamentoAppService.BuscarDisponivel(id);
+            IEnumerable<SaldoViewModel> saldos = _saldoAppService.BuscarDisponivel(id);
+            ViewBag.Saldo = saldos;
+
+            IEnumerable<ItemViewModel> itens = _itemAppService.BuscarItemPorSocio(id);
+			ViewBag.Itens = itens;
+
+            IEnumerable<AgregadoViewModel> agregado = _agregadoAppService.BuscarAgregadoPorSocio(id);
+            ViewBag.Agregado = agregado;
+
+			var socio = _socioAppService.BuscarPorId(id);
             return View(socio);
         }
 

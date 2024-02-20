@@ -123,7 +123,10 @@
                     </a>
                         <div class="dropdown-menu dropdown-menu-right" role="menu" title="Logout">
                         <a href="#" class="dropdown-item azul"><i class="fas fa-user"></i>  Perfil</a>
-                        <a href="#" class="dropdown-item azul fa fa-right-from-bracket"><i class="fas fa-sign-out-alt"></i>  Sair</a>
+                        <form action="/Acesso/Logout" method="post">
+                            <button class="dropdown-item" type="submit"><i class="dw dw-logout"></i> Log Out</button>
+                        </form>
+                        <a asp-controller="Acesso" asp-action="Logout" class="dropdown-item azul fa fa-right-from-bracket"><i class="fas fa-sign-out-alt"></i>  Sair</a>
                         </div>
                     </li>
                 </ul>
@@ -256,7 +259,7 @@
 
                             <li class="nav-header">FERRAMENTAS</li>
                             <li class="nav-item">
-                            <a asp-controller="Admin" asp-action="Index" class="nav-link">
+                            <a href="/Admin/Index" class="nav-link">
                                     <i class="nav-icon fas fa-tools"></i>
                                     <p>
                                         Configurações

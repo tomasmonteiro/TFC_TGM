@@ -20,7 +20,6 @@ namespace CPF_CACL.GestaoSocio.Data.Context
 
         public DbSet<ItemApoio> ItemApoio { get; set; }
         public DbSet<Organismo> Organismo { get; set; }
-        public DbSet<Pagamento> Pagamento { get; set; }
         public DbSet<PerfilUsuario> PerfilUsuario { get; set; }
         public DbSet<Socio> Socio { get; set; }
         public DbSet<TipoBeneficio> TipoBeneficio { get; set; }
@@ -35,8 +34,13 @@ namespace CPF_CACL.GestaoSocio.Data.Context
         public DbSet<PedidoApoio> PedidoApoios { get; set; }
         public DbSet<Relacao> Relacao { get; set; }
 
-
-
+        public DbSet<TipoItem> TipoItem { get; set; }
+        public DbSet<Item> Item { get; set; }
+        public DbSet<ItemPagamento> ItemPagamento { get; set; }
+        public DbSet<Pagamento> Pagamento { get; set; }
+        public DbSet<Periodo> Periodo { get; set; } 
+        public DbSet<Saldo> Saldo { get; set; } 
+         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

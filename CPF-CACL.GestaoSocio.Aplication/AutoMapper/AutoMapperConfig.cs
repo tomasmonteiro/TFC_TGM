@@ -19,6 +19,13 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
             CreateMap<AgregadoViewModel, Agregado>().ReverseMap();
             CreateMap<RelacaoViewModel, Relacao>().ReverseMap();
 
+            CreateMap<ItemViewModel, Item>().ReverseMap();
+            CreateMap<TipoItemViewModel, TipoItem>().ReverseMap();
+            CreateMap<PagamentoViewModel, Pagamento>().ReverseMap();
+            CreateMap<PeriodoViewModel, Periodo>().ReverseMap();
+            CreateMap<ItemPagamentoViewModel, ItemPagamento>().ReverseMap();
+            CreateMap<SaldoViewModel, Saldo>().ReverseMap();
+
 
             #endregion
 
@@ -26,6 +33,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
 
             CreateMap<TipoPagamento, TipoPagamentoViewModel>().ReverseMap().ForMember(c => c.Pagamentos, opt => opt.Ignore());
             CreateMap<Municipio, MunicipioViewModel>().ReverseMap().ForMember(c => c.Bairros, opt => opt.Ignore());
+            
             CreateMap<Bairro, BairroViewModel>()
                 .ForMember(c => c.Municipio, opt => opt.Ignore())
                 .ForMember(dest => dest.NomeMunicipio, opt => opt.MapFrom(src => src.Municipio.Nome));
@@ -48,6 +56,31 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
 
             CreateMap<Relacao, RelacaoViewModel>().ReverseMap()
                 .ForMember(c => c.Agregados, opt => opt.Ignore());
+
+            CreateMap<Item, ItemViewModel>()
+                .ForMember(dest => dest.NomeTipoItem, opt => opt.MapFrom(src => src.TipoItem.Descricao))
+                .ForMember(dest => dest.NomeSocio, opt => opt.MapFrom(src => src.Socio.Nome))
+                .ForMember(dest => dest.CodPeriodo, opt => opt.MapFrom(src => src.Periodo.Cod));
+
+            CreateMap<TipoItem, TipoItemViewModel>().ReverseMap()
+                .ForMember(c => c.Items, opt => opt.Ignore());
+
+            CreateMap<Pagamento, PagamentoViewModel>()
+                .ForMember(dest => dest.NomeSocio, opt => opt.MapFrom(src => src.Socio.Nome))
+                .ForMember(dest => dest.NomeTipoPagamento, opt => opt.MapFrom(src => src.TipoPagamento.Nome));
+
+            CreateMap<Periodo, PeriodoViewModel>().ReverseMap()
+                .ForMember(c => c.Items, opt => opt.Ignore());
+
+
+            CreateMap<ItemPagamento, ItemPagamentoViewModel>().ReverseMap()
+                .ForMember(c => c.Pagamento, opt => opt.Ignore())
+                .ForMember(c => c.Item, opt => opt.Ignore());
+
+
+            CreateMap<Saldo, SaldoViewModel>()
+                .ForMember(dest => dest.NomeSocio, opt => opt.MapFrom(src => src.Socios.Nome));
+
 
             #endregion
         }

@@ -1,0 +1,49 @@
+﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.PeriodoViewModel
+
+
+<div class="modal fade" id="periodo" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="perioroLabel">Criar Peíodo</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div><div class="modal-body">
+                    @* <form asp-controller="Periodo" asp-action="CriarPerioEItem" method="post"> *@
+
+                        <div class="form-group">
+                            <label asp-for="Ano" class="control-label required"> Ano </label>
+                            <input type="number" id="ano" asp-for="Ano" class="form-control" min="2000" max="2100" value="@DateTime.Now.ToString("yyyy")" />
+                            <span asp-validation-for="Ano" class="text-danger"></span>
+                        </div>
+                        <div class="form-group espaco-input">
+                            <label asp-for="DataInicio" class="control-label required"> Data Inicial </label>
+                            <input type="date" asp-for="DataInicio" value="@DateTime.Now.ToString("dd-MM-yyyy")" id="dataInicial" class="form-control" data-val-required="" />
+                            <span asp-validation-for="DataInicio" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="DataFim" class="control-label required"> Data Final</label>
+                            <input type="date" asp-for="DataFim" value="@DateTime.Now.ToString("dd-MM-yyyy")" id="dataFinal" class="form-control" data-val-required="" />
+                            <span asp-validation-for="DataFim" class="text-danger"></span>
+                        </div>
+                        <div class="">
+                            <input type="hidden" value="@DateTime.Now" id="dataCriacao">
+                        </div>
+
+                        <div class="">
+                            <input type="hidden" value="true" asp-for="Status">
+                        </div>
+                        <br />
+                        <div class="modal-footer">
+                        <button type="button" onclick="AdicionarPeriodo()" class="btn btn-success waves-effect"> Adicionar</button>
+                            <a role="button" class="btn btn-link waves-effect" asp-controller="Periodo" asp-action="Index"> Cancelar</a>
+                        </div>
+                    @* </form>  *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

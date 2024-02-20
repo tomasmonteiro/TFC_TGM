@@ -8,10 +8,16 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
     public class SocioService : ServiceBase, ISocioService
     {
         private readonly ISocioRepository _socioRepository;
-        public SocioService(ISocioRepository socioRepository, INotificador notificador) 
+        private readonly IItemService _itemService;
+        private readonly IPeriodoService _periodoService;
+        private readonly ITipoItemRepository _tipoItemRepository;
+        public SocioService(ISocioRepository socioRepository, IItemService itemService, IPeriodoService periodoService, ITipoItemRepository tipoItemRepository, INotificador notificador) 
             : base(notificador)
         {
             _socioRepository = socioRepository;
+            _itemService = itemService;
+            _periodoService = periodoService;
+            _tipoItemRepository = tipoItemRepository;
         }
 
         public IEnumerable<Socio> BuscarPorNome(string nome)
@@ -31,6 +37,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
                 Notificar("Já existe um Sócio definido com este nome.");
                 return;
             }
+            socio.EstadoSocio = Enums.EEstadoSocio.Pendente;
             _socioRepository.Add(socio);
         }
         public IEnumerable<Socio> GetAll()
@@ -75,8 +82,30 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
 
         public Guid Adicionar(Socio socio)
         {
-            socio.Cod = GerarDodigoSocio();
+			socio.EstadoSocio = Enums.EEstadoSocio.Pendente;
+			socio.Cod = GerarDodigoSocio();
             _socioRepository.Add(socio);
+
+            //Criar codigo do perio
+            var codPeriodo = _periodoService.GerarCodigoPeriodo(DateTime.Now);
+
+            var periodo = _periodoService.BuscarPorCod(codPeriodo);
+
+            var tipoItem = _tipoItemRepository.BuscarJoia();
+
+            var item = new Item
+            {
+                Descricao = "Jóia",
+                PeriodoId = periodo.Id,
+                SocioId = socio.Id,
+                TipoItemId = tipoItem.Id,
+                DataCriacao = DateTime.Now,
+                Status = true,
+                Valor = 5000
+            };
+            //Adicionar Joia
+            _itemService.Add(item);
+
             return socio.Id;
         }
 

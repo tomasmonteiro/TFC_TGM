@@ -29,6 +29,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC
             services.AddMvcCore().AddRazorViewEngine();
             //Resoluçaõ de injecção de dependências
             services.AddDependencyInjection();
+            
 
            
         }
@@ -47,12 +48,11 @@ namespace CPF_CACL.GestaoSocio.UI.MVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Socio}/{action=Create}/{id?}");
 
             app.MapControllerRoute(
-                name: "buscarDados",
-                pattern: "{controller=Socio}/{action=BuscarDados}/{opcaoSelecionada?}",
-                defaults: new { controller = "Socio", action="BuscarDados"});
+                name: "Admin",
+                pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
         }
     }
 }

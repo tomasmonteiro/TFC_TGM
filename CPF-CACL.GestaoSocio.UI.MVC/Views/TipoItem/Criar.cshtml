@@ -1,0 +1,39 @@
+﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.TipoItemViewModel
+
+
+<div class="modal fade" id="tipoItem" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tipoItemLabel">Criar Tipo de Item</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <div class="modal-body">
+                    @* <form asp-asp-controller="TipoItem" asp-action="Create" method="post"> *@
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" asp-for="Descricao" id="Nome" class="form-control" placeholder="Digite o tipo de item (Ex: Quota)">
+                    </div>
+
+                    <br />
+                    <div class="">
+                        <input type="hidden" id="dataCriacao" value="@DateTime.Now" asp-for="DataCriacao" id="dataCriacao">
+                    </div>
+                    <div class="">
+                        <input type="hidden" id="status" value="true" asp-for="Status" id="status">
+                    </div>
+
+                    @* </form> *@
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="AdicionarTipoItem()" class="btn btn-success waves-effect"> Adicionar</button>
+                    <a role="button" class="btn btn-link waves-effect" asp-controller="TipoItem" asp-action="Index"> Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -35,7 +35,13 @@ namespace CPF_CACL.GestaoSocio.Aplication.Services
             return mapper.Map<IEnumerable<AgregadoViewModel>>(agregadoService.BuscarTodos());
         }
 
-        public void Eliminar(Guid id)
+		public IEnumerable<AgregadoViewModel> BuscarAgregadoPorSocio(Guid socioId)
+		{
+
+			return mapper.Map<IEnumerable<AgregadoViewModel>>(agregadoService.BuscarAgregadoPorSocio(socioId));
+		}
+
+		public void Eliminar(Guid id)
         {
             agregadoService.Eliminar(id);
         }

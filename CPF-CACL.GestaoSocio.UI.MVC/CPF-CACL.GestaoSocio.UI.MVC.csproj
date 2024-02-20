@@ -27,6 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\" />
+    <Folder Include="Controllers\Admin\" />
     <Folder Include="wwwroot\vendors\images\" />
   </ItemGroup>
 

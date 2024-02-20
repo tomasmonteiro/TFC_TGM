@@ -27,7 +27,8 @@ namespace CPF_CACL.GestaoSocio.Domain.Models.Entities
         public ICollection<Pagamento> Pagamentos { get; set; }
         public ICollection<PedidoApoio> PedidoApoios { get; set; }
         public ICollection<ProjectoSocio> ProjectoSocios { get; set; }
-
+        public ICollection<Item> Items { get; set; }
+        public ICollection<Saldo> Saldo { get; set; }
 
 
     }

@@ -11,10 +11,10 @@ namespace CPF_CACL.GestaoSocio.Aplication.Services
         private readonly IMapper mapper;
         private readonly ISocioService socioService;
         //
-        public SocioAppService(IMapper mapper, ISocioService municipioService)
+        public SocioAppService(IMapper mapper, ISocioService socioService)
         {
             this.mapper = mapper;
-            this.socioService = municipioService;
+            this.socioService = socioService;
         }
 
         public Guid Adicionar(SocioViewModel socioViewModel)

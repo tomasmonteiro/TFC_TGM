@@ -40,7 +40,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="dadospessoais" role="tabpanel">
-                                <div class="pd-20 profile-task-wrap">
+                                <div class="pd-20">
                                     <div class="container pd-0">
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-6 espaco-input">
@@ -137,7 +137,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="filiacao" role="tabpanel">
-                                <div class="pd-20 profile-task-wrap">
+                                <div class="pd-20">
                                     <div class="container pd-0">
                                         <div class="row">
                                             <div class="col-12 col-sm-6 col-md-6 espaco-input">
@@ -172,7 +172,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="contactos" role="tabpanel">
-                                <div class="pd-20 profile-task-wrap">
+                                <div class="pd-20">
                                     <div class="container pd-0">
                                         <div class="row">
                                             <div class="col-12 col-sm-6 col-md-4 espaco-input">
@@ -232,7 +232,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="dadosprofissionais" role="tabpanel">
-                                <div class="pd-20 profile-task-wrap">
+                                <div class="pd-20">
                                     <div class="container pd-0">
                                         <div class="row">
                                             <div class="col-12 col-sm-6 col-md-4 espaco-input">
@@ -282,7 +282,7 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="categoria" role="tabpanel">
-                                <div class="pd-20 profile-task-wrap">
+                                <div class="pd-20">
                                     <div class="container pd-0">
                                         <div class="row">
                                             <div class="col-12 col-sm-6 col-md-6 espaco-input">
@@ -336,6 +336,9 @@
 <button id="irAoTopoBtn" title="Ir ao Topo""><i class="fas fa-arrow-circle-up"></i></button>
 
 
+<!--Para abrir o Modal-->
+<div id="modalContainer"></div>
+
 <!---------Modal para Adicionar Agregado--------------->
 
 <div class="modal fade" id="adicionarAgregado" tabindex="-1" role="dialog" style="display: none;">
@@ -348,14 +351,15 @@
                 </button>
 
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="modalContent">
                 <form>
 
-                    <input type="hidden" id="SocioId" name="SocioId" />
+                    <input asp-for="SocioId" type="hidden" id="SocioId" name="SocioId" />
 
                     <div class="form-group">
-                        <label for="generoAgregado" class="control-label">RELAÇÃO:</label>
-                        <select for="Relacao" id="relacaoAgregado" class="form-control" data-val-required="">
+                        <label for="RelacaoId" class="control-label">RELAÇÃO:</label>
+                        <select  id="relacaoAgregado" class="form-control">
+
                         </select>
                     </div>
 
@@ -365,34 +369,37 @@
                     </div>
                     <div class="form-group">
                         <label for="biAgregado" class="control-label">BI</label>
-                        <input id="biAgregado" name="biAgregado" class="form-control" />
+                        <input asp-for="BI" id="biAgregado" name="biAgregado" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label for="generoAgregado" class="control-label">GÉNERO:</label>
-                        <select for="Genero" id="generoAgregado" class="form-control" data-val-required="">
+                        <select asp-for="Genero" for="Genero" id="generoAgregado" class="form-control" data-val-required="">
                             <option>Feminino</option>
                             <option>Masculino</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="dataNascimentoAgregado" class="control-label required"> DATA DE NASCIMENTO: </label>
-                        <input type="date" for="dataNascimentoAgregado" value="@DateTime.Now.ToString("dd-MM-yyyy")" id="dataNascimentoAgregado" class="form-control" data-val-required="" />
+                        <input asp-for="DataNascimento" type="date" for="dataNascimentoAgregado" value="@DateTime.Now.ToString("dd-MM-yyyy")" id="dataNascimentoAgregado" class="form-control" data-val-required="" />
                     </div>
                     <div class="form-group">
                         <label for="nacionalidadeAgregado" class="control-label">NACIONALIDADE:</label>
-                        <input id="nacionalidadeAgregado" name="nacionalidadeAgregado" class="form-control" />
+                        <input asp-for="Nacionalidade" id="nacionalidadeAgregado" name="nacionalidadeAgregado" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <input type="hidden" id="dataCriacaoAgregado" value="@DateTime.Now" class="form-control" />
+                        <input asp-for="DataCriacao" type="hidden" id="dataCriacaoAgregado" value="@DateTime.Now" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <input type="hidden" id="dataAtualizacaoAgregado" class="form-control" />
+                        <input asp-for="DataAtualizacao" type="hidden" id="dataAtualizacaoAgregado" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Status" type="hidden" id="statusAgregado" class="form-control" />
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="AdicionarAgregado()" class="btn btn-success waves-effect">Salvar</button>
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-link waves-effect" asp-controller="Socio" asp-action="Index">Cancelar</button>
             </div>
         </div>
     </div>

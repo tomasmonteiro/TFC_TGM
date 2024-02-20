@@ -5,6 +5,7 @@ using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
@@ -13,11 +14,13 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         private readonly IRelacaoAppService _relacaoAppService;
         private readonly IRelacaoRepository _relacaoRepository;
         private readonly IAgregadoAppService _agregadoAppService;
-        public AgregadoController(IRelacaoAppService relacaoAppService, IAgregadoAppService agregadoAppService, IRelacaoRepository relacaoRepository, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+        private readonly IAgregadoRepository _agregadoRepository;
+        public AgregadoController(IRelacaoAppService relacaoAppService, IAgregadoAppService agregadoAppService, IRelacaoRepository relacaoRepository, IAgregadoRepository agregadoRepository, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _relacaoAppService = relacaoAppService;
             _relacaoRepository = relacaoRepository;
             _agregadoAppService = agregadoAppService;
+            _agregadoRepository = agregadoRepository;
         }
 
         // GET: AgregadoController
@@ -27,14 +30,14 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             return View(agregado);
         }
 
-        // GET: AgregadoController/Details/5
+        // GET: AgregadoController/Detalhes/5
         public ActionResult Details(Guid id)
         {
             return View();
         }
 
-        // GET: AgregadoController/Create
-        public ActionResult Create()
+        // GET: AgregadoController/Criar
+        public ActionResult Criar()
         {
             var viewModel = new AgregadoViewModel();
             var relacoes = _relacaoRepository.BuscarTodos();
@@ -47,21 +50,33 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
                 })
                 .ToList();
 
-            return PartialView("Create", viewModel);
+            return PartialView("Criar", viewModel);
         }
 
-        // POST: AgregadoController/Create
+        // POST: AgregadoController/Criar
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Criar(AgregadoViewModel agregadoViewModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+
+                _agregadoAppService.Adicionar(agregadoViewModel);
+
+                if (!ValidOperation())
+                {
+                    var sb = new StringBuilder();
+                    foreach (var item in BuscarMensagemErro())
+                    {
+                        sb.AppendLine($"x {item}\n");
+                    }
+                    return Json(sb.ToString());
+                }
+                return Json("Registo adicionado com sucesso!");
+
             }
-            catch
+            catch (Exception erro)
             {
-                return View();
+                return Json($"x Ocorreu um erro: {erro.Message}");
             }
         }
 

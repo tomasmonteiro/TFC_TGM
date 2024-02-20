@@ -1,0 +1,75 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model List<ExtratoViewModel>
+
+@{
+    ViewData["Title"] = "Registar Pagamento";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+<div class="page-header">
+    <div class="row">
+        <div class="col-12 col-md-12 col-sm-12">
+            <div class="title">
+                <h4>Extrato Financeiro</h4>
+            </div>
+            <nav class="col-12 col-md-12 col-sm-12" aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/Pagamento/Index">Pagamento</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Extrato Financeiro</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <!---->
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <table class="table table-bordered stripe" id="tabelaItem">
+                                    <thead>
+                                        <tr>
+                                            <td colspan="5" class="text-center text-bold bg-cyan">PAGAMENTOS EFECTUADOS</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-left">Descrição</th>
+                                            <th class="text-left">Recibo</th>
+                                            <th class="text-left">Valor (KZ)</th>
+                                            <th class="text-left">Data Pag.</th>
+                                            <th class="text-left">Data Inserç.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var itens in Model)
+                                        {
+                                            <tr role="row" class="">
+                                                <td class="text-left">@itens.DescricaoItem</td>
+                                                <td class="text-left">@itens.ReciboPagamento</td>
+                                                <td class="text-left">@itens.ValorItem</td>
+                                                <td class="text-left">@itens.DataPagamento.ToString("dd/MM/yyyy")</td>
+                                                <td class="text-left">@itens.DataRegisto.ToString("dd/MM/yyyy")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--/-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

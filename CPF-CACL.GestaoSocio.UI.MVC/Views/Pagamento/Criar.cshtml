@@ -1,0 +1,67 @@
+﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.PagamentoViewModel
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<!--Para abrir o Modal-->
+<div id="modalContainer"></div>
+
+<div class="modal fade" id="modalPagamento" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pagamentoLabel">Registar Pagamento</h5>
+
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--Corpo do Modal-->
+            <div class="modal-body">
+                <div class="">
+                    <input type="hidden" id="SocioId">
+                </div>
+                <div class="form-group">
+                    <label  class="control-label">Tipo de Pagamento</label>
+                    <select  id="tipoPagamento" class="form-control" data-val-required="">
+                        @foreach (var item in Model.TipoPagamento)
+                        {
+                            <option value="@item.Id">@item.Nome</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Nº do Recíbo</label>
+                    <input type="text" id="Recibo" class="form-control" placeholder="Digite o nº do recíbo">
+                </div>
+
+                <div class="form-group">
+                    <label>Valor (KZ)</label>
+                    <input type="text" id="Valor" class="form-control" placeholder="Digite o valor do pagamento">
+                </div>
+
+                <div class="form-group">
+                    <label>Data do pagamento</label>
+                    <input type="date" value="@DateTime.Now.ToString("dd-MM-yyyy")" id="DataPagamento" class="form-control"/>
+                </div>
+
+                <div class="">
+                    <input type="hidden" value="@DateTime.Now" id="dataCriacao">
+                </div>
+
+                <div class="">
+                    <input type="hidden" value="true">
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button type="button" onclick="AdicionarPagamento()" class="btn btn-success waves-effect"> Adicionar</button>
+                    <a role="button" class="btn btn-link waves-effect" data-dismiss="modal"> Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

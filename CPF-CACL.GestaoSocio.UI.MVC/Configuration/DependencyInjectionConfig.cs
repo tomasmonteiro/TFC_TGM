@@ -39,13 +39,37 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Configuration
 
             services.AddScoped<INotificador, Notificador>();
 
+            services.AddScoped<IRelacaoRepository, RelacaoRepository>();
+            services.AddScoped<IRelacaoAppService, RelacaoAppService>();
+            services.AddScoped<IRelacaoService, RelacaoService>();
+
+            services.AddScoped<IItemRepository, ItemRepository>();
+            services.AddScoped<IItemAppService, ItemAppService>();
+            services.AddScoped<IItemService, ItemService>();
+
+            services.AddScoped<ITipoItemRepository, TipoItemRepository>();
+            services.AddScoped<ITipoItemAppService, TipoItemAppService>();
+            services.AddScoped<ITipoItemService, TipoItemService>();
+
+            services.AddScoped<IPagamentoRepository, PagamentoRepository>();
+            services.AddScoped<IPagamentoAppService, PagamentoAppService>();
+            services.AddScoped<IPagamentoService, PagamentoService>();
+
+			services.AddScoped<IItemPagamentoRepository, ItemPagamentoRepository>();
+			services.AddScoped<IItemPagamentoAppService, ItemPagamentoAppService>();
+			services.AddScoped<IItemPagamentoService, ItemPagamentoService>();
+
+			services.AddScoped<IPeriodoRepository, PeriodoRepository>();
+            services.AddScoped<IPeriodoAppService, PeriodoAppService>();
+            services.AddScoped<IPeriodoService, PeriodoService>();
+
             services.AddScoped<IAgregadoRepository, AgregadoRepository>();
             services.AddScoped<IAgregadoAppService, AgregadoAppService>();
             services.AddScoped<IAgregadoService, AgregadoService>();
 
-            services.AddScoped<IRelacaoRepository, RelacaoRepository>();
-            services.AddScoped<IRelacaoAppService, RelacaoAppService>();
-            services.AddScoped<IRelacaoService, RelacaoService>();
+            services.AddScoped<ISaldoRepository, SaldoRepository>();
+            services.AddScoped<ISaldoAppService, SaldoAppService>();
+            services.AddScoped<ISaldoService, SaldoService>();
 
             return services;
         }

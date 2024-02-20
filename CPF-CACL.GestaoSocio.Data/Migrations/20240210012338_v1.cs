@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CPF_CACL.GestaoSocio.Data.Migrations
 {
-    public partial class V1 : Migration
+    public partial class v1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -91,6 +91,26 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Periodo",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Cod = table.Column<string>(type: "varchar(10)", nullable: false),
+                    Ano = table.Column<int>(type: "int", nullable: false),
+                    Estado = table.Column<string>(type: "varchar(20)", nullable: false),
+                    DataInicio = table.Column<DateTime>(type: "date", nullable: false),
+                    DataFim = table.Column<DateTime>(type: "date", nullable: false),
+                    UltimoDiaUtil = table.Column<DateTime>(type: "date", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Periodo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Relacao",
                 columns: table => new
                 {
@@ -118,6 +138,21 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TipoBeneficio", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TipoItem",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Descricao = table.Column<string>(type: "varchar(50)", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoItem", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -393,17 +428,58 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Item",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Cod = table.Column<string>(type: "varchar(10)", nullable: false),
+                    Descricao = table.Column<string>(type: "varchar(50)", nullable: false),
+                    Valor = table.Column<decimal>(type: "smallmoney", nullable: false),
+                    Estado = table.Column<string>(type: "varchar(30)", nullable: false),
+                    DataVencimento = table.Column<DateTime>(type: "date", nullable: true),
+                    TipoItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SocioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PeriodoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Item", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Item_Periodo_PeriodoId",
+                        column: x => x.PeriodoId,
+                        principalTable: "Periodo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Item_Socio_SocioId",
+                        column: x => x.SocioId,
+                        principalTable: "Socio",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Item_TipoItem_TipoItemId",
+                        column: x => x.TipoItemId,
+                        principalTable: "TipoItem",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pagamento",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Cod = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Recibo = table.Column<string>(type: "varchar(50)", nullable: false),
+                    Descricao = table.Column<string>(type: "varchar(200)", nullable: true),
+                    Valor = table.Column<decimal>(type: "smallmoney", nullable: false),
+                    Estado = table.Column<string>(type: "varchar(20)", nullable: false),
                     DataPagamento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Valor = table.Column<double>(type: "float", nullable: false),
-                    TipoPagamentoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SocioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TipoPagamentoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
@@ -421,14 +497,12 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         name: "FK_Pagamento_TipoPagamento_TipoPagamentoId",
                         column: x => x.TipoPagamentoId,
                         principalTable: "TipoPagamento",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Pagamento_Usuario_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "Usuario",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -460,7 +534,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Descricao = table.Column<string>(type: "varchar(100)", nullable: false),
-                    DataAtribuicao = table.Column<DateTime>(type: "Datetime", nullable: false),
+                    DataAtribuicao = table.Column<DateTime>(type: "datetime", nullable: false),
                     SocioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProjectoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -544,6 +618,64 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ItemPagamento",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataInsercao = table.Column<DateTime>(type: "datetime", nullable: false),
+                    PagamentoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemPagamento", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ItemPagamento_Item_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Item",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ItemPagamento_Pagamento_PagamentoId",
+                        column: x => x.PagamentoId,
+                        principalTable: "Pagamento",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Saldo",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Valor = table.Column<decimal>(type: "smallmoney", nullable: false),
+                    SocioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PagamentoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Saldo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Saldo_Pagamento_PagamentoId",
+                        column: x => x.PagamentoId,
+                        principalTable: "Pagamento",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Saldo_Socio_SocioId",
+                        column: x => x.SocioId,
+                        principalTable: "Socio",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Agregado_RelacaoId",
                 table: "Agregado",
@@ -596,6 +728,27 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Item_Cod",
+                table: "Item",
+                column: "Cod",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Item_PeriodoId",
+                table: "Item",
+                column: "PeriodoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Item_SocioId",
+                table: "Item",
+                column: "SocioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Item_TipoItemId",
+                table: "Item",
+                column: "TipoItemId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ItemApoio_ApoioId",
                 table: "ItemApoio",
                 column: "ApoioId");
@@ -609,6 +762,22 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "IX_ItemApoio_ForneceorId",
                 table: "ItemApoio",
                 column: "ForneceorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemPagamento_ItemId",
+                table: "ItemPagamento",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemPagamento_PagamentoId",
+                table: "ItemPagamento",
+                column: "PagamentoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pagamento_Recibo",
+                table: "Pagamento",
+                column: "Recibo",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pagamento_SocioId",
@@ -631,6 +800,12 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 column: "SocioId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Periodo_Cod",
+                table: "Periodo",
+                column: "Cod",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Projecto_TipoProjectoId",
                 table: "Projecto",
                 column: "TipoProjectoId");
@@ -643,6 +818,16 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectoSocio_SocioId",
                 table: "ProjectoSocio",
+                column: "SocioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Saldo_PagamentoId",
+                table: "Saldo",
+                column: "PagamentoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Saldo_SocioId",
+                table: "Saldo",
                 column: "SocioId");
 
             migrationBuilder.CreateIndex(
@@ -687,13 +872,16 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "ItemApoio");
 
             migrationBuilder.DropTable(
-                name: "Pagamento");
+                name: "ItemPagamento");
 
             migrationBuilder.DropTable(
                 name: "PedidoApoio");
 
             migrationBuilder.DropTable(
                 name: "ProjectoSocio");
+
+            migrationBuilder.DropTable(
+                name: "Saldo");
 
             migrationBuilder.DropTable(
                 name: "Relacao");
@@ -708,22 +896,34 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                 name: "Fornecedor");
 
             migrationBuilder.DropTable(
-                name: "TipoPagamento");
+                name: "Item");
 
             migrationBuilder.DropTable(
                 name: "Projecto");
 
             migrationBuilder.DropTable(
-                name: "Socio");
-
-            migrationBuilder.DropTable(
-                name: "Usuario");
+                name: "Pagamento");
 
             migrationBuilder.DropTable(
                 name: "TipoBeneficio");
 
             migrationBuilder.DropTable(
+                name: "Periodo");
+
+            migrationBuilder.DropTable(
+                name: "TipoItem");
+
+            migrationBuilder.DropTable(
                 name: "TipoProjecto");
+
+            migrationBuilder.DropTable(
+                name: "Socio");
+
+            migrationBuilder.DropTable(
+                name: "TipoPagamento");
+
+            migrationBuilder.DropTable(
+                name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "Bairro");

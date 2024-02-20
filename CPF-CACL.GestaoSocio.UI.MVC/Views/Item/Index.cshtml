@@ -1,0 +1,95 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+@using CPF_CACL.GestaoSocio.Domain.Enums;
+
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.ItemViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Itens";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev">Listagem de Itens (Quota, Jóia, Incrição e Outros)</h3>
+                            <button type="button" class="btn btn-success waves-effect ml-auto" data-toggle="ajax-modal" data-target="#itens" data-url="@Url.Action("Criar")"><i class="fa fa-plus"></i>Novo Item</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 9;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">#COD</th>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Valor (KZ)</th>
+                                    <th scope="col">Sócio</th>
+                                    <th scope="col">Peírodo</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Registo</th>
+                                    <th scope="col">Vencimento</th>
+                                    <th scope="col">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (ItemViewModel item in Model)
+                                    {
+                                        <tr role="row" class="">
+                                            <th class="text-left" scope="row">@item.Cod</th>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@item.Descricao</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@item.Valor</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@item.NomeSocio</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@item.CodPeriodo</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0" style="@(item.Estado == EEstadoItem.NaoPago ? "color: red;" :
+                                            item.Estado == EEstadoItem.NaoPago ? "color: green;" : "")">
+                                                @item.Estado
+                                            </td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@item.DataCriacao</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@item.DataVencimento</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="" onclick="SetPeriodo('@item.Id', '@item.Cod', '@item.Descricao', '@item.Valor', '@item.NomeSocio','@item.CodPeriodo','@item.Estado', '@item.DataVencimento', '@item.DataCriacao')" data-toggle="modal" data-target="#editarItem"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetPeriodo('@item.Id', '@item.Cod', '@item.Descricao')" data-toggle="modal" data-target="#eliminarItem"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

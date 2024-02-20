@@ -23,29 +23,30 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             var relacao = _relacaoRepository.GetById(agregado.RelacaoId);
 
-            if (relacao != null && relacao.Nome == "Cônjuge")
+            if (relacao != null)
             {
-                if (VerificarExisteConjuge(agregado.SocioId))
+                if (relacao.Nome == "Cônjuge")
                 {
-                    Notificar("Já existe um Cônjuge para este Sócio.");
-                    return;
+                    if (VerificarExisteConjuge(agregado.SocioId))
+                    {
+                        Notificar("Já existe um Cônjuge para este Sócio.");
+                        return;
+                    }
+                    _agregadoRepository.Add(agregado);
                 }
-
-                _agregadoRepository.Add(agregado);
-
-            }
-            else if (relacao != null && relacao.Nome == "Filho")
-            {
-                //Calcular a idade do filho
-                var idade = agregado.CalcularIdade(agregado.DataNascimento);
-
-                //Se o filho for maior de idade...
-                if (idade >= 18)
+                else if (relacao.Nome == "Filho")
                 {
-                    Notificar("Não é permitido o registro de filhos maior de idade.");
-                    return;
+                    //Calcular a idade do filho
+                    var idade = agregado.CalcularIdade(agregado.DataNascimento);
+
+                    //Se o filho for maior de idade...
+                    if (idade >= 18)
+                    {
+                        Notificar("Não é permitido o registro de filhos maior de idade.");
+                        return;
+                    }
+                    _agregadoRepository.Add(agregado);
                 }
-                _agregadoRepository.Add(agregado);
             }
         }
 
@@ -89,5 +90,10 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             _agregadoRepository.Remove(agregado);
         }
-    }
+
+		public IEnumerable<Agregado> BuscarAgregadoPorSocio(Guid socioId)
+		{
+            return _agregadoRepository.BuscarAgregadoPorSocio(socioId);
+		}
+	}
 }

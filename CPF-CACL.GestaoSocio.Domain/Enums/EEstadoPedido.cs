@@ -8,7 +8,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Enums
 {
     public enum EEstadoPedido
     {
-        Pendente = 1,
-        Concluindo = 2
+        Pendente = 0,
+        Concluindo = 1
     }
 }

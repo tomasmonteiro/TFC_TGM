@@ -20,7 +20,7 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Descricao).HasColumnType("varchar(100)").IsRequired();
-            builder.Property(x => x.DataAtribuicao).HasColumnType("Datetime").IsRequired();
+            builder.Property(x => x.DataAtribuicao).HasColumnType("datetime").IsRequired();
 
             builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");

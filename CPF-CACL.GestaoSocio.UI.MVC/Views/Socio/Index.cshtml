@@ -20,6 +20,9 @@
                     <!--Para abrir o Modal-->
                     <div id="PlaceHolderHere"></div>
 
+                    <!--Para abrir o Modal Add Agregado-->
+                    <div id="modalContainer"></div>
+
                     <div class="col-12 col-md-12 col-lg-12">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
                             <h3 class="card-title testev">Listagem de Socios</h3>
@@ -68,8 +71,9 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                         <a class="dropdown-item" href="/Socio/Details/@socio.Id"><i class="dw dw-eye"></i> Detalhes</a>
-                                                        <a class="dropdown-item" href="" onclick="SetUser('@socio.Id', '@socio.Nome', '@socio.BI', '@socio.DataNascimento')" data-toggle="modal" data-target="#editarSocio"><i class="dw dw-edit2"></i> Editar</a>
-                                                        <a class="dropdown-item" href="#" onclick="SetUser('@socio.Id', '@socio.Nome', '@socio.BI', '@socio.DataNascimento')" data-toggle="modal" data-target="#eliminarSocio"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                        <a class="dropdown-item" href="#" onclick="abrirModalAgregado('@socio.Id')"><i class="dw dw-group"></i>Add Agregado</a>
+                                                        <a class="dropdown-item" href="" onclick="SetSocio('@socio.Id', '@socio.Nome', '@socio.BI', '@socio.DataNascimento')" data-toggle="modal" data-target="#editarSocio"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetSocio('@socio.Id', '@socio.Nome', '@socio.BI', '@socio.DataNascimento')" data-toggle="modal" data-target="#eliminarSocio"><i class="dw dw-delete-3"></i> Eliminar</a>
                                                     </div>
                                                 </div>
                                             </td>

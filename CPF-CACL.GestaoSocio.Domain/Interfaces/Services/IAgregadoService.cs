@@ -7,6 +7,8 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Services
    
         //Método para verificar se já existe um conjuge para aquele Sócio
         bool VerificarExisteConjuge(Guid socioId);
- 
-    }
+
+		IEnumerable<Agregado> BuscarAgregadoPorSocio(Guid socioId);
+
+	}
 }

@@ -4,6 +4,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Services
 {
     public interface IPagamentoService : IServiceBase<Pagamento>
     {
-        Pagamento BuscarPorCod(Guid id);
-    }
+        Pagamento BuscarPorCod(string codigo);
+		public IEnumerable<Pagamento> BuscarDisponivel(Guid id);
+	}
 }
