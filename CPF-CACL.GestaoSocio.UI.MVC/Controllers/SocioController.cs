@@ -4,11 +4,14 @@ using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
 using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
+using CPF_CACL.GestaoSocio.UI.MVC.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
+    [Autorizacao("Admin", "Vogal", "Secretario", "Tesoureiro")]
     public class SocioController : BaseController
     {
         private readonly ISocioAppService _socioAppService;
@@ -45,6 +48,8 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         }
 
         // GET: SocioController/Details/5
+
+        
         public ActionResult Details(Guid id)
         {
             //IEnumerable<PagamentoViewModel> pagamentos = _pagamentoAppService.BuscarDisponivel(id);

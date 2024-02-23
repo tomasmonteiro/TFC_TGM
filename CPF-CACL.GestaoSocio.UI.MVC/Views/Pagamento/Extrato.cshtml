@@ -1,16 +1,10 @@
 ﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
-
 @model List<ExtratoViewModel>
 
 @{
-    ViewData["Title"] = "Registar Pagamento";
+    ViewData["Title"] = "Extrato Financeiro";
 }
 
-<div id="loading-overlay" style="display: none;">
-    <div id="loading-circle">
-        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
-    </div>
-</div>
 <div class="page-header">
     <div class="row">
         <div class="col-12 col-md-12 col-sm-12">
@@ -29,47 +23,67 @@
 </div>
 
 
-<div class="row">
-    <div class="col-12 col-md-12 col-lg-12">
-        <div class="card">
-            <div class="margem-container card-body">
-                <div class="margens col-12 col-md-12 col-lg-12">
-                    <div class="text-center col-12 col-md-12 col-lg-12">
-                        <!---->
-                        <div class="row">
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <table class="table table-bordered stripe" id="tabelaItem">
-                                    <thead>
-                                        <tr>
-                                            <td colspan="5" class="text-center text-bold bg-cyan">PAGAMENTOS EFECTUADOS</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="text-left">Descrição</th>
-                                            <th class="text-left">Recibo</th>
-                                            <th class="text-left">Valor (KZ)</th>
-                                            <th class="text-left">Data Pag.</th>
-                                            <th class="text-left">Data Inserç.</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var itens in Model)
-                                        {
-                                            <tr role="row" class="">
-                                                <td class="text-left">@itens.DescricaoItem</td>
-                                                <td class="text-left">@itens.ReciboPagamento</td>
-                                                <td class="text-left">@itens.ValorItem</td>
-                                                <td class="text-left">@itens.DataPagamento.ToString("dd/MM/yyyy")</td>
-                                                <td class="text-left">@itens.DataRegisto.ToString("dd/MM/yyyy")</td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!--/-->
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title text-center text-bold">PAGAMENTOS EFECTUADOS</h3>
                     </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Descrição</th>
+                                    <th>Recibo</th>
+                                    <th>Valor (KZ)</th>
+                                    <th>Data Pag.</th>
+                                    <th>Data Inserç.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var itens in Model)
+                                {
+                                    <tr role="row" class="">
+                                        <td >@itens.DescricaoItem</td>
+                                        <td>@itens.ReciboPagamento</td>
+                                        <td>@itens.ValorItem</td>
+                                        <td>@itens.DataPagamento.ToString("dd/MM/yyyy")</td>
+                                        <td>@itens.DataRegisto.ToString("dd/MM/yyyy")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
                 </div>
+                <!-- /.card -->
             </div>
         </div>
     </div>
-</div>
+</section>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $("#example2").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example1').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+}

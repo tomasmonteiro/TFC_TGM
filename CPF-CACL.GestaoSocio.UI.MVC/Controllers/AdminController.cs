@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CPF_CACL.GestaoSocio.UI.MVC.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
@@ -6,7 +7,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
     {
         public IActionResult Index()
         {
-            return View();
-        }
+            return View(); 
+        } 
     }
 }

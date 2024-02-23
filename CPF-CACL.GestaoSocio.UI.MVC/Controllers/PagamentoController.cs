@@ -5,12 +5,14 @@ using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
 using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
+using CPF_CACL.GestaoSocio.UI.MVC.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
+    [Autorizacao("Admin", "Presidente", "Tesoureiro", "Secretario", "Vogal")]
     public class PagamentoController : BaseController
     {
         private readonly ISaldoAppService _saldoAppService;
@@ -110,16 +112,17 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             }
         }
 
-        // GET: PagamentoController/Delete/5
-        public ActionResult Deletar(int id)
+        // GET: PagamentoController/Deletar/5
+        [Autorizacao("Admin")]
+        public ActionResult Deletar(Guid id)
         {
             return View();
         }
 
-        // POST: PagamentoController/Delete/5
+        // POST: PagamentoController/Deletar/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Deletar(int id, IFormCollection collection)
+        [Autorizacao("Admin")]
+        public ActionResult Deletar(PagamentoViewModel pagamentoViewModel)
         {
             try
             {

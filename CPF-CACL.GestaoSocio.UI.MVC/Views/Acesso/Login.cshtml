@@ -1,6 +1,8 @@
-﻿@{
+﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.LoginViewModel
+@{
     Layout = null;
 }
+ 
 <!DOCTYPE html>
 <html lang="pt-pt">
     <head>
@@ -8,16 +10,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <title>Login | GEST-PREV</title>
 
+        <link href="~/css/site.css" rel="stylesheet" />
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
         <!-- Font Awesome -->
         <link rel="stylesheet" type="text/css" href="~/css/fontawesome/css/all.min.css" />
+        <!--SweetAlert2-->
+        <link rel="stylesheet" type="text/css" href="~/plugins/sweetalert2/sweetalert2.min.css" />
+
         <!-- icheck bootstrap -->
         <link rel="stylesheet" type="text/css" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
         <!-- Theme style -->
         <link rel="stylesheet" type="text/css" href="~/dist/css/adminlte.min.css">
     </head>
     <body class="hold-transition login-page" style="background-color: #808080">
+
         <div class="login-box">
             <!-- /.login-logo -->
             <div class="card card-outline card-primary">
@@ -25,27 +32,30 @@
                 <p href="" class="h1 text-primary"><b>GEST</b>-PREV</p>
                 </div>
                 <div class="card-body login-card-body">
+
                     <p class="login-box-msg">Gestão de Previdência | LOGIN</p>
                     @if (TempData["Erro"] != null)
                     {
                         <p class="text-danger">@TempData["Erro"]</p>
                     }
-                    <form action="" method="post">
+                    <form method="post">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="userName" placeholder="Utiliador">
+                        <input type="text" asp-for="Login" class="form-control" id="userName" placeholder="Utiliador" data-val-required="">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-user"></span>
                                 </div>
                             </div>
+                            <span asp-validation-for="Login" class="text-danger"></span>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="password" name="password" class="form-control" placeholder="Password">
+                            <input type="password" asp-for="Senha" id="password" class="form-control" autocomplete="off" placeholder="Password" data-val-required="">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
                                 </div>
                             </div>
+                            <span asp-validation-for="Senha" class="text-danger"></span>
                         </div>
                         <div class="row">
                             @*<div class="col-8">
@@ -58,19 +68,24 @@
                             </div> *@
                             <!-- /.col -->
                             <div class="offset-4 col-4">
-                                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                                <button type="submit" class="btn btn-primary btn-block">Entrar</button>
                             </div>
                             <!-- /.col -->
                         </div>
-                    </form>
+                </form>
                 </div>
             </div>
         </div>
-        <!-- /.login-box -->
+
+
         <!-- jQuery -->
         <script src="~/plugins/jquery/jquery.min.js"></script>
+        <script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
         <!-- Bootstrap 4 -->
         <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <script src="~/js/site.js"></script>
+
         <!-- AdminLTE App -->
         <script src="~/dist/js/adminlte.min.js"></script>
     </body>

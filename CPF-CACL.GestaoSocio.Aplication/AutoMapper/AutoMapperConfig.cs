@@ -25,6 +25,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
             CreateMap<PeriodoViewModel, Periodo>().ReverseMap();
             CreateMap<ItemPagamentoViewModel, ItemPagamento>().ReverseMap();
             CreateMap<SaldoViewModel, Saldo>().ReverseMap();
+            CreateMap<UsuarioViewModel, Usuario>().ReverseMap();
 
 
             #endregion
@@ -81,6 +82,10 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
             CreateMap<Saldo, SaldoViewModel>()
                 .ForMember(dest => dest.NomeSocio, opt => opt.MapFrom(src => src.Socios.Nome));
 
+
+            CreateMap<Usuario, UsuarioViewModel>().ReverseMap()
+                .ForMember(c => c.Apoios, opt => opt.Ignore())
+                .ForMember(c => c.Pagamentos, opt => opt.Ignore());
 
             #endregion
         }

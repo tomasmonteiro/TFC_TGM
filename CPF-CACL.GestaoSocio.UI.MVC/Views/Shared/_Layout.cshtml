@@ -1,14 +1,27 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@using CPF_CACL.GestaoSocio.Domain.Enums;
+
+<!DOCTYPE html>
 <html lang="pt-pt">
     <head>
         <meta charset="utf-8">     
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-   
-        <title>@ViewData["Title"] - GEST-PREV</title>
 
-        
+        <title>@ViewData["Title"] | GEST-PREV</title>
+
 
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <!-- Font Awesome -->
+        <link rel="stylesheet" type="text/css" href="~/css/fontawesome/css/all.min.css" />
+        @* 
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> *@
+        @* <link href="~/dist/css/css/ionicons.css" rel="stylesheet" /> *@
+        <link href="~/dist/css/css/ionicons.min.css" rel="stylesheet" />
+
+        <link href="~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+
         <!--Vendor-->
         @* <link rel="stylesheet" type="text/css" href="~/vendors/styles/icon-font.css"/> *@
         <link href="~/vendors/styles/icon-font.min.css" rel="stylesheet" />
@@ -20,14 +33,13 @@
 
         
 
-        <!-- Font Awesome -->
-        <link rel="stylesheet" type="text/css" href="~/css/fontawesome/css/all.min.css" />
         <!--SweetAlert2-->
         <link rel="stylesheet" type="text/css" href="~/plugins/sweetalert2/sweetalert2.min.css" />
 
         <!-- Outros estilos -->
         <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
         <link href="~/css/datatables.min.css" rel="stylesheet" />
+    <link href="~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
     
         <!--Usando JsGrid -->
         <link href="~/plugins/jsgrid/jsgrid.min.css" rel="stylesheet" />
@@ -69,28 +81,6 @@
 
                 <!-- Topo - Links da direita -->
                 <ul class="navbar-nav ml-auto">
-@*                     <!-- Barra de pesquisa -->
-                    <li class="nav-item">
-                        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                            <i class="fas fa-search"></i>
-                        </a>
-                        <div class="navbar-search-block">
-                            <form class="form-inline">
-                                <div class="input-group input-group-sm">
-                                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-navbar" type="submit">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                        <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </li> *@
-
                 
                     <!-- Menu Dropdown das Notificações -->
                     <li class="nav-item dropdown">
@@ -119,7 +109,7 @@
                     <!--Menu de Login/Logout-->
                     <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fas fa-bold fa-user-tie"></i>
+                        <i class="fas fa-user-tie"></i>
                     </a>
                         <div class="dropdown-menu dropdown-menu-right" role="menu" title="Logout">
                         <a href="#" class="dropdown-item azul"><i class="fas fa-user"></i>  Perfil</a>
@@ -143,12 +133,16 @@
                 <!-- Menu Lateral -->
                 <div class="sidebar">
                     <!-- Painel de usuário -->
-                    <div class="user-panel mt-3 pb-3 mb-3">
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
                             <img src="~/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">Tomás Gabriel Monteiro</a>
+                            
+                            @if (HttpContextAccessor.HttpContext.Session.GetString("userName") != null)
+                            {
+                                <a href="#" class="d-block">@HttpContextAccessor.HttpContext.Session.GetString("nome")</a>
+                            }
                         </div>
                     </div>
 
@@ -167,7 +161,7 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a asp-controller="Municipio" asp-action="Index" class="nav-link">
+                                        <a href="#" class="nav-link">
                                             <i class="fas fa-search nav-icon"></i>
                                             <p>Pesquisar</p>
                                         </a>
@@ -179,15 +173,21 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="./index3.html" class="nav-link">
+                                        <a href="#" class="nav-link">
                                             <i class="fa nav-icon fa-hands-helping"></i>
                                             <p>Atribuir Apóio</p>
                                         </a>
                                     </li>
+                                <li class="nav-item">
+                                    <a href="/Socio/Index" class="nav-link">
+                                        <i class="fas fa-group nav-icon"></i>
+                                        <p>Todos</p>
+                                    </a>
+                                </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a href="pages/widgets.html" class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-money-bill"></i>
                                     <p>
                                         Pagamento
@@ -205,13 +205,21 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="pages/charts/chartjs.html" class="nav-link">
-                                            <i class=" nav-icon fas fa-chart-line"></i>
-                                            <p>Dados financeiros</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
+                                    @if (HttpContextAccessor.HttpContext.Session.GetString("perfil")
+                                        == EPerfilUsuario.Tesoureiro.ToString()
+                                        ||
+                                        HttpContextAccessor.HttpContext.Session.GetString("perfil")
+                                        == EPerfilUsuario.Presidente.ToString()
+                                        )
+                                    {
+                                        <li class="nav-item">
+                                            <a href="pages/charts/chartjs.html" class="nav-link">
+                                                <i class=" nav-icon fas fa-chart-line"></i>
+                                                <p>Dados financeiros</p>
+                                            </a>
+                                        </li>
+                                    }
+                                <li class="nav-item">
                                         <a href="pages/charts/chartjs.html" class="nav-link">
                                             <i class="fas fa-chart-bar nav-icon"></i>
                                             <p>Dados dos sócios</p>
@@ -257,17 +265,8 @@
                                 </ul>
                             </li>
 
-                            <li class="nav-header">FERRAMENTAS</li>
                             <li class="nav-item">
-                            <a href="/Admin/Index" class="nav-link">
-                                    <i class="nav-icon fas fa-tools"></i>
-                                    <p>
-                                        Configurações
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/gallery.html" class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-question-circle"></i>
                                     <p>
                                         Ajuda e feedback
@@ -307,8 +306,15 @@
         <script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
     
         <script src="~/js/datatables.min.js"></script>
+
         <script src="~/plugins/pdfmake-0.2.7/pdfmake.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+
+        <script src="~/plugins/datatables-buttons/js/datatables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colvis.min.js"></script>
 
 
 

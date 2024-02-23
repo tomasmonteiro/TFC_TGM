@@ -2,7 +2,12 @@
 
 namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 {
-    public interface IUsuarioService : IRepositoryBase<Usuario>
+    public interface IUsuarioRepository : IRepositoryBase<Usuario>
     {
+         
+        ICollection<Usuario> BuscarPorName(string nome);
+        Usuario BuscarPorLogin(string login);
+        Usuario BuscarPorEmail(string email);
+        IEnumerable<Usuario> BuscarTodos();
     }
 }

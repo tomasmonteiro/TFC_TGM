@@ -14,7 +14,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         private readonly IMunicipioAppService _municipioAppService;
         private readonly IMunicipioRepository _municipioRepository;
         private readonly IBairroAppService _bairroAppService;
-        public BairroController(IMunicipioAppService municipioAppService,IBairroAppService bairroAppService, IMunicipioRepository municipioRepository, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+        public BairroController(IMunicipioAppService municipioAppService, IBairroAppService bairroAppService, IMunicipioRepository municipioRepository, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _municipioAppService = municipioAppService;
             _municipioRepository = municipioRepository;
@@ -49,12 +49,12 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
                 })
                 .ToList();
 
-            return PartialView("Create",viewModel);
+            return PartialView("Create", viewModel);
         }
 
         // POST: BairroController/Create
         [HttpPost]
-        public ActionResult Create(BairroViewModel viewModel )
+        public ActionResult Create(BairroViewModel viewModel)
         {
             try
             {

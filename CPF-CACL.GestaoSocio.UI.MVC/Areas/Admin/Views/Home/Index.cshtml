@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Painel administrativo";
+}
+
+@model CPF_CACL.GestaoSocio.Domain.Enums.EEstadoApoio
+
+
+@* <div class="text-center">
+    <h1 class="display-6 text-20">Bem-Vindo</h1>
+    <p>Este é um sistema de Getão de Previdência Social.</p>
+</div> *@
+
+<div class="row espaco">
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>150</h3>
+
+                <p>Sócios</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-android-people"></i>
+            </div>
+            <a href="/Socio/Index" class="small-box-footer">Mais informações <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                <p>Pagamentos efectuados</p>
+            </div>
+            <div class="icon">
+                <i class=" ion ion-stats-bars"></i>
+            </div>
+            <a href="/Pagamento/Index" class="small-box-footer">Mais informações<i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>44</h3>
+
+                <p>Usuários Registados</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="@Url.Action("Index", "Usuario", new {area = "Admin"})" class="small-box-footer">Mais informações <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>65</h3>
+
+                <p>Fornecedores</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-chart-pie  ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">Mais informações <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+  
+</div>
+<!-- /.row -->
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="card mb-2">
+                            <img class="" src="~/img/app_img/photo2.png" alt="Dist Photo 2">
+                            <div class="card-img-overlay d-flex flex-column justify-content-center">
+                                <h5 class="card-title text-white mt-5 pt-2">CPF-CACL</h5>
+                                <p class="card-text pb-2 pt-1 text-white">
+                                    Lorem ipsum dolor sit amet, <br>
+                                    consectetur adipisicing elit <br>
+                                    sed do eiusmod tempor.
+                                </p>
+                                <a href="#" class="text-white">Last update 15 hours ago</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

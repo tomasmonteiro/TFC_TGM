@@ -71,6 +71,10 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Configuration
             services.AddScoped<ISaldoAppService, SaldoAppService>();
             services.AddScoped<ISaldoService, SaldoService>();
 
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IUsuarioAppService, UsuarioAppService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
+
             return services;
         }
     }

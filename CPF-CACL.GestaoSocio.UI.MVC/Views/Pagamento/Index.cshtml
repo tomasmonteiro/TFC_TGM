@@ -1,4 +1,6 @@
-﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 @using CPF_CACL.GestaoSocio.Domain.Enums;
 
 @model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.PagamentoViewModel>
@@ -75,8 +77,11 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                         <a class="dropdown-item" href="/Pagamento/Detalhes/@pagamento.Id"><i class="dw dw-eye"></i> Detalhes</a>
-                                                        <a class="dropdown-item" href="" onclick="SetPagamento('@pagamento.Id', '@pagamento.Recibo',  '@pagamento.Valor' , '@pagamento.DataPagamento', '@pagamento.SocioId','@pagamento.DataCriacao')" data-toggle="modal" data-target="#editarPagamento"><i class="dw dw-edit2"></i> Editar</a>
-                                                        <a class="dropdown-item" href="#" onclick="SetPagamento('@pagamento.Id', '@pagamento.Recibo',  '@pagamento.SocioId')" data-toggle="modal" data-target="#eliminarPagamento"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                        @if (HttpContextAccessor.HttpContext.Session.GetString("perfil") == EPerfilUsuario.Admin.ToString())
+                                                        {
+                                                            <a class="dropdown-item" href="" onclick="SetPagamento('@pagamento.Id', '@pagamento.Recibo',  '@pagamento.Valor' , '@pagamento.DataPagamento', '@pagamento.SocioId','@pagamento.DataCriacao')" data-toggle="modal" data-target="#editarPagamento"><i class="dw dw-edit2"></i> Editar</a>
+                                                            <a class="dropdown-item" href="#" onclick="SetPagamento('@pagamento.Id', '@pagamento.Recibo',  '@pagamento.SocioId')" data-toggle="modal" data-target="#eliminarPagamento"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                        }
                                                     </div>
                                                 </div>
                                             </td>

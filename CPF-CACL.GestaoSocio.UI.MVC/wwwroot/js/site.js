@@ -354,9 +354,139 @@ function ValidarAgregado() {
 
 
 
+///---- USUARIO--
+function CadastrarUsuario() {
+    if (!ValidarUsuario()) {
+        return;
+    }
+    else {
+        $('#loading-overlay').show();
+        var url = '@Url.Action("Criar","Usuario", new { area = "Admin"})';
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/Usuario/Criar',
+            data: {
+                Nome: $("#nome").val(),
+                Login: $("#nomeDeUsuario").val(),
+                Senha: $("#password1").val(),
+                Email: $("#email").val(),
+                Perfil: $("#perfil").val(),
+                DataCriacao: $("#dataCriacao").val(),
+                Status: $("#status").val()
+            },
+            success: function (result) {
+                if (result.substring(0, 1) == "x") {
+                    Notificar("error", "Erro!", result);
+                    return false;
+                }
+                setTimeout(function () {
+                    $('#loading-overlay').hide();
+                    Swal.fire({
+                        icon: "success",
+                        title: "Sucesso",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    }).then((result) => {
+                        window.location = "/Admin/Usuario/Index";
+                    });
+                }, 2500);
+            },
+            error: function (result) {
+                Notificar("error", "Erro!", result);
+
+            }
+        });
+    }
+
+}
+function ValidarUsuario() {
+    if ($("#nome").val() == "") {
+        $("#nome").focus();
+        NotificarErro("error", "Erro!", "O Nome do completo deve ser preenchido.");
+        return false;
+    }
+    else {
+        if ($("#nomeDeUsuario").val() == "") {
+            $("#nomeDeUsuario").focus();
+            NotificarErro("error", "Erro!", "O Nome de Usuário deve ser preenchido.");
+            return false;
+        }
+        else {
+            if ($("#email").val() == "") {
+                $("#email").focus();
+                NotificarErro("error", "Erro!", "É necessário fornecer um email.");
+                return false;
+            }
+            else {
+                if ($("#password1").val() == "") {
+                    $("#password1").focus();
+                    NotificarErro("error", "Erro!", "É necessário criar uma password.");
+                    return false;
+                }
+                else {
+                    if ($("#password2").val() == "") {
+                        $("#password2").focus();
+                        NotificarErro("error", "Erro!", "Repita a password.");
+                        return false;
+                    }
+                    else {
+                        if ($("#password1").val() != $("#password2").val()) {
+                            NotificarErro("error", "Erro!", "Dados da password diferentes.");
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return true;
+}
 
 
+///----LOGIN--
+function EfetuarLogin() {
+    if (!ValidarLogin()) {
+        return;
+    }
+    else {
+        $('#loading-overlay').show();
+        $.ajax({
+            type: "POST",
+            url: "/Acesso/Login",
+            data: {
+                Login: $("#userName").val(),
+                Senha: $("#password").val()
+            },
+            success: function (result) {
+                if (result.substring(0, 1) == "x") {
+                    Notificar("error", "Erro!", result);
+                    return false;
+                }
+            },
+            error: function (result) {
+                Notificar("error", "Erro!", result);
 
+            }
+        });
+    }
+}
+function ValidarLogin() {
+    if ($("#userName").val() == "") {
+        $("#userName").focus();
+        NotificarErro("error", "Erro!", "O Nome de Usuásrio deve ser preenchido.");
+        return false;
+    }
+    else {
+        if ($("#password").val() == "") {
+            $("#password").focus();
+            NotificarErro("error", "Erro!", "Insira a password do usuário.");
+            return false;
+        }
+    }
+    return true;
+}
 
 
 //--------------------------------------------

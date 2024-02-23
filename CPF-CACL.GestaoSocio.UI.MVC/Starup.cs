@@ -29,6 +29,14 @@ namespace CPF_CACL.GestaoSocio.UI.MVC
             services.AddMvcCore().AddRazorViewEngine();
             //Resoluçaõ de injecção de dependências
             services.AddDependencyInjection();
+
+            services.AddSession(s => 
+            { 
+                s.IdleTimeout = TimeSpan.FromMinutes(30); 
+                s.Cookie.HttpOnly = true;
+                s.Cookie.IsEssential = true;
+            });
+            services.AddHttpContextAccessor();
             
 
            
@@ -40,19 +48,24 @@ namespace CPF_CACL.GestaoSocio.UI.MVC
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseSession();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Socio}/{action=Create}/{id?}");
+                name: "Admin",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
-                name: "Admin",
-                pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+                name: "Socio",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Acesso}/{action=Login}/{id?}");
+
         }
     }
 }

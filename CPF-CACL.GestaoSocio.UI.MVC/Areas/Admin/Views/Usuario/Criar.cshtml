@@ -1,0 +1,150 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model CPF_CACL.GestaoSocio.Aplication.ViewModel.UsuarioViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Cadastrar Usuário";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev">Cadastrar Usuário</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 " style=" margin-bottom: 5px; padding-right: 0px !important; padding-left: 0 !important;">
+        <div class="card-box height-100-p overflow-hidden" style="border-radius: 0px !important;">
+            <div class="profile-tab height-100-p">
+                <div class="tab height-100-p">
+                    <div class="pd-20">
+                        <div class=" pd-0">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-md-6 espaco-input">
+                                    <label asp-for="Nome" class="control-label"> Nome</label>
+                                    <input asp-for="Nome" id="Nome" class="form-control" />
+                                    <span asp-validation-for="Nome" class="text-danger"></span>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-6 espaco-input">
+                                    <label asp-for="Login" class="control-label"> Login </label>
+                                    <input asp-for="Login" id="Login" class="form-control" />
+                                    <span asp-validation-for="Login" class="text-danger"></span>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-6 espaco-input">
+                                    <label asp-for="Email" class="control-label"> Email</label>
+                                    <input asp-for="Email" id="Email" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-6 espaco-input">
+                                    <label asp-for="Senha" class="control-label"> Senha </label>
+                                    <input  type="password" asp-for="Senha" id="Senha1" class="form-control" />
+                                    <span asp-validation-for="Senha" class="text-danger"></span>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-6 espaco-input">
+                                    <label  class="control-label"> Repita a senha </label>
+                                    <input type="password" id="Senha2" class="form-control" />
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-12">
+                                    <button type="button" id="btnCadastrar" onclick="CadastrarUsuario()" class="btn btn-success float-right waves-effect"> Cadastrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+@* <div class="row">
+    <div class="col-md-12 col-sm-12 " style=" margin-bottom: 5px; padding-right: 0px !important; padding-left: 0 !important;">
+        <div class="card-box height-100-p overflow-hidden" style="border-radius: 0px !important;">
+            
+        </div>
+    </div>
+</div>
+
+<div class="register-box">
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
+        </div>
+        <div class="card-body">
+            <p class="login-box-msg">Register a new membership</p>
+
+            <form action="../../index.html" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Full name">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control" placeholder="Email">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" placeholder="Password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" placeholder="Retype password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- /.col -->
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+        </div>
+        <!-- /.form-box -->
+    </div><!-- /.card -->
+</div> *@
+

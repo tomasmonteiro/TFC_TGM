@@ -1,0 +1,180 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+@using CPF_CACL.GestaoSocio.Domain.Enums;
+
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.UsuarioViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Lista de Usuários";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev">Lista de Usuários</h3>
+                            
+                            <a class="btn btn-success  ml-auto" href="" data-toggle="modal" data-target="#cadastraUsuario">
+                                <i class="fas fa-user-plus"></i> Cadastrar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">Nome completo</th>
+                                    <th scope="col">Nome de usuário</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Peril</th>
+                                    <th scope="col">Data de Cadastro</th>
+                                    <th scope="col">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (UsuarioViewModel usuario in Model)
+                                    {
+                                        <tr role="row" class="">
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@usuario.Nome</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@usuario.Login</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@usuario.Email</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@usuario.Perfil</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@usuario.DataCriacao</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link text-left font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="/Socio/Details/@usuario.Id"><i class="dw dw-eye"></i> Detalhes</a>
+                                                        <a class="dropdown-item" href="" onclick="SetSocio('@usuario.Id', '@usuario.Nome')" data-toggle="modal" data-target="#editarSocio"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetSocio('@usuario.Id', '@usuario.Nome')" data-toggle="modal" data-target="#eliminarSocio"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+ <!--Modal-->
+
+ <!--Cadastrar Usurio-->
+<div class="modal fade" id="cadastraUsuario" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Cadastrar usuário</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="nome" class="form-control" placeholder="Nome completo">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fas fa-users"></span>
+                            </div>
+                        </div>
+                        <select id="perfil" class="form-control" placeholder="Perfil">
+                            <option value="@EPerfilUsuario.Admin">Administrador</option>
+                            <option value="@EPerfilUsuario.Presidente">Presidente</option>
+                            <option value="@EPerfilUsuario.Tesoureiro">Tesoureiro</option>
+                            <option value="@EPerfilUsuario.Secretario">Secretário</option>
+                            <option value="@EPerfilUsuario.Vogal">Vogal</option>
+                            <option value="@EPerfilUsuario.Socio">Socio</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fas fa-at"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="nomeDeUsuario" class="form-control" placeholder="Nome de usuário">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                        <input type="email" id="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                        <input type="password" id="password1" class="form-control" placeholder="Password">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                        <input type="password" id="password2" class="form-control" placeholder="Repita a password">
+                    </div>
+
+                    <div class="">
+                        <input type="hidden" value="@DateTime.Now" id="dataCriacao">
+                    </div>
+
+                    <div class="">
+                        <input type="hidden" value="true" id="status">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="CadastrarUsuario()" class="btn btn-success waves-effect">Cadastrar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+

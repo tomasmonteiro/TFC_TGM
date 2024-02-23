@@ -995,11 +995,19 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("varchar(300)");
 
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(150)");
 
-                    b.Property<Guid>("PerfilUsuarioId")
+                    b.Property<string>("Perfil")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<Guid?>("PerfilUsuarioId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Senha")
@@ -1008,14 +1016,6 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Telefone")
-                        .IsRequired()
-                        .HasColumnType("varchar(12)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
@@ -1299,13 +1299,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Usuario", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.PerfilUsuario", "PerfilUsuario")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.PerfilUsuario", null)
                         .WithMany("Usuarios")
-                        .HasForeignKey("PerfilUsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PerfilUsuario");
+                        .HasForeignKey("PerfilUsuarioId");
                 });
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Apoio", b =>
