@@ -1,7 +1,6 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
+using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
-using CPF_CACL.GestaoSocio.Domain.Models.Validation;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
 
 namespace CPF_CACL.GestaoSocio.Domain.Services
@@ -18,7 +17,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
 
         public void Add(TipoPagamento tipoPagamento)
         {
-            if (!ExecutarValidacao(new TipoPagamentoValidation(), tipoPagamento)) return;
             if (_tipoPagamentoRepository.Find(a => a.Nome == tipoPagamento.Nome && a.Status == true).Count() > 0)
             {
                 Notificar("Já existe um Tipo de Pagamento definido com este nome.");
@@ -42,7 +40,13 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         }
         public void Remove(TipoPagamento tipoPagamento)
         {
-            _tipoPagamentoRepository.Remove(tipoPagamento);
+            var novoTipo = _tipoPagamentoRepository.GetById(tipoPagamento.Id);
+            if (novoTipo == null)
+            {
+                Notificar("O Tipo de Pagamento que pretende eliminar não existe.");
+                return;
+            }
+            _tipoPagamentoRepository.Remove(novoTipo);
         }
         public void Eliminar(Guid id)
         {

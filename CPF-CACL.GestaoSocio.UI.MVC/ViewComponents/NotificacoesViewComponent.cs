@@ -1,4 +1,4 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.ViewComponents

@@ -1,7 +1,6 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
+using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
-using CPF_CACL.GestaoSocio.Domain.Models.Validation;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
 
 namespace CPF_CACL.GestaoSocio.Domain.Services
@@ -23,7 +22,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         public void Add(Bairro bairro)
         {
             bairro.DataCriacao = DateTime.Now;
-            if (!ExecutarValidacao(new BairroValidation(), bairro)) return;
             if (_bairroRepository.Find(a => a.Nome == bairro.Nome && a.MunicipioId == bairro.MunicipioId && a.Status == true).Count() > 0)
             {
                 Notificar("Já existe um Bairro definido com este nome, neste Município.");
@@ -45,7 +43,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         public void Update(Bairro bairro)
         {
             bairro.DataAtualizacao = DateTime.Now;
-            if (!ExecutarValidacao(new BairroValidation(), bairro)) return;
             _bairroRepository.Update(bairro);
         }
         public void Eliminar(Guid id)
@@ -67,7 +64,13 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
 
         public void Remove(Bairro bairro)
         {
-            _bairroRepository.Remove(bairro);
+            var novoBairro = _bairroRepository.GetById(bairro.Id);
+            if (novoBairro== null)
+            {
+                Notificar("O Bairro que pretende eliminar não existe.");
+                return;
+            }
+            _bairroRepository.Remove(novoBairro);
         }
     }
 }

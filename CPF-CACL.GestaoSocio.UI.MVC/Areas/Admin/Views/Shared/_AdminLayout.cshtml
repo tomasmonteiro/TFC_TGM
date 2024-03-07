@@ -13,16 +13,12 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <!-- Font Awesome -->
     <link rel="stylesheet" type="text/css" href="~/css/fontawesome/css/all.min.css" />
-    @*
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> *@
-    @* <link href="~/dist/css/css/ionicons.css" rel="stylesheet" /> *@
-    <link href="~/dist/css/css/ionicons.min.css" rel="stylesheet" />
+    
 
     <link href="~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
 
     <!--Vendor-->
-    @* <link rel="stylesheet" type="text/css" href="~/vendors/styles/icon-font.css"/> *@
+    <link rel="stylesheet" type="text/css" href="~/vendors/styles/icon-font.css"/> 
     <link href="~/vendors/styles/icon-font.min.css" rel="stylesheet" />
     <link href="~/vendors/styles/core.css" rel="stylesheet" />
     <link href="~/vendors/styles/style.css" rel="stylesheet" />
@@ -39,6 +35,9 @@
     <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
     <link href="~/css/datatables.min.css" rel="stylesheet" />
     <link href="~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+
+    <!-- Ionicons -->
+    <link href="~/dist/css/css/ionicons.min.css" rel="stylesheet" /> 
 
     <!--Usando JsGrid -->
     <link href="~/plugins/jsgrid/jsgrid.min.css" rel="stylesheet" />
@@ -107,12 +106,11 @@
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fas fa-user-tie"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" role="menu" title="Logout">
-                        <a href="#" class="dropdown-item azul"><i class="fas fa-user"></i>  Perfil</a>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu" >
+                        <a href="#" class="dropdown-item azul" title="Perfil"><i class="dw dw-user"></i>  Perfil</a>
                         <form action="/Acesso/Logout" method="post">
-                            <button class="dropdown-item" type="submit"><i class="dw dw-logout"></i> Log Out</button>
+                            <button class="dropdown-item" title="Sair" type="submit"><i class="dw dw-logout"></i> Sair</button>
                         </form>
-                        <a asp-controller="Acesso" asp-action="Logout" class="dropdown-item azul fa fa-right-from-bracket"><i class="fas fa-sign-out-alt"></i>  Sair</a>
                     </div>
                 </li>
             </ul>
@@ -128,7 +126,7 @@
             <!-- Menu Lateral -->
             <div class="sidebar">
                 <!-- Painel de usuário -->
-                <div class="user-panel mt-3 pb-3 mb-3">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
                         <img src="~/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                     </div>
@@ -156,7 +154,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-controller="Municipio" asp-action="Index" class="nav-link">
+                                    <a href="#" onclick="pesquisarSocio()" class="nav-link">
                                         <i class="fas fa-search nav-icon"></i>
                                         <p>Pesquisar</p>
                                     </a>
@@ -168,15 +166,21 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./index3.html" class="nav-link">
-                                        <i class="fa nav-icon fa-hands-helping"></i>
+                                    <a href="#" class="nav-link">
+                                        <i class="fas  fa-hands-helping nav-icon"></i>
                                         <p>Atribuir Apóio</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-controller="Socio" asp-action="Index" class="nav-link">
+                                        <i class="fas fa-group nav-icon"></i>
+                                        <p>Todos</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
+                            <a href="/Pagamento/Index" class="nav-link">
                                 <i class="nav-icon fas fa-money-bill"></i>
                                 <p>
                                     Pagamento
@@ -195,20 +199,20 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="pages/charts/chartjs.html" class="nav-link">
+                                    <a href="#" class="nav-link">
                                         <i class=" nav-icon fas fa-chart-line"></i>
                                         <p>Dados financeiros</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/charts/chartjs.html" class="nav-link">
+                                    <a href="#" class="nav-link">
                                         <i class="fas fa-chart-bar nav-icon"></i>
                                         <p>Dados dos sócios</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/charts/chartjs.html" class="nav-link">
-                                        <i class="fa fa-chart-area nav-icon"></i>
+                                    <a href="#" class="nav-link">
+                                        <i class="fas fa-chart-area nav-icon"></i>
                                         <p>Outros dados</p>
                                     </a>
                                 </li>
@@ -216,39 +220,10 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-envelope"></i>
-                                <p>
-                                    Caixa de Mensagem
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="pages/mailbox/mailbox.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Recebidas</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/mailbox/compose.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Enviadas</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="pages/mailbox/read-mail.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Lidas</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
 
                         <li class="nav-header">FERRAMENTAS</li>
                         <li class="nav-item">
-                            <a href="/Admin/Index" class="nav-link">
+                            <a href="/Admin/Configuracoes/Index" class="nav-link">
                                 <i class="nav-icon fas fa-tools"></i>
                                 <p>
                                     Configurações
@@ -256,7 +231,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/gallery.html" class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-question-circle"></i>
                                 <p>
                                     Ajuda e feedback
@@ -279,14 +254,13 @@
         </div>
 
         <footer class="main-footer">
-            <strong>Copyright &copy; 2023 - Gest-Prev</strong>
+            <strong>Copyright &copy; 2023 - GEST-PREV</strong>
             Gestão de previdência social.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Versão</b> 1.0.0
             </div>
         </footer>
     </div>
-
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)

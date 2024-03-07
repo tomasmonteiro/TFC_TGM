@@ -12,23 +12,6 @@
     </div>
 </div>
 
-<div class="page-header">
-    <div class="row">
-        <div class="col-12 col-md-12 col-sm-12">
-            <div class="title">
-                <h4>Bairros</h4>
-            </div>
-            <nav class="col-12 col-md-12 col-sm-12" aria-label="breadcrumb" role="navigation">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Listagem de bairros</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-</div>
-
-
 <div class="row espaco">
     <div class="col-md-12">
         <div class="card">
@@ -36,11 +19,10 @@
                 <div class=" container col-12 col-md-12 col-lg-12">
                     <!--Para abrir o Modal-->
                     <div id="PlaceHolderHere"></div>
-                    <div class="col-12 col-md-12 col-lg-12">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
-                            <div class="col-12 col-sm-4 col-md-4">
-                                <button type="button" class="btn btn-success  form-control" data-toggle="ajax-modal" data-target="#bairro" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
-                            </div>
+                    <div class=" col-12 col-md-12 col-lg-12">
+                        <div class="container gap-2  d-flex d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev icone"><i class="icon ion ion-android-apps icone" style="font-size: 32px;"></i> Listagem de Bairros</h3>
+                            <button type="button" class="btn btn-success ml-auto" data-toggle="ajax-modal" data-target="#bairro" data-url="@Url.Action("Create")"><i class="fas fa-plus"></i> Novo</button>
                         </div>
                     </div>
                 </div>
@@ -55,10 +37,9 @@
             <div class="margem-container card-body">
                 <div class="margens col-12 col-md-12 col-lg-12">
                     <div class="text-center col-12 col-md-12 col-lg-12">
-                        <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
+                        <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 5;" id="myDataTable">
                             <thead class ="navbar-primary">
                                 <tr>
-                                    <th scope="col">#</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Município</th>
                                     <th scope="col">Registo</th>
@@ -72,8 +53,7 @@
                                     foreach (BairroViewModel bairro in Model)
                                     {
                                         <tr>
-                                            <th scope="row">@bairro.Id</th>
-                                            <td>@bairro.Nome</td>
+                                            <th scope="row">@bairro.Nome</th>
                                             <td>@bairro.NomeMunicipio</td>
                                             <td>@bairro.DataCriacao</td>
                                             <td>@bairro.DataAtualizacao</td>

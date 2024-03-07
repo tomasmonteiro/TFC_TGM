@@ -1,0 +1,352 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.BeneficioViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Benefícios";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev"><i class="icon ion ion-android-apps"></i> Lista de Benefícios</h3>
+
+                            <button type="button" class="btn btn-success  ml-auto" href="" data-toggle="ajax-modal" data-target="#adicionarBeneficio" data-url="@Url.Action("Criar")">
+                                <i class="fas fa-user-plus"></i> Cadastrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 5;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Registo</th>
+                                    <th scope="col">Actualização</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Acão</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (BeneficioViewModel beneficio in Model)
+                                    {
+                                        <tr role="row" class="">
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@beneficio.Nome</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@beneficio.NomeTipo</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@beneficio.DataCriacao</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@beneficio.DataAtualizacao</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@beneficio.Status</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link text-left font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="#" onclick="SetBeneficioEditar('@beneficio.Id',  '@beneficio.Nome', '@beneficio.TipoBeneficioId', '@beneficio.DataCriacao','@beneficio.Status')" data-toggle="modal" data-target="#editarBeneficio"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetBeneficioInativar('@beneficio.Id', '@beneficio.Nome')" data-toggle="modal" data-target="#inativarBeneficio"><i class="dw dw-ban"></i> Inativar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetBeneficioEliminar('@beneficio.Id', '@beneficio.Nome')" data-toggle="modal" data-target="#eliminarBeneficio"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--Modal-->
+
+
+<!--Editar Beneficio-->
+
+
+
+<div class="modal fade" id="editarBeneficio" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarBeneficioLabel">Editar  Beneficio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div><div class="modal-body">
+
+                    <input type="hidden" id="Id" />
+
+                    <input type="hidden" id="tipoId" />
+
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" id="nomeEdit" class="form-control">
+                    </div>
+                    <div class="">
+                        <input type="hidden" id="dataCriacaoEdit">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="true" id="statusEdit">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="EditarBeneficio()" class="btn btn-success waves-effect">Salvar</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para inativar----------->
+
+<div class="modal fade" id="inativarBeneficio" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarBeneficioLabel">Inativar Tipo de Benefício</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idInativar" name="id" />
+                <span>Desejas inativar o benefício <label id="nomeInativar"></label>?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="InativarBeneficio()" class="btn btn-danger waves-effect">Inativar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para eliminar----------->
+
+<div class="modal fade" id="eliminarBeneficio" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarBeneficioLabel">Eliminar Benefício</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idEliminar" />
+                <p>Desejas eliminar permanentemente o benefício <label id="nomeEliminar"></label>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EliminarBeneficio()" class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Script-->
+@section Scripts{
+    <script>
+
+
+
+
+        //------------------Editar-------
+        function SetBeneficioEditar(beneficioId, nome, tipoId, dataCriacao, status) {
+            $("#Id").val(beneficioId);
+            $("#nomeEdit").val(nome);
+            $("#tipoId").val(tipoId);
+            $("#dataCriacaoEdit").val(dataCriacao);
+            $("#statusEdit").val(status);
+        }
+        function EditarBeneficio() {
+
+            if (!ValidarModalEditar()) {
+                return;
+            }
+            else {
+                $('#loading-overlay').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/Beneficio/Editar",
+                    data: {
+                        Id: $("#Id").val(),
+                        Nome: $("#nomeEdit").val(),
+                        TipoBeneficioId: $("#tipoId").val(),
+                        DataCriacao: $("#dataCriacaoEdit").val(),
+                        Status: $("#statusEdit").val()
+                    },
+                    success: function (result) {
+                        if (result.substring(0, 1) == "x") {
+                            NotificarErro("error", "Erro!", result);
+                            return false;
+                        }
+                        setTimeout(function () {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Sucesso!",
+                                text: result,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then((result) => {
+                                window.location = "/Beneficio/Index";
+                            });
+                        }, 2500);
+                    },
+                    error: function (result) {
+                        Notificar("error", "Erro!", result);
+                    }
+                });
+            }
+        }
+        function ValidarModalEditar() {
+            if ($("#nomeEdit").val() == "") {
+                $("#nomeEdit").focus();
+                NotificarErro("error", "Erro!", "O Nome do Benefício deve ser preenchido.");
+                return false;
+            }
+            return true;
+        }
+        /*------------------Inativar-------*/
+        function SetBeneficioInativar(beneficioId, nomeBeneficio) {
+
+            $("#idInativar").val(beneficioId);
+            $("#nomeInativar").text(nomeBeneficio);
+        }
+        function InativarBeneficio() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Beneficio/Inativar",
+                data: {
+                    id: $("#idInativar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Beneficio/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+
+        /*------------------Eliminar-------*/
+        function SetBeneficioEliminar(beneficioId, nomeBeneficio) {
+
+            $("#idEliminar").val(beneficioId);
+            $("#nomeEliminar").text(nomeBeneficio);
+        }
+        function EliminarBeneficio() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Beneficio/Eliminar",
+                data: {
+                    id: $("#idEliminar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Beneficio/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+
+
+        function NotificarErro(icone, titulo, mensagem) {
+            Swal.fire({
+                icon: icone,
+                title: titulo,
+                text: mensagem,
+                showConfirmButton: false,
+                iconSize: "10px",
+                timer: 2500
+            });
+        }
+
+    </script>
+}
+

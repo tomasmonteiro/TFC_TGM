@@ -1,6 +1,6 @@
 ﻿using CPF_CACL.GestaoSocio.Data.Context;
+using CPF_CACL.GestaoSocio.Domain.Entities;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 
 namespace CPF_CACL.GestaoSocio.Data.Repository
 {
@@ -15,7 +15,7 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
 
         public Socio BuscarPorCodigo(string cod)
         {
-            return _gsContext.Socio.Where(p => p.Cod == cod).FirstOrDefault();
+            return _gsContext.Socio.Where(p => p.Cod == cod && p.Status == true).FirstOrDefault();
         }
 
         public ICollection<Socio> BuscarPorGenero(string genero)
@@ -42,6 +42,11 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
                 .FirstOrDefault();
 
             return ultimoCodigo;
+        }
+
+        public int ContarSocios()
+        {
+            return _gsContext.Socio.Count(p => p.Status == true);
         }
     }
 }

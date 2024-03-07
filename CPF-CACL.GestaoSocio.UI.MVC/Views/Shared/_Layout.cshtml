@@ -8,7 +8,7 @@
         <meta charset="utf-8">     
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-        <title>@ViewData["Title"] | GEST-PREV</title>
+    <title>@ViewData["Title"] | GEST-PREV</title>
 
 
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -128,7 +128,7 @@
                 <!-- Logotipo -->
                 <a asp-controller="Home" asp-action="Index" class="brand-link navbar-blue active">
                 <img src="~/img/logo.png" alt="Gest-Prev Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                    <span class="brand-text font-weight-light">GEST-PREV</span>
+                <span class="brand-text font-weight-light">GEST-PREV</span>
                 </a>
                 <!-- Menu Lateral -->
                 <div class="sidebar">
@@ -161,7 +161,7 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link">
+                                        <a href="#" onclick="pesquisarSocio()" class="nav-link">
                                             <i class="fas fa-search nav-icon"></i>
                                             <p>Pesquisar</p>
                                         </a>
@@ -174,16 +174,16 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">
-                                            <i class="fa nav-icon fa-hands-helping"></i>
+                                        <i class="fas fa-hands-helping nav-icon"></i>
                                             <p>Atribuir Apóio</p>
                                         </a>
                                     </li>
-                                <li class="nav-item">
-                                    <a href="/Socio/Index" class="nav-link">
-                                        <i class="fas fa-group nav-icon"></i>
-                                        <p>Todos</p>
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="/Socio/Index" class="nav-link">
+                                            <i class="fas fa-group nav-icon"></i>
+                                            <p>Todos</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
@@ -213,67 +213,50 @@
                                         )
                                     {
                                         <li class="nav-item">
-                                            <a href="pages/charts/chartjs.html" class="nav-link">
+                                            <a href="#" class="nav-link">
                                                 <i class=" nav-icon fas fa-chart-line"></i>
                                                 <p>Dados financeiros</p>
                                             </a>
                                         </li>
                                     }
                                 <li class="nav-item">
-                                        <a href="pages/charts/chartjs.html" class="nav-link">
+                                        <a href="#" class="nav-link">
                                             <i class="fas fa-chart-bar nav-icon"></i>
                                             <p>Dados dos sócios</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="pages/charts/chartjs.html" class="nav-link">
-                                            <i class="fa fa-chart-area nav-icon"></i>
+                                        <a href="#" class="nav-link">
+                                            <i class="fas fa-chart-area nav-icon"></i>
                                             <p>Outros dados</p>
                                         </a>
                                     </li>
                                
                                 </ul>
                             </li>
-
+                            @if (HttpContextAccessor.HttpContext.Session.GetString("perfil")
+                            == EPerfilUsuario.Admin.ToString()
+                            )
+                            {
+                                <li class="nav-header">FERRAMENTAS</li>
+                                <li class="nav-item">
+                                    <a href="/Admin/Configuracoes/Index" class="nav-link">
+                                        <i class="nav-icon fas fa-tools"></i>
+                                        <p>
+                                            Configurações
+                                        </p>
+                                    </a>
+                                </li>
+                            }
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon far fa-envelope"></i>
-                                    <p>
-                                        Caixa de Mensagem
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="pages/mailbox/mailbox.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Recebidas</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/mailbox/compose.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Enviadas</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/mailbox/read-mail.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Lidas</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-question-circle"></i>
-                                    <p>
-                                        Ajuda e feedback
-                                    </p>
-                                </a>
-                            </li>
-                        </ul>
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fas fa-question-circle"></i>
+                                        <p>
+                                            Ajuda e feedback
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
                     </nav>
                 </div>
             </aside>
@@ -289,7 +272,7 @@
             </div>
 
             <footer class="main-footer">
-                <strong>Copyright &copy; 2023 - Gest-Prev</strong>
+            <strong>Copyright &copy; 2023 - GEST-PREV</strong>
                 Gestão de previdência social.
                 <div class="float-right d-none d-sm-inline-block">
                     <b>Versão</b> 1.0.0

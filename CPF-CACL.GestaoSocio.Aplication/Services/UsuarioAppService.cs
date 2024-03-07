@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+using CPF_CACL.GestaoSocio.Domain.Entities;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Services;
 
 namespace CPF_CACL.GestaoSocio.Aplication.Services
@@ -55,9 +55,13 @@ namespace CPF_CACL.GestaoSocio.Aplication.Services
             return mapper.Map<ICollection<UsuarioViewModel>>(usuarioService.BuscarPorName(nome));
         }
 
-        public void Eliminar(Guid id)
+        public void Inativar(Guid id)
         {
             usuarioService.Eliminar(id);
+        }
+        public void Eliminar(UsuarioViewModel usuario)
+        {
+            usuarioService.Remove(mapper.Map<Usuario>(usuario));
         }
 
         public IEnumerable<UsuarioViewModel> Buscar()

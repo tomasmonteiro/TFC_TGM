@@ -1,12 +1,7 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
+using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CPF_CACL.GestaoSocio.Domain.Services
 {
@@ -53,7 +48,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
                 return;
             }
             usuario.Status = false;
-            Update(usuario);
+            _usuarioRepository.Update(usuario);
         }
 
         public IEnumerable<Usuario> GetAll()
@@ -68,11 +63,27 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
 
         public void Remove(Usuario usuario)
         {
-            _usuarioRepository.Remove(usuario);
+            var novoUsuario = _usuarioRepository.GetById(usuario.Id);
+            if (novoUsuario == null)
+            {
+                Notificar("O Usuario que pretende eliminar não existe.");
+                return;
+            }
+            _usuarioRepository.Remove(novoUsuario);
         }
 
-        public void Update(Usuario usuario)
+        public void Update(Usuario novoUsuario)
         {
+            Usuario usuario = GetById(novoUsuario.Id);
+            if (usuario == null)
+            {
+                Notificar("O Usuário que pretende atualizar não existe.");
+                return;
+            }
+            usuario.Nome = novoUsuario.Nome;
+            usuario.Login = novoUsuario.Login;
+            usuario.Perfil = novoUsuario.Perfil;
+            usuario.Email = novoUsuario.Email;
             usuario.DataAtualizacao = DateTime.Now;
             _usuarioRepository.Update(usuario);
         }

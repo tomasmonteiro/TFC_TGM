@@ -63,9 +63,9 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Configuration
             services.AddScoped<IPeriodoAppService, PeriodoAppService>();
             services.AddScoped<IPeriodoService, PeriodoService>();
 
-            services.AddScoped<IAgregadoRepository, AgregadoRepository>();
-            services.AddScoped<IAgregadoAppService, AgregadoAppService>();
-            services.AddScoped<IAgregadoService, AgregadoService>();
+            services.AddScoped<IDependenteRepository, DependenteRepository>();
+            services.AddScoped<IDependenteAppService, DependenteAppService>();
+            services.AddScoped<IDependenteService, DependenteService>();
 
             services.AddScoped<ISaldoRepository, SaldoRepository>();
             services.AddScoped<ISaldoAppService, SaldoAppService>();
@@ -74,6 +74,18 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Configuration
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioAppService, UsuarioAppService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
+
+            services.AddScoped<IFornecedorRepository, FornecedorRepository>();
+            services.AddScoped<IFornecedorAppService, FornecedorAppService>();
+            services.AddScoped<IFornecedorService, FornecedorService>();
+
+            services.AddScoped<ITipoBeneficioRepository, TipoBeneficioRepository>();
+            services.AddScoped<ITipoBeneficioAppService, TipoBeneficioAppService>();
+            services.AddScoped<ITipoBeneficioService, TipoBeneficioService>();
+
+            services.AddScoped<IBeneficioRepository, BeneficioRepository>();
+            services.AddScoped<IBeneficioAppService, BeneficioAppService>();
+            services.AddScoped<IBeneficioService, BeneficioService>();
 
             return services;
         }

@@ -4,7 +4,6 @@
 @model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.UsuarioViewModel>
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Lista de Usuários";
 }
 
@@ -73,8 +72,9 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                         <a class="dropdown-item" href="/Socio/Details/@usuario.Id"><i class="dw dw-eye"></i> Detalhes</a>
-                                                        <a class="dropdown-item" href="" onclick="SetSocio('@usuario.Id', '@usuario.Nome')" data-toggle="modal" data-target="#editarSocio"><i class="dw dw-edit2"></i> Editar</a>
-                                                        <a class="dropdown-item" href="#" onclick="SetSocio('@usuario.Id', '@usuario.Nome')" data-toggle="modal" data-target="#eliminarSocio"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                        <a class="dropdown-item" href="" onclick="SetUsuarioEditar('@usuario.Id', '@usuario.Nome', '@usuario.Login', '@usuario.Email', '@usuario.Perfil')" data-toggle="modal" data-target="#editarUsuario"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetUsuarioInativar('@usuario.Id', '@usuario.Nome')" data-toggle="modal" data-target="#inativarUsuario"><i class="dw dw-ban"></i> Inativar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetUsuarioEliminar('@usuario.Id', '@usuario.Nome')" data-toggle="modal" data-target="#eliminarUsuario"><i class="dw dw-delete-3"></i> Eliminar</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -177,4 +177,316 @@
         </div>
     </div>
 </div>
+
+
+<!--Editar Usurio-->
+<div class="modal fade" id="editarUsuario" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Editar usuário</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+
+                    <input type="hidden" id="usuarioIdEdit" name="UsuarioIdEdit" />
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="nomeEdit" class="form-control" placeholder="Nome completo">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fas fa-users"></span>
+                            </div>
+                        </div>
+                        <select id="perfilEdit" class="form-control" placeholder="Perfil">
+                            <option value="@EPerfilUsuario.Admin">Administrador</option>
+                            <option value="@EPerfilUsuario.Presidente">Presidente</option>
+                            <option value="@EPerfilUsuario.Tesoureiro">Tesoureiro</option>
+                            <option value="@EPerfilUsuario.Secretario">Secretário</option>
+                            <option value="@EPerfilUsuario.Vogal">Vogal</option>
+                            <option value="@EPerfilUsuario.Socio">Socio</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fas fa-at"></span>
+                            </div>
+                        </div>
+                        <input type="text" id="nomeDeUsuarioEdit" disabled class="form-control" placeholder="Nome de usuário">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                        <input type="email"  id="emailEdit" class="form-control" placeholder="Email">
+                    </div>
+
+                    <div class="">
+                        <input type="hidden" id="dataCriacaoEdit">
+                    </div>
+
+                    <div class="">
+                        <input type="hidden" value="@DateTime.Now" id="dataAtualizacao">
+                    </div>
+
+                    <div class="">
+                        <input type="hidden" value="true" id="statusEdit">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EditarUsuario()" class="btn btn-success waves-effect">Guardar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--------Modal para inativar----------->
+
+<div class="modal fade" id="inativarUsuario" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="inativarUsuarioLabel">Inativar Usuario</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idInativar" name="idInativar"/>
+                <span>Desejas inativar o usuário <label id="nomeInativar"></label>?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="InativarUsuario()" class="btn btn-danger waves-effect">Inativar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para eliminar----------->
+
+<div class="modal fade" id="eliminarUsuario" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarUsuarioLabel">Eliminar Fornecedor</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idEliminar" name="idEliminar" />
+                <span>Desejas eliminar permanentemente o usuario <label id="nomeEliminar"></label>?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EliminarUsuario()" class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--Script-->
+@section Scripts{
+    <script>
+        /*------------------Inativar-------*/
+        function SetUsuarioInativar(usuarioId, nomeUsuario) {
+
+            $("#idInativar").val(usuarioId);
+
+            $("#nomeInativar").text(nomeUsuario);
+        }
+        function InativarUsuario() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Usuario/Inativar",
+                data: {
+                    id: $("#idInativar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: "Sucesso!",
+                            text: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Admin/Usuario/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+
+        /*------------------Eliminar-------*/
+        function SetUsuarioEliminar(usuarioId, nomeUsuario) {
+
+            $("#idEliminar").val(usuarioId);
+
+            $("#nomeEliminar").text(nomeUsuario);
+        }
+        function EliminarUsuario() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Usuario/Eliminar",
+                data: {
+                    id: $("#idEliminar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: "Sucesso!",
+                            text: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Admin/Usuario/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+        //------------------Editar-------
+
+        function SetUsuarioEditar(usuarioId, nome, login, email, perfil) {
+            $("#usuarioIdEdit").val(usuarioId);
+            $("#nomeEdit").val(nome);
+            $("#perfilEdit").val(perfil);
+            $("#nomeDeUsuarioEdit").val(login);
+            $("#emailEdit").val(email);
+
+        }
+        function EditarUsuario() {
+
+            if (!ValidarUsuarioEditar()) {
+                return;
+            }
+            else {
+                $('#loading-overlay').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/Usuario/Editar",
+                    data: {
+                        Id: $("#usuarioIdEdit").val(),
+                        Nome: $("#nomeEdit").val(),
+                        Perfil: $("#perfilEdit").val(),
+                        Login: $("#nomeDeUsuarioEdit").val(),
+                        Email: $("#emailEdit").val()
+                    },
+                    success: function (result) {
+                        if (result.substring(0, 1) == "x") {
+                            NotificarErro("error", "Erro!", result);
+                            return false;
+                        }
+                        setTimeout(function () {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Sucesso!",
+                                text: result,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then((result) => {
+                                window.location = "/Admin/Usuario/Index";
+                            });
+                        }, 2500);
+                    },
+                    error: function (result) {
+                        Notificar("error", "Erro!", result);
+                    }
+                });
+            }
+        }
+        function ValidarUsuarioEditar() {
+            if ($("#nomeEdit").val() == "") {
+                $("#nomeEdit").focus();
+                NotificarErro("error", "Erro!", "O Número Completo do Usuário deve ser preenchido.");
+                return false;
+            }
+            else {
+                if ($("#perfilEdit").val() == "") {
+                    $("#perfilEdit").focus();
+                    NotificarErro("error", "Erro!", "O Perfil do Usuário deve ser preenchido.");
+                    return false;
+                }
+                else {
+                    if ($("#emailEdit").val() == "") {
+                        $("#emailEdit").focus();
+                        NotificarErro("error", "Erro!", "O Email de Usuário deve ser preenchido.");
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        function NotificarErro(icone, titulo, mensagem) {
+            Swal.fire({
+                icon: icone,
+                title: titulo,
+                text: mensagem,
+                showConfirmButton: false,
+                iconSize: "10px",
+                timer: 2500
+            });
+        }
+
+    </script>
+}
+
+
+
 

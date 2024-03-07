@@ -1,0 +1,455 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+@using CPF_CACL.GestaoSocio.Domain.Enums;
+
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.FornecedorViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Fornecedores";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev"><i class="icon ion ion-android-apps"></i> Lista de Forecedores</h3>
+
+                            <a class="btn btn-success  ml-auto" href="" data-toggle="modal" data-target="#cadastraFornecedor">
+                                <i class="fas fa-plus-square"></i> Cadastrar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 8;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">#COD</th>
+                                    <th scope="col">Nome </th>
+                                    <th scope="col">NIF</th>
+                                    <th scope="col">Endereço</th>
+                                    <th scope="col">Telefone</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (FornecedorViewModel fornecedor in Model)
+                                    {
+                                        <tr role="row" class="">
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.Cod</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.Nome</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.NIF</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.Endereco</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.Telefone</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.Email</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">
+                                                <p class="p-1" style="@(fornecedor.Status == "false" ? "background-color: yellow; color: black;" :
+                                            fornecedor.Status == "true" ? "background-color: green; color: #fff;" : "")">
+                                                    @if (fornecedor.Status == "true")
+                                                    {
+                                                        <span>Ativo</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>Inativo</span>                                                        
+                                                    }
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link text-left font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="/Admin/Fornecedor/Detalhes/@fornecedor.Id"><i class="dw dw-eye"></i> Detalhes</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetFornecedorEditar('@fornecedor.Id', '@fornecedor.Cod', '@fornecedor.Nome', '@fornecedor.NIF', '@fornecedor.Endereco', '@fornecedor.Telefone', '@fornecedor.Email', '@fornecedor.DataCriacao', '@fornecedor.Status')" data-toggle="modal" data-target="#editarFornecedor"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetFornecedorInativar('@fornecedor.Id', '@fornecedor.Nome')" data-toggle="modal" data-target="#inativarFornecedor"><i class="dw dw-ban"></i> Inativar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetFornecedorEliminar('@fornecedor.Id', '@fornecedor.Nome')" data-toggle="modal" data-target="#eliminarFornecedor"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--Modal-->
+<!--Cadastrar Fornecedor-->
+
+<div class="modal fade" id="cadastraFornecedor" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Cadastrar Fornecedor</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nome do Fornecedor</label>
+                    <br />
+                    <input type="text" id="Nome" class="form-control" placeholder="Digite o nome do fornecedor">
+                </div>
+                <div class="form-group">
+                    <label>NIF</label>
+                    <br />
+                    <input type="text" id="NIF" class="form-control" placeholder="Digite o NIF do fornecedor">
+                </div>
+                <div class="form-group">
+                    <label>Endereço</label>
+                    <br />
+                    <input type="text" id="Endereco" class="form-control" placeholder="Digite o endereço do fornecedor">
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <br />
+                    <input type="tel" id="Telefone" class="form-control" placeholder="Digite o telefone do fornecedor">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <br />
+                    <input type="email" id="Email" class="form-control" placeholder="Digite o email do fornecedor">
+                </div>
+
+                <div class="">
+                    <input id="DataCriacao" type="hidden" value="@DateTime.Now">
+                </div>
+
+                <div class="">
+                    <input id="Status" type="hidden" value="true">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="AdicionarFornecedor()" class="btn btn-success waves-effect">Cadastrar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Editar Fornecedor-->
+
+<div class="modal fade" id="editarFornecedor" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Editar Fornecedor</h4>
+            </div>
+            <div class="modal-body">
+
+                <input type="hidden" id="FornecedorId" name="FornecedorId" />
+                <div class="form-group">
+                    <label>Código do Fornecedor</label>
+                    <br />
+                    <input type="text" id="CodigoEd" disabled class="form-control" placeholder="Digite o nome do fornecedor">
+                </div>
+                <div class="form-group">
+                    <label>Nome do Fornecedor</label>
+                    <br />
+                    <input type="text" id="NomeEd" class="form-control" placeholder="Digite o nome do fornecedor">
+                </div>
+                <div class="form-group">
+                    <label>NIF</label>
+                    <br />
+                    <input type="text" id="NIFEd" class="form-control" placeholder="Digite o NIF do fornecedor">
+                </div>
+                <div class="form-group">
+                    <label>Endereço</label>
+                    <br />
+                    <input type="text" id="EnderecoEd" class="form-control" placeholder="Digite o endereço do fornecedor">
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <br />
+                    <input type="tel" id="TelefoneEd" class="form-control" placeholder="Digite o telefone do fornecedor">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <br />
+                    <input type="email" id="EmailEd" class="form-control" placeholder="Digite o email do fornecedor">
+                </div>
+
+                <div class="">
+                    <input id="DataCriacaoEd" type="hidden">
+                </div>
+                <div class="">
+                    <input id="DataAtualizacaoEd" type="hidden" value="@DateTime.Now">
+                </div>
+
+                <div class="">
+                    <input id="StatusEd" type="hidden" value="true">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EditarFornecedor()" class="btn btn-success waves-effect">Editar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para inativar----------->
+
+<div class="modal fade" id="inativarFornecedor" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarFornecedorLabel">Inativar Fornecedor</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="id" name="id" />
+                <p>Desejas inativar o Fornecedor <label id="nome"></label>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="InativarFornecedor()" class="btn btn-danger waves-effect">Inativar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para eliminar----------->
+
+<div class="modal fade" id="eliminarFornecedor" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarFornecedorLabel">Eliminar Fornecedor</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idEliminar" name="id" />
+                <p>Desejas eliminar permanentemente o Fornecedor <label id="nomeEliminar"></label>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EliminarFornecedor()" class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Script-->
+
+@section Scripts{
+    <script>
+
+        /*------------------Inativar-------*/
+        function SetFornecedorInativar(fornecedorId, nomeFornecedor) {
+
+            $("#id").val(fornecedorId);
+
+            $("#nome").text(nomeFornecedor);
+        }
+        function InativarFornecedor() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Fornecedor/Inativar",
+                data: {
+                    id: $("#id").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Admin/Fornecedor/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+
+        /*------------------Eliminar-------*/
+        function SetFornecedorEliminar(fornecedorId, nomeFornecedor) {
+
+            $("#idEliminar").val(fornecedorId);
+
+            $("#nomeEliminar").text(nomeFornecedor);
+        }
+        function EliminarFornecedor() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Fornecedor/Eliminar",
+                data: {
+                    id: $("#idEliminar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Admin/Fornecedor/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+ //------------------Editar-------
+
+        function SetFornecedorEditar(fornecedorId, cod, nome, nif, endereco, telefone, email, dataCriacao, status) {
+            $("#FornecedorId").val(fornecedorId);
+            $("#CodigoEd").val(cod);
+            $("#NomeEd").val(nome);
+            $("#NIFEd").val(nif);
+            $("#EnderecoEd").val(endereco);
+            $("#TelefoneEd").val(telefone);
+            $("#EmailEd").val(email);
+            $("#DataCriacaoEd").val(dataCriacao);
+            $("#StatusEd").val(status);
+        }
+        function EditarFornecedor() {
+
+            if (!ValidarModalEditar()) {
+                return;
+            }
+            else{
+                $('#loading-overlay').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/Fornecedor/Editar",
+                    data: {
+                        Id: $("#FornecedorId").val(),
+                        Cod: $("#CodigoEd").val(),
+                        Nome: $("#NomeEd").val(),
+                        NIF: $("#NIFEd").val(),
+                        Endereco: $("#EnderecoEd").val(),
+                        Telefone: $("#TelefoneEd").val(),
+                        Email: $("#EmailEd").val(),
+                        DataCriacao: $("#DataCriacaoEd").val(),
+                        DataAtualizacao: $("#DataAtualizacaoEd").val(),
+                        Status: $("#StatusEd").val()
+                    },
+                    success: function (result) {
+                        if (result.substring(0, 1) == "x") {
+                            NotificarErro("error", "Erro!", result);
+                            return false;
+                        }
+                        setTimeout(function () {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Sucesso!",
+                                text: result,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then((result) => {
+                                window.location = "/Admin/Fornecedor/Index";
+                            });
+                        }, 2500);
+                    },
+                    error: function (result) {
+                        Notificar("error", "Erro!", result);
+                    }
+                });
+            }           
+        }
+        function ValidarModalEditar() {
+            if ($("#NomeEd").val() == "") {
+                $("#NomeEd").focus();
+                NotificarErro("error", "Erro!", "O Número do Fornecedor deve ser preenchido.");
+                return false;
+            }
+            else {
+                if ($("#TelefoneEd").val() == "") {
+                    $("#TelefoneEd").focus();
+                    NotificarErro("error", "Erro!", "O Telefone do Fornecedor deve ser preenchido.");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function NotificarErro(icone, titulo, mensagem) {
+            Swal.fire({
+                icon: icone,
+                title: titulo,
+                text: mensagem,
+                showConfirmButton: false,
+                iconSize: "10px",
+                timer: 2500
+            });
+        }
+
+    </script>
+}

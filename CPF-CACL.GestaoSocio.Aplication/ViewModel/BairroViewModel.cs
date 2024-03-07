@@ -1,4 +1,4 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace CPF_CACL.GestaoSocio.Aplication.ViewModel

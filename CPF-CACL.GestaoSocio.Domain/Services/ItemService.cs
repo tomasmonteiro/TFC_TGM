@@ -1,6 +1,6 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
+using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
 
 namespace CPF_CACL.GestaoSocio.Domain.Services
@@ -200,7 +200,13 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         }
         public void Remove(Item item)
         {
-            _itemRepository.Remove(item);
+            var novoItem = _itemRepository.GetById(item.Id);
+            if (novoItem == null)
+            {
+                Notificar("O Item que pretende eliminar não existe.");
+                return;
+            }
+            _itemRepository.Remove(novoItem);
         }
         public void Dispose()
         {

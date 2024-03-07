@@ -1,13 +1,7 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
+using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CPF_CACL.GestaoSocio.Domain.Services
 {
@@ -157,7 +151,13 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
 
         public void Remove(ItemPagamento itemPagamento)
         {
-            _itemPagamentoRepository.Remove(itemPagamento);
+            var novoItemPagamento = _itemPagamentoRepository.GetById(itemPagamento.Id);
+            if (novoItemPagamento == null)
+            {
+                Notificar("O Item Pagamento que pretende eliminar não existe.");
+                return;
+            }
+            _itemPagamentoRepository.Remove(novoItemPagamento);
         }
 
         public void Update(ItemPagamento itemPagamento)

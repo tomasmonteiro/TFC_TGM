@@ -22,55 +22,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Agregado", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("BI")
-                        .HasColumnType("varchar(14)");
-
-                    b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Genero")
-                        .IsRequired()
-                        .HasColumnType("varchar(9)");
-
-                    b.Property<string>("Nacionalidade")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("varchar(150)");
-
-                    b.Property<Guid>("RelacaoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SocioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RelacaoId");
-
-                    b.HasIndex("SocioId");
-
-                    b.ToTable("Agregado", (string)null);
-                });
-
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Apoio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Apoio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,7 +68,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Apoio", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Bairro", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Bairro", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -145,7 +97,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Bairro", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Beneficio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Beneficio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -174,7 +126,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Beneficio", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Capital", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Capital", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -207,7 +159,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Capital", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.CategoriaSocio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.CategoriaSocio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -234,7 +186,55 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("CategoriaSocio", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Despesa", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Dependente", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BI")
+                        .HasColumnType("varchar(14)");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DataNascimento")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Genero")
+                        .IsRequired()
+                        .HasColumnType("varchar(9)");
+
+                    b.Property<string>("Nacionalidade")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("varchar(150)");
+
+                    b.Property<Guid>("RelacaoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SocioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RelacaoId");
+
+                    b.HasIndex("SocioId");
+
+                    b.ToTable("Dependente", (string)null);
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Despesa", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -266,7 +266,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Despesa", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Fornecedor", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Fornecedor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -310,7 +310,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Fornecedor", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Item", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Item", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -366,7 +366,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Item");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.ItemApoio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.ItemApoio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -407,7 +407,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("ItemApoio", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.ItemPagamento", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.ItemPagamento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -440,7 +440,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("ItemPagamento");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Municipio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Municipio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -464,7 +464,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Municipio", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Organismo", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Organismo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -488,7 +488,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Organismo", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Pagamento", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Pagamento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -540,7 +540,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Pagamento", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.PedidoApoio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.PedidoApoio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -572,7 +572,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("PedidoApoio", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.PerfilUsuario", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.PerfilUsuario", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -596,7 +596,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("PerfilUsuario", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Periodo", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Periodo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -639,7 +639,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Periodo");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Projecto", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Projecto", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -674,7 +674,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Projecto", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.ProjectoSocio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.ProjectoSocio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -711,7 +711,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("ProjectoSocio", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Relacao", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Relacao", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -735,7 +735,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Relacao", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Saldo", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Saldo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -779,7 +779,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Saldo", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Socio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Socio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -884,7 +884,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Socio", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoBeneficio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoBeneficio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -908,7 +908,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("TipoBeneficio", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoItem", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -932,7 +932,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("TipoItem", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoPagamento", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoPagamento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -956,7 +956,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("TipoPagamento", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoProjecto", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoProjecto", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -980,7 +980,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("TipoProjecto", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Usuario", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Usuario", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1024,34 +1024,15 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Usuario", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Agregado", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Apoio", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Relacao", "Relacao")
-                        .WithMany("Agregados")
-                        .HasForeignKey("RelacaoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Socio", "Socio")
-                        .WithMany("Agregados")
-                        .HasForeignKey("SocioId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Relacao");
-
-                    b.Navigation("Socio");
-                });
-
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Apoio", b =>
-                {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Socio", "Socio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Socio", "Socio")
                         .WithMany("Apoios")
                         .HasForeignKey("SocioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Usuario", "Usuario")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Usuario", "Usuario")
                         .WithMany("Apoios")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1062,9 +1043,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Bairro", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Bairro", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Municipio", "Municipio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Municipio", "Municipio")
                         .WithMany("Bairros")
                         .HasForeignKey("MunicipioId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1073,9 +1054,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Municipio");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Beneficio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Beneficio", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoBeneficio", "TipoBeneficio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.TipoBeneficio", "TipoBeneficio")
                         .WithMany("Beneficios")
                         .HasForeignKey("TipoBeneficioId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1084,15 +1065,15 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("TipoBeneficio");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Capital", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Capital", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Beneficio", "Beneficio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Beneficio", "Beneficio")
                         .WithMany("Capitais")
                         .HasForeignKey("BeneficioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.CategoriaSocio", "CategoriaSocio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.CategoriaSocio", "CategoriaSocio")
                         .WithMany("Capitais")
                         .HasForeignKey("CategoriaSocioId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1103,9 +1084,28 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("CategoriaSocio");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Despesa", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Dependente", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Apoio", "Apoio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Relacao", "Relacao")
+                        .WithMany("Dependentes")
+                        .HasForeignKey("RelacaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Socio", "Socio")
+                        .WithMany("Dependentes")
+                        .HasForeignKey("SocioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Relacao");
+
+                    b.Navigation("Socio");
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Despesa", b =>
+                {
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Apoio", "Apoio")
                         .WithMany("Despesas")
                         .HasForeignKey("ApoioId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1114,21 +1114,21 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Apoio");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Item", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Item", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Periodo", "Periodo")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Periodo", "Periodo")
                         .WithMany("Items")
                         .HasForeignKey("PeriodoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Socio", "Socio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Socio", "Socio")
                         .WithMany("Items")
                         .HasForeignKey("SocioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoItem", "TipoItem")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.TipoItem", "TipoItem")
                         .WithMany("Items")
                         .HasForeignKey("TipoItemId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1141,21 +1141,21 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("TipoItem");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.ItemApoio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.ItemApoio", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Apoio", "Apoio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Apoio", "Apoio")
                         .WithMany("ItemApoios")
                         .HasForeignKey("ApoioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Beneficio", "Beneficio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Beneficio", "Beneficio")
                         .WithMany("ItemApoios")
                         .HasForeignKey("BeneficioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Fornecedor", "Fornecedor")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Fornecedor", "Fornecedor")
                         .WithMany("ItemApoios")
                         .HasForeignKey("ForneceorId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1168,15 +1168,15 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Fornecedor");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.ItemPagamento", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.ItemPagamento", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Item", "Item")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Item", "Item")
                         .WithMany("ItemPagamnetos")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Pagamento", "Pagamento")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Pagamento", "Pagamento")
                         .WithMany("ItemPagamnetos")
                         .HasForeignKey("PagamentoId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1187,21 +1187,21 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Pagamento");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Pagamento", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Pagamento", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Socio", "Socio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Socio", "Socio")
                         .WithMany("Pagamentos")
                         .HasForeignKey("SocioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoPagamento", "TipoPagamento")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.TipoPagamento", "TipoPagamento")
                         .WithMany("Pagamentos")
                         .HasForeignKey("TipoPagamentoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Usuario", null)
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Usuario", null)
                         .WithMany("Pagamentos")
                         .HasForeignKey("UsuarioId");
 
@@ -1210,9 +1210,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("TipoPagamento");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.PedidoApoio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.PedidoApoio", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Socio", "Socio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Socio", "Socio")
                         .WithMany("PedidoApoios")
                         .HasForeignKey("SocioId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1221,9 +1221,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Socio");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Projecto", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Projecto", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoProjecto", "TipoProjecto")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.TipoProjecto", "TipoProjecto")
                         .WithMany("Projectos")
                         .HasForeignKey("TipoProjectoId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1232,15 +1232,15 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("TipoProjecto");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.ProjectoSocio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.ProjectoSocio", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Projecto", "Projecto")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Projecto", "Projecto")
                         .WithMany("ProjectoSocios")
                         .HasForeignKey("ProjectoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Socio", "Socio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Socio", "Socio")
                         .WithMany("ProjectoSocios")
                         .HasForeignKey("SocioId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1251,15 +1251,15 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Socio");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Saldo", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Saldo", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Pagamento", "Pagamentos")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Pagamento", "Pagamentos")
                         .WithMany("Saldo")
                         .HasForeignKey("PagamentoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Socio", "Socios")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Socio", "Socios")
                         .WithMany("Saldo")
                         .HasForeignKey("SocioId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1270,21 +1270,21 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Socios");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Socio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Socio", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Bairro", "Bairros")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Bairro", "Bairros")
                         .WithMany("Socios")
                         .HasForeignKey("BairroId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.CategoriaSocio", "CategoriaSocio")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.CategoriaSocio", "CategoriaSocio")
                         .WithMany("Socios")
                         .HasForeignKey("CategoriaSocioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.Organismo", "Organismo")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Organismo", "Organismo")
                         .WithMany("Socios")
                         .HasForeignKey("OrganismoId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1297,91 +1297,91 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Organismo");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Usuario", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Usuario", b =>
                 {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Models.Entities.PerfilUsuario", null)
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.PerfilUsuario", null)
                         .WithMany("Usuarios")
                         .HasForeignKey("PerfilUsuarioId");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Apoio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Apoio", b =>
                 {
                     b.Navigation("Despesas");
 
                     b.Navigation("ItemApoios");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Bairro", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Bairro", b =>
                 {
                     b.Navigation("Socios");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Beneficio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Beneficio", b =>
                 {
                     b.Navigation("Capitais");
 
                     b.Navigation("ItemApoios");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.CategoriaSocio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.CategoriaSocio", b =>
                 {
                     b.Navigation("Capitais");
 
                     b.Navigation("Socios");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Fornecedor", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Fornecedor", b =>
                 {
                     b.Navigation("ItemApoios");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Item", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Item", b =>
                 {
                     b.Navigation("ItemPagamnetos");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Municipio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Municipio", b =>
                 {
                     b.Navigation("Bairros");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Organismo", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Organismo", b =>
                 {
                     b.Navigation("Socios");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Pagamento", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Pagamento", b =>
                 {
                     b.Navigation("ItemPagamnetos");
 
                     b.Navigation("Saldo");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.PerfilUsuario", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.PerfilUsuario", b =>
                 {
                     b.Navigation("Usuarios");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Periodo", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Periodo", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Projecto", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Projecto", b =>
                 {
                     b.Navigation("ProjectoSocios");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Relacao", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Relacao", b =>
                 {
-                    b.Navigation("Agregados");
+                    b.Navigation("Dependentes");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Socio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Socio", b =>
                 {
-                    b.Navigation("Agregados");
-
                     b.Navigation("Apoios");
+
+                    b.Navigation("Dependentes");
 
                     b.Navigation("Items");
 
@@ -1394,27 +1394,27 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Saldo");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoBeneficio", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoBeneficio", b =>
                 {
                     b.Navigation("Beneficios");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoItem", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoItem", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoPagamento", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoPagamento", b =>
                 {
                     b.Navigation("Pagamentos");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.TipoProjecto", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoProjecto", b =>
                 {
                     b.Navigation("Projectos");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Models.Entities.Usuario", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Usuario", b =>
                 {
                     b.Navigation("Apoios");
 

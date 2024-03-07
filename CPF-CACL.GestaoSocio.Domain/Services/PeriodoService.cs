@@ -1,6 +1,6 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
+using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
 using System.Globalization;
 
@@ -190,7 +190,13 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         //Elimina o registo permanentemente
         public void Remove(Periodo periodo)
         {
-            _periodoRepository.Remove(periodo);
+            var novoPeriodo = _periodoRepository.GetById(periodo.Id);
+            if (novoPeriodo == null)
+            {
+                Notificar("O Periodo que pretende eliminar não existe.");
+                return;
+            }
+            _periodoRepository.Remove(novoPeriodo);
         }
         public void Update(Periodo periodo)
         {

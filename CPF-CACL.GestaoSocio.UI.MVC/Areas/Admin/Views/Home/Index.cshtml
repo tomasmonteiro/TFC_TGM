@@ -1,6 +1,5 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Painel administrativo";
+    ViewData["Title"] = "Página inicial - Admin";
 }
 
 @model CPF_CACL.GestaoSocio.Domain.Enums.EEstadoApoio
@@ -16,7 +15,7 @@
         <!-- small box -->
         <div class="small-box bg-info">
             <div class="inner">
-                <h3>150</h3>
+                <h3>@ViewBag.TotalSocios</h3>
 
                 <p>Sócios</p>
             </div>
@@ -31,7 +30,7 @@
         <!-- small box -->
         <div class="small-box bg-success">
             <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>@ViewBag.TotalPagamentos</h3>
 
                 <p>Pagamentos efectuados</p>
             </div>
@@ -46,7 +45,7 @@
         <!-- small box -->
         <div class="small-box bg-warning">
             <div class="inner">
-                <h3>44</h3>
+                <h3>@ViewBag.TotalUsuarios</h3>
 
                 <p>Usuários Registados</p>
             </div>
@@ -61,14 +60,14 @@
         <!-- small box -->
         <div class="small-box bg-danger">
             <div class="inner">
-                <h3>65</h3>
+                <h3>@ViewBag.TotalFornecedores</h3>
 
                 <p>Fornecedores</p>
             </div>
             <div class="icon">
-                <i class="fas fa-chart-pie  ion ion-pie-graph"></i>
+                <i class="fas fa-chart-pie  ion ion-ios-briefcase"></i>
             </div>
-            <a href="#" class="small-box-footer">Mais informações <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/Admin/Fornecedor/Index" class="small-box-footer">Mais informações <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
   

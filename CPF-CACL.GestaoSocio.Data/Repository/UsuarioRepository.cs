@@ -1,6 +1,6 @@
 ﻿using CPF_CACL.GestaoSocio.Data.Context;
 using CPF_CACL.GestaoSocio.Data.Repository;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+using CPF_CACL.GestaoSocio.Domain.Entities;
 
 namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 {
@@ -30,6 +30,11 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
         public IEnumerable<Usuario> BuscarTodos()
         {
             return _gsContext.Usuario.Where(p => p.Status == true).ToList();
+        }
+
+        public int ContarUsuarios()
+        {
+            return _gsContext.Usuario.Count(p => p.Status == true);
         }
     }
 }

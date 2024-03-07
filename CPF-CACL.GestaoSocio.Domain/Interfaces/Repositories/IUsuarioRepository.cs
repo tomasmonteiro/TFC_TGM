@@ -1,4 +1,4 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
 
 namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 {
@@ -9,5 +9,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
         Usuario BuscarPorLogin(string login);
         Usuario BuscarPorEmail(string email);
         IEnumerable<Usuario> BuscarTodos();
+        int ContarUsuarios();
     }
 }

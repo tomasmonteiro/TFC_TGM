@@ -1,0 +1,79 @@
+﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.DependenteViewModel
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<!--Para abrir o Modal-->
+<div id="modalContainer"></div>
+
+<!---------Modal para Adicionar Agregado--------------->
+
+<div class="modal fade" id="adicionarAgregado" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cabecalhoModalAdicionarAgregado">CADASTRAR AGREGADO</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body" id="modalContent">
+                <form>
+                    <input asp-for="SocioId" type="hidden" id="SocioId" name="SocioId" />
+
+                    <div class="form-group">
+                        <label for="generoAgregado" class="control-label">RELAÇÃO:</label>
+                        <select asp-for="RelacaoId" for="Relacao" id="relacaoAgregado" class="form-control" data-val-required="">
+                            @foreach (var item in Model.Relacao)
+                            {
+                                <option value="@item.Id">@item.Nome</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nomeAgregado" class="control-label">NOME COMPLETO:</label>
+                        <input asp-for="Nome" id="nomeAgregado" name="nomeAgregado" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="biAgregado" class="control-label">BI</label>
+                        <input asp-for="BI" id="biAgregado" name="biAgregado" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="generoAgregado" class="control-label">GÉNERO:</label>
+                        <select asp-for="Genero" for="Genero" id="generoAgregado" class="form-control" data-val-required="">
+                            <option>Feminino</option>
+                            <option>Masculino</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataNascimentoAgregado" class="control-label required"> DATA DE NASCIMENTO: </label>
+                        <input asp-for="DataNascimento" type="date" for="dataNascimentoAgregado" value="@DateTime.Now.ToString("dd-MM-yyyy")" id="dataNascimentoAgregado" class="form-control" data-val-required="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nacionalidadeAgregado" class="control-label">NACIONALIDADE:</label>
+                        <input asp-for="Nacionalidade" id="nacionalidadeAgregado" name="nacionalidadeAgregado" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="DataCriacao" type="hidden" id="dataCriacaoAgregado" value="@DateTime.Now" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="DataAtualizacao" type="hidden" id="dataAtualizacaoAgregado" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="Status" type="hidden" id="statusAgregado" class="form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="AdicionarAgregado()" class="btn btn-success waves-effect">Salvar</button>
+                <button type="button" class="btn btn-link waves-effect" asp-controller="Agregado" asp-action="Index">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+

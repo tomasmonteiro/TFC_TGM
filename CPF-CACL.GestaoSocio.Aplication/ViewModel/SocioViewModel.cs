@@ -1,7 +1,6 @@
 ﻿using CPF_CACL.GestaoSocio.Domain.Enums;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
 {

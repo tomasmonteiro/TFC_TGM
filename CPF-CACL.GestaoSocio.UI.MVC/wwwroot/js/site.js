@@ -197,7 +197,7 @@ function AdicionarSocio() {
 function abrirModalAgregado(id) {
     
     $.ajax({
-        url: "/Agregado/Criar",
+        url: "/Dependente/Criar",
         type: "GET",
         success: function (response) {
             $('#modalContainer').html(response);
@@ -290,7 +290,7 @@ function AdicionarAgregado() {
         $('#loading-overlay').show();
         $.ajax({
             type: "POST",
-            url: "/Agregado/Criar",
+            url: "/Dependente/Criar",
             data: {
                 Nome: $("#nomeAgregado").val(),
                 BI: $("#biAgregado").val(),
@@ -352,6 +352,59 @@ function ValidarAgregado() {
 }
 
 
+//----- BENEFICIO
+
+///----Adicionar--
+
+function AdicionarBeneficio() {
+    if (!ValidarBeneficio()) {
+        return;
+    }
+    else {
+        $('#loading-overlay').show();
+        $.ajax({
+            type: "POST",
+            url: "/Beneficio/Criar",
+            data: {
+                Nome: $("#nome").val(),
+                TipoBeneficioId: $("#tipoId").val(),
+                DataCriacao: $("#dataCriacao").val(),
+                Status: $("#status").val()
+            },
+            success: function (result) {
+                if (result.substring(0, 1) == "x") {
+                    NotificarErro("error", "Erro!", result);
+                    return false;
+                }
+                setTimeout(function () {
+                    $('#loading-overlay').hide();
+                    Swal.fire({
+                        icon: "success",
+                        title: "Sucesso!",
+                        text: result,
+                        showConfirmButton: false,
+                        timer: 2500
+                    }).then((result) => {
+                        window.location = "/Beneficio/Index";
+                    });
+                }, 2500);
+            },
+            error: function (result) {
+                NotificarErro("error", "Erro!", result);
+            }
+        });
+    }
+}
+function ValidarBeneficio() {
+    if ($("#nome").val() == "") {
+        $("#nome").focus();
+        NotificarErro("error", "Erro!", "O Nome do Benefício deve ser preenchido.");
+        return false;
+    }
+    return true;
+}
+
+
 
 
 ///---- USUARIO--
@@ -383,10 +436,8 @@ function CadastrarUsuario() {
                     $('#loading-overlay').hide();
                     Swal.fire({
                         icon: "success",
-                        title: "Sucesso",
-                        text: result,
+                        title: result,
                         showConfirmButton: false,
-                        iconSize: "10px",
                         timer: 2500
                     }).then((result) => {
                         window.location = "/Admin/Usuario/Index";
@@ -444,6 +495,49 @@ function ValidarUsuario() {
     return true;
 }
 
+//-----PESQUISAR SOCIO
+function pesquisarSocio() {
+    Swal.fire({
+        title: 'Digite o código do Sócio:',
+        input: 'text',
+        showCancelButton: true,
+        confirmButtonText: 'Pesquisar',
+        cancelButtonText: 'Cancelar',
+        showLoaderOnConfirm: true,
+        preConfirm: (valor) => {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(fetch(`/Socio/Pesquisar?codigo=${encodeURIComponent(valor)}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage('A pesquisa falhou!')
+                        }));
+                }, 1000);
+            });
+        },
+        allowOutsideClick: false,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if (result.value.socioId) {
+                window.location = "/Socio/Details/" + result.value.socioId;
+            }
+            else {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: `${result.value}`,
+                    icon: 'error'
+                });
+            }
+        }
+    })
+}
+
+
 
 ///----LOGIN--
 function EfetuarLogin() {
@@ -487,6 +581,72 @@ function ValidarLogin() {
     }
     return true;
 }
+
+
+///----AGREGADO--
+function AdicionarFornecedor() {
+    if (!ValidarFornecedor()) {
+        return;
+    }
+    else {
+        $('#loading-overlay').show();
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Fornecedor/Criar",
+            data: {
+                Nome: $("#Nome").val(),
+                NIF: $("#NIF").val(),
+                Endereco: $("#Endereco").val(),
+                Telefone: $("#Telefone").val(),
+                Email: $("#Email").val(),
+                DataCriacao: $("#DataCriacao").val(),
+                Status: $("#Status").val()
+            },
+            success: function (result) {
+                if (result.substring(0, 1) == "x") {
+                    Notificar("error", "Erro!", result);
+                    return false;
+                }
+                Notificar("success", "Sucesso!", result);
+                $("#Nome").val("");
+                $("#NIF").val("");
+                $("#Endereco").val("");
+                $("#Telefone").val("");
+                $("#Email").val("");
+            },
+            error: function (result) {
+                Notificar("error", "Erro!", result);
+            }
+        });
+    }
+}
+function ValidarFornecedor() {
+    if ($("#Nome").val() == "") {
+        $("#Nome").focus();
+        NotificarErro("error", "Erro!", "O Nome do Fornecedor deve ser preenchido.");
+        return false;
+    }
+    else {
+        if ($("#Telefone").val() == "") {
+            $("#Telefone").focus();
+            NotificarErro("error", "Erro!", "O Telefone do Fornecedor deve ser preenchido.");
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //--------------------------------------------

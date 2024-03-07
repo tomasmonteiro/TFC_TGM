@@ -1,7 +1,7 @@
 ﻿using CPF_CACL.GestaoSocio.Data.Context;
+using CPF_CACL.GestaoSocio.Domain.Entities;
 using CPF_CACL.GestaoSocio.Domain.Enums;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CPF_CACL.GestaoSocio.Data.Repository

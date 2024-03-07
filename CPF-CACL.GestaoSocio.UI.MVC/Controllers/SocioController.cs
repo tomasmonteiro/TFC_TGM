@@ -1,13 +1,9 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
-using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
 using CPF_CACL.GestaoSocio.UI.MVC.Extensions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
@@ -15,6 +11,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
     public class SocioController : BaseController
     {
         private readonly ISocioAppService _socioAppService;
+        private readonly ISocioRepository _socioRepository;
         private readonly IOrganismoRepository _organismoRepository;
         private readonly IBairroRepository _bairroRepository;
         private readonly IMunicipioRepository _municipioRepository;
@@ -22,11 +19,12 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         private readonly ISaldoAppService _saldoAppService;
         private readonly IItemAppService _itemAppService;
 
-		private readonly IAgregadoAppService _agregadoAppService;
+		private readonly IDependenteAppService _agregadoAppService;
 
-		public SocioController(ISocioAppService socioAppService, IItemAppService itemAppService, IOrganismoRepository organismoRepository,  IBairroRepository bairroRepository, ICategoriaSocioRepository categoriaRepository, IMunicipioRepository municipioRepository, ISaldoAppService saldoAppService, IAgregadoAppService agregadoAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+		public SocioController(ISocioAppService socioAppService, ISocioRepository socioRepository, IItemAppService itemAppService, IOrganismoRepository organismoRepository,  IBairroRepository bairroRepository, ICategoriaSocioRepository categoriaRepository, IMunicipioRepository municipioRepository, ISaldoAppService saldoAppService, IDependenteAppService agregadoAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _socioAppService = socioAppService;
+            _socioRepository = socioRepository;
             _organismoRepository = organismoRepository;
             _bairroRepository = bairroRepository;
             _categoriaRepository = categoriaRepository;
@@ -59,7 +57,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             IEnumerable<ItemViewModel> itens = _itemAppService.BuscarItemPorSocio(id);
 			ViewBag.Itens = itens;
 
-            IEnumerable<AgregadoViewModel> agregado = _agregadoAppService.BuscarAgregadoPorSocio(id);
+            IEnumerable<DependenteViewModel> agregado = _agregadoAppService.BuscarDependentePorSocio(id);
             ViewBag.Agregado = agregado;
 
 			var socio = _socioAppService.BuscarPorId(id);
@@ -177,6 +175,21 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
                 return View();
             }
         }
+
+        // GET: SocioController/Pesquisar/5
+        public ActionResult Pesquisar(string codigo)
+        {
+            var socio = _socioRepository.BuscarPorCodigo(codigo);
+            if (socio!= null)
+            {
+               return Json(new { socioId = socio.Id.ToString() });
+            }
+            else
+            {
+                return Json($"Sócio não localizado!");
+            }
+        }
+
 
         // GET: SocioController/Delete/5
         public ActionResult Delete(Guid id)

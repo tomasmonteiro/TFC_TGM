@@ -1,5 +1,5 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Enums;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
+using CPF_CACL.GestaoSocio.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

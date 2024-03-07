@@ -76,6 +76,14 @@ body {
 }*/
 
 
+.icone {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+
+
 .modal-header {
     color: #ffF !important;
     background-color: #007bff !important;

@@ -1,4 +1,4 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
 
 namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 {
@@ -9,8 +9,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
         ICollection<Socio> BuscarPorGenero(string genero);
         IEnumerable<Socio> BuscarTodos();
         public string ConsultarUltimoCodigo(string tipoEntidade, int anoAtual);
-
-
-
+        int ContarSocios();
     }
 }

@@ -1,8 +1,8 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
 
 namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 {
-    public interface IDespesaService : IRepositoryBase<Despesa>
+    public interface IDespesaRepository : IRepositoryBase<Despesa>
     {
     }
 }

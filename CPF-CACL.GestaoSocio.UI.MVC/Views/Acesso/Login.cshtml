@@ -22,71 +22,61 @@
         <link rel="stylesheet" type="text/css" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
         <!-- Theme style -->
         <link rel="stylesheet" type="text/css" href="~/dist/css/adminlte.min.css">
-    </head>
-    <body class="hold-transition login-page" style="background-color: #808080">
+</head>
+    <body style="background-image: url('img/app_img/vecteezy.jpg'); background-size:cover;height:100vh; width:100vw;">
+        <div class="hold-transition login-page" style="background-color: rgba(0,0,0,0.5)">
+            <div class="login-box">
+                <!-- /.login-logo -->
+                <div class="card card-outline card-primary">
+                    <div class="card-header text-center">
+                    <p href="" class="h1 text-primary"><b>GEST</b>-PREV</p>
+                    </div>
+                    <div class="card-body login-card-body">
 
-        <div class="login-box">
-            <!-- /.login-logo -->
-            <div class="card card-outline card-primary">
-                <div class="card-header text-center">
-                <p href="" class="h1 text-primary"><b>GEST</b>-PREV</p>
-                </div>
-                <div class="card-body login-card-body">
-
-                    <p class="login-box-msg">Gestão de Previdência | LOGIN</p>
-                    @if (TempData["Erro"] != null)
-                    {
-                        <p class="text-danger">@TempData["Erro"]</p>
-                    }
-                    <form method="post">
-                        <div class="input-group mb-3">
-                        <input type="text" asp-for="Login" class="form-control" id="userName" placeholder="Utiliador" data-val-required="">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-user"></span>
+                        <p class="login-box-msg">Gestão de Previdência | LOGIN</p>
+                        @if (TempData["Erro"] != null)
+                        {
+                            <p class="text-danger">@TempData["Erro"]</p>
+                        }
+                        <form method="post">
+                            <div class="input-group mb-3">
+                            <input type="text" asp-for="Login" class="form-control" id="userName" placeholder="Utiliador" data-val-required="">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-user"></span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Login" class="text-danger"></span>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="password" asp-for="Senha" id="password" class="form-control" autocomplete="off" placeholder="Password" data-val-required="">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Senha" class="text-danger"></span>
+                            </div>
+                            <div class="row">
+                                <div class="offset-4 col-4">
+                                    <button type="submit" class="btn btn-primary btn-block">Entrar</button>
                                 </div>
                             </div>
-                            <span asp-validation-for="Login" class="text-danger"></span>
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="password" asp-for="Senha" id="password" class="form-control" autocomplete="off" placeholder="Password" data-val-required="">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
-                                </div>
-                            </div>
-                            <span asp-validation-for="Senha" class="text-danger"></span>
-                        </div>
-                        <div class="row">
-                            @*<div class="col-8">
-                                <div class="icheck-primary">
-                                    <input type="checkbox" id="remember">
-                                    <label for="remember">
-                                        Remember Me
-                                    </label>
-                                </div>
-                            </div> *@
-                            <!-- /.col -->
-                            <div class="offset-4 col-4">
-                                <button type="submit" class="btn btn-primary btn-block">Entrar</button>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                </form>
+                    </form>
+                    </div>
                 </div>
             </div>
+
         </div>
+            <!-- jQuery -->
+            <script src="~/plugins/jquery/jquery.min.js"></script>
+            <script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+            <!-- Bootstrap 4 -->
+            <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+            <script src="~/js/site.js"></script>
 
-        <!-- jQuery -->
-        <script src="~/plugins/jquery/jquery.min.js"></script>
-        <script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
-        <!-- Bootstrap 4 -->
-        <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-        <script src="~/js/site.js"></script>
-
-        <!-- AdminLTE App -->
-        <script src="~/dist/js/adminlte.min.js"></script>
+            <!-- AdminLTE App -->
+            <script src="~/dist/js/adminlte.min.js"></script>
     </body>
 </html>

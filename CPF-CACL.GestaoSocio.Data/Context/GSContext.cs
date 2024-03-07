@@ -1,5 +1,5 @@
 ﻿using CPF_CACL.GestaoSocio.Data.Map;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+using CPF_CACL.GestaoSocio.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -11,7 +11,7 @@ namespace CPF_CACL.GestaoSocio.Data.Context
         public GSContext(DbContextOptions<GSContext> options) : base(options){}
 
         //Tabelas
-        public DbSet<Agregado> Agregado { get; set; }
+        public DbSet<Dependente> Dependente { get; set; }
         public DbSet<Apoio> Apoio { get; set; }
         public DbSet<Beneficio> Beneficio { get; set; }
         public DbSet<Capital> Capital { get; set; }

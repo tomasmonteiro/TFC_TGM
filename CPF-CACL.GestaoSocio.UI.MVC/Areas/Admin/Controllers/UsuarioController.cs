@@ -1,15 +1,15 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
-using CPF_CACL.GestaoSocio.Aplication.Services;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
 using CPF_CACL.GestaoSocio.UI.MVC.Controllers;
-using Microsoft.AspNetCore.Http;
+using CPF_CACL.GestaoSocio.UI.MVC.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Autorizacao("Admin")]
 
     public class UsuarioController : BaseController
     {
@@ -27,9 +27,10 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Admin.Controllers
         }
 
         // GET: UsuarioController/Details/5
-        public ActionResult Detalhes(int id)
+        public ActionResult Detalhes(Guid id)
         {
-            return View();
+            var usuario = _usuarioAppService.BuscarPorId(id);
+            return View(usuario);
         }
 
         // GET: UsuarioController/Create
@@ -64,45 +65,92 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Admin.Controllers
         }
 
         // GET: UsuarioController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Editar(int id)
         {
             return View();
         }
 
         // POST: UsuarioController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Editar(UsuarioViewModel usuarioViewModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _usuarioAppService.Atualizar(usuarioViewModel);
+
+                if (!ValidOperation())
+                {
+                    var sb = new StringBuilder();
+                    foreach (var item in BuscarMensagemErro())
+                    {
+                        sb.AppendLine($"x {item}\n");
+                    }
+                    return Json(sb.ToString());
+                }
+                return Json("Registo atualizado com sucesso!");
             }
-            catch
+            catch (Exception erro)
             {
-                return View();
+                return Json($"x Ocorreu um erro: {erro.Message}");
             }
         }
 
-        // GET: UsuarioController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: UsuarioController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Inativar(Guid id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _usuarioAppService.Inativar(id);
+
+                if (!ValidOperation())
+                {
+                    var sb = new StringBuilder();
+                    foreach (var item in BuscarMensagemErro())
+                    {
+                        sb.AppendLine($"x {item}\n");
+                    }
+                    return Json(sb.ToString());
+                }
+                return Json("Registo inativado com sucesso!");
             }
-            catch
+            catch (Exception erro)
             {
-                return View();
+                return Json($"x Ocorreu um erro: {erro.Message}");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Eliminar(Guid id)
+        {
+            try
+            {
+                var usuario = _usuarioAppService.BuscarPorId(id);
+                if (usuario == null)
+                {
+                    return Json("O registo que pretende eliminar não foi localizado!");
+                }
+                else
+                {
+                    _usuarioAppService.Eliminar(usuario);
+
+                    if (!ValidOperation())
+                    {
+                        var sb = new StringBuilder();
+                        foreach (var item in BuscarMensagemErro())
+                        {
+                            sb.AppendLine($"x {item}\n");
+                        }
+                        return Json(sb.ToString());
+                    }
+                    return Json("Registo eliminado com sucesso!");
+                }
+            }
+            catch (Exception erro)
+            {
+                return Json($"x Ocorreu um erro: {erro.Message}");
             }
         }
     }
 }
+

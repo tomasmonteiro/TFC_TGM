@@ -12,23 +12,6 @@
     </div>
 </div>
 
-<div class="page-header">
-    <div class="row">
-        <div class="col-12 col-md-12 col-sm-12">
-            <div class="title">
-                <h4>Município</h4>
-            </div>
-            <nav class="col-12 col-md-12 col-sm-12" aria-label="breadcrumb" role="navigation">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Listagem de relações</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-</div>
-
-
 <div class="row espaco">
     <div class="col-md-12">
         <div class="card">
@@ -36,11 +19,11 @@
                 <div class=" container col-12 col-md-12 col-lg-12">
                     <!--Para abrir o Modal-->
                     <div id="PlaceHolderHere"></div>
+
                     <div class="col-12 col-md-12 col-lg-12">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
-                            <div class="col-12 col-sm-4 col-md-4">
-                                <button type="button" class="btn btn-success  form-control" data-toggle="ajax-modal" data-target="#criarRelacao" data-url="@Url.Action("Criar")"><i class="fa fa-plus"></i> Adicionar Novo</button>
-                            </div>
+                        <div class="container d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev icone"><i class="icon ion ion-android-apps icone" style="font-size: 32px;"></i> Listagem de relações</h3>
+                            <button type="button" class="btn btn-success ml-auto" data-toggle="ajax-modal" data-target="#criarRelacao" data-url="@Url.Action("Criar")"><i class="fas fa-plus"></i> Novo</button>                        
                         </div>
                     </div>
                 </div>
@@ -58,7 +41,6 @@
                         <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 5;" id="myDataTable">
                             <thead class="navbar-blue">
                                 <tr>
-                                    <th scope="col">#</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Registo</th>
                                     <th scope="col">Actualização</th>
@@ -71,8 +53,7 @@
                                     foreach (RelacaoViewModel relacao in Model)
                                     {
                                         <tr>
-                                            <th scope="row">@relacao.Id</th>
-                                            <td>@relacao.Nome</td>
+                                            <th scope="row">@relacao.Nome</th>
                                             <td>@relacao.DataCriacao</td>
                                             <td>@relacao.DataAtualizacao</td>
                                             <td>

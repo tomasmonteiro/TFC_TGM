@@ -21,13 +21,9 @@
                     <div id="PlaceHolderHere"></div>
 
                     <div class="col-12 col-md-12 col-lg-12">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
-                            <h3 class="card-title testev">Listagem de Periodos</h3>
-                            @* <a class="btn btn-success waves-effect ml-auto testev" asp-controller="Periodo" asp-action="Criar"><i class="dw dw-add" style="margin-right: 1em;"></i> Novo Período</a> *@
-                            <@* button type="button" class="btn btn-success waves-effect ml-auto" data-toggle="ajax-modal" data-target="#periodo" data-url="@Url.Action("Criar")"><i class="fa fa-plus"></i>Novo Parído</button>
- *@
-                            <a class="btn btn-success waves-effect ml-auto" asp-controller="Item" asp-action="Index"><i class="fa fa-plus"></i>Itens</a>
-
+                        <div class="container d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev icone"><i class="icon ion ion-android-apps icone" style="font-size: 32px;"></i> Listagem de Periodos</h3>
+                            <button type="button" class="btn btn-success waves-effect ml-auto" data-toggle="ajax-modal" data-target="#periodo" data-url="@Url.Action("Criar")"><i class="fas fa-plus"></i> Novo</button>
                         </div>
                     </div>
                 </div>

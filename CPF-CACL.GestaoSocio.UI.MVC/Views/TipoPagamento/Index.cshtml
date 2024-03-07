@@ -10,24 +10,8 @@
         <i class="fas fa-circle-notch fa-spin"></i> Carregando...
     </div>
 </div>
-<!--Para abrir o Modal-->
-<div id="PlaceHolderHere"></div>
 
-<div class="page-header">
-    <div class="row">
-        <div class="col-12 col-md-12 col-sm-12">
-            <div class="title">
-                <h4>Tipos de Pagamentos</h4>
-            </div>
-            <nav class="col-12 col-md-12 col-sm-12" aria-label="breadcrumb" role="navigation">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Listagem de Tipo de Pagamento</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-</div>
+
 
 
 <div class="row espaco">
@@ -35,13 +19,12 @@
         <div class="card">
             <div class="card-body cabecalho">
                 <div class=" container col-12 col-md-12 col-lg-12">
-                    
-
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
                     <div class="col-12 col-md-12 col-lg-12">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
-
-                            <div class="col-12 col-sm-4 col-md-4">
-                                <button type="button" class="btn btn-success  form-control" data-toggle="ajax-modal" data-target="#tipoPagamento" data-url="@Url.Action("Create")"><i class="fa fa-plus"></i> Adicionar Novo</button>
+                        <div class="container d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev icone"><i class="icon ion ion-android-apps icone" style="font-size: 32px;"></i>Listagem de Tipo de Pagamento</h3>
+                            <button type="button" class="btn btn-success ml-auto" data-toggle="ajax-modal" data-target="#tipoPagamento" data-url="@Url.Action("Create")"><i class="fas fa-plus"></i> Novo</button>
                             </div>
                         </div>
                     </div>

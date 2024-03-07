@@ -1,6 +1,6 @@
 ﻿using CPF_CACL.GestaoSocio.Data.Context;
 using CPF_CACL.GestaoSocio.Data.Repository;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+using CPF_CACL.GestaoSocio.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
@@ -43,6 +43,11 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
                 .FirstOrDefault();
 
             return ultimoCodigo;
+        }
+
+        public int ContarPagamentos()
+        {
+            return _gsContext.Pagamento.Count(p => p.Status == true);
         }
     }
 }

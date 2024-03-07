@@ -1,0 +1,51 @@
+﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.BeneficioViewModel
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+
+<div class="modal fade" id="adicionarTipoBeneficio" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="beneficioLabel">Cadastrar Benefício</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <label asp-for="TipoBeneficioId" class="control-label">Tipo de Benefício</label>
+                    <select id="tipoId" class="form-control">
+                        @foreach (var item in Model.TipoBeneficio)
+                        {
+                            <option value="@item.Id">@item.Nome</option>
+                        }
+                    </select>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Nome">Nome do benefício</label>
+                        <input type="text" id="nome" class="form-control" placeholder="Digite o nome do benefício">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="@DateTime.Now" id="dataCriacao">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="true" id="status" asp-for="Status">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="AdicionarBeneficio()" class="btn btn-success waves-effect">Cadastrar</button>
+                    <button type="button" class="btn btn-link waves-effect" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,12 +1,8 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
-using CPF_CACL.GestaoSocio.Aplication.Services;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
-using CPF_CACL.GestaoSocio.Domain.Models.Entities;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {

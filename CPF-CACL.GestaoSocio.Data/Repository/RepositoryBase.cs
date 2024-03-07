@@ -1,4 +1,5 @@
 ﻿using CPF_CACL.GestaoSocio.Data.Context;
+using CPF_CACL.GestaoSocio.Domain.Entities;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -7,27 +8,29 @@ using System.Linq.Expressions;
 
 namespace CPF_CACL.GestaoSocio.Data.Repository
 {
-    public class RepositoryBase<TEntity> : IDisposable, IRepositoryBase<TEntity> where TEntity : class
+    public class RepositoryBase<TEntity> : IDisposable, IRepositoryBase<TEntity> where TEntity : BaseEntity, new()
     {
         protected GSContext _gsContext;
+        protected readonly DbSet<TEntity> DbSet;
 
         public RepositoryBase(GSContext gsContext)
         {
             _gsContext = gsContext;
+            DbSet = gsContext.Set<TEntity>();
         }
         public void Add(TEntity obj)
         {
-            _gsContext.Set<TEntity>().Add(obj);
+            DbSet.Add(obj);
             _gsContext.SaveChanges();
         }
         public TEntity GetById(Guid id)
         {
-            return _gsContext.Set<TEntity>().Find(id);
+            return DbSet.Find(id);
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            return _gsContext.Set<TEntity>().ToList();
+            return DbSet.ToList();
         }
        public void Update(TEntity obj)
         {
@@ -36,7 +39,8 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
         }
         public void Remove(TEntity obj)
         {
-            _gsContext.Set<TEntity>().Remove(obj);
+            DbSet.Attach(obj);
+            DbSet.Remove(obj);
             _gsContext.SaveChanges();
         }
         
@@ -47,7 +51,7 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
 
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return _gsContext.Set<TEntity>().Where(predicate).ToList();
+            return DbSet.Where(predicate).ToList();
         }
     }
 }

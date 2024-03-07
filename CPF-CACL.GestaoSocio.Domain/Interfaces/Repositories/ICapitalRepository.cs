@@ -1,4 +1,4 @@
-﻿using CPF_CACL.GestaoSocio.Domain.Models.Entities;
+﻿using CPF_CACL.GestaoSocio.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 {
-    public interface ICapitalService : IRepositoryBase<Capital>
+    public interface ICapitalRepository : IRepositoryBase<Capital>
     {
     }
 }
