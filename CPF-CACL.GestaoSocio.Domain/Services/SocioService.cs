@@ -11,13 +11,15 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         private readonly IItemService _itemService;
         private readonly IPeriodoService _periodoService;
         private readonly ITipoItemRepository _tipoItemRepository;
-        public SocioService(ISocioRepository socioRepository, IItemService itemService, IPeriodoService periodoService, ITipoItemRepository tipoItemRepository, INotificador notificador) 
+        private readonly ICapitalRepository _capitalRepository;
+        public SocioService(ICapitalRepository capitalRepository, ISocioRepository socioRepository, IItemService itemService, IPeriodoService periodoService, ITipoItemRepository tipoItemRepository, INotificador notificador) 
             : base(notificador)
         {
             _socioRepository = socioRepository;
             _itemService = itemService;
             _periodoService = periodoService;
             _tipoItemRepository = tipoItemRepository;
+            _capitalRepository = capitalRepository;
         }
 
         public IEnumerable<Socio> BuscarPorNome(string nome)
@@ -129,6 +131,21 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
                 proximoNumero = int.Parse(ultimoCodigo.Substring(2 + tipoEntidade.Length)) + 1;
             }
             return $"{tipoEntidade}{anoAtual:D2}{proximoNumero:D3}";
+        }
+
+        public double BuscarValorCapital(Guid socioId, Guid beneficioId)
+        {
+            var socio = _socioRepository.GetById(socioId);
+            var categoriaId = socio.CategoriaSocioId;
+
+            var capital = _capitalRepository.Find(p => p.BeneficioId == beneficioId && p.CategoriaSocioId == categoriaId && p.Status == true).FirstOrDefault();
+            if (capital == null)
+            {
+                Notificar("Capital não localizado.");
+                return 0;
+            }
+
+            return capital.Valor;
         }
     }
 }

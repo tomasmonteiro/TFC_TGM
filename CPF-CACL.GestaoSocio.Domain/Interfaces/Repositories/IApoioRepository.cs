@@ -9,5 +9,8 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 {
     public interface IApoioRepository : IRepositoryBase<Apoio>
     {
+        IEnumerable<Apoio> BuscarTodos();
+        IEnumerable<Apoio> BuscarApoioPendente();
+        IEnumerable<Apoio> BuscarApoioConcluido();
     }
 }

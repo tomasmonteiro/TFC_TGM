@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>@ViewData["Title"] | SIGEPRES</title>
+    <title>@ViewData["Title"] | GEST-PREV</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -14,6 +14,10 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" type="text/css" href="~/css/fontawesome/css/all.min.css" />
+    <!--Vendor-->
+    <link rel="stylesheet" type="text/css" href="~/vendors/styles/icon-font.css" />
+    <!-- Ionicons -->
+    <link href="~/dist/css/css/ionicons.min.css" rel="stylesheet" />
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
     <!--SweetAlert2-->
@@ -30,8 +34,8 @@
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
                 <a href="/Socio/Home/Index" class="navbar-brand">
-                    <img src="../../dist/img/AdminLTELogo.png" alt="SIGEPRES Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                    <span class="brand-text font-weight-light">SIGEPRES</span>
+                    <img src="../../dist/img/AdminLTELogo.png" alt="GEST-PREV Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <span class="brand-text font-weight-light">GEST-PREV</span>
                 </a>
 
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,19 +51,19 @@
                         <li class="nav-item dropdown">
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Área Administrativa</a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a href="@Url.Action("Extrato","Financeiro", new {id = @HttpContextAccessor.HttpContext.Session.GetString("userId"), area = "Socio"})" class="dropdown-item">Extrato Financeiro</a></li>
-                                <li><a href="#" class="dropdown-item">Pagamentos</a></li>                                
+                                <li><a href="#" class="dropdown-item">Solicitar Apoio</a></li>
+                                <li><a href="#" class="dropdown-item">Consultar Apoio</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a id="dropdownSubMenu2" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Área Financeira</a>
                             <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
-                                <li><a href="#" class="dropdown-item">Solicitar Apoio</a></li>
-                                <li><a href="#" class="dropdown-item">Consultar Apoio</a></li>
+                                <li><a href="@Url.Action("Extrato","Financeiro", new {id = @HttpContextAccessor.HttpContext.Session.GetString("userId"), area = "Socio"})" class="dropdown-item">Extrato Financeiro</a></li>
+                                <li><a href="#" class="dropdown-item">Pagamentos</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Contact</a>
+                            <a href="#" class="nav-link">Contactos</a>
                         </li>
                     </ul>
                 </div>
@@ -93,17 +97,17 @@
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item dropdown-footer">Visualizar todas as notificações</a>
                         </div>
-                    </li> <!--Menu de Login/Logout-->
+                    </li> 
+                    <!--Menu de Login/Logout-->
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="fas fa-user-tie"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" role="menu" title="Logout">
-                            <a href="#" class="dropdown-item azul"><i class="dw dw-user"></i>  Perfil</a>
+                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                            <a href="#" class="dropdown-item azul" title="Perfil"><i class="dw dw-user"></i>  Perfil</a>
                             <form action="/Acesso/Logout" method="post">
-                                <button class="dropdown-item" type="submit"><i class="dw dw-logout"></i> Log Out</button>
+                                <button class="dropdown-item" title="Sair" type="submit"><i class="dw dw-logout"></i> Sair</button>
                             </form>
-                            <a asp-controller="Acesso" asp-action="Logout" class="dropdown-item azul fa fa-right-from-bracket"><i class="fas fa-sign-out-alt"></i>  Sair</a>
                         </div>
                     </li>
                 </ul>

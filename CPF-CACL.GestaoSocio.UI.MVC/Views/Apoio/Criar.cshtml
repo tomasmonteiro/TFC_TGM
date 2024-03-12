@@ -1,0 +1,292 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@model CPF_CACL.GestaoSocio.Aplication.ViewModel.ApoioViewModel
+
+@{
+    ViewData["Title"] = "Registar Apoio";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="pd-ltr-20">
+    <div class="min-height-200px">
+
+        <div class="page-header">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="title">
+                        <h4>Registar Apoio</h4>
+                    </div>
+                    <nav aria-label="breadcrumb" role="navigation">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Registar Apoio</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 " style="padding-right: 0px !important; margin-bottom: 5px; padding-left: 0 !important;">
+            <div class="card-box height-100-p overflow-hidden">
+                <div class="profile-tab height-100-p">
+                    <div class="tab height-100-p">
+                        <ul class="nav nav-tabs customtab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link cabecalho-sessao" data-toggle="tab" href="#dadosDoApoio" role="tab" aria-selected="true">DADOS DO APOIO</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="dadosDoApoio" role="tabpanel">
+                                <div class="pd-20">
+                                    <div class="container pd-0">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-6 col-md-4 espaco-input">
+                                                <input type="hidden" id="socioId" value="@ViewBag.Socio.Id" />
+
+                                                <input type="hidden" id="usuarioId" value="@HttpContextAccessor.HttpContext.Session.GetString("userId")" />
+
+                                                <input type="hidden" id="valorCapital"/>
+
+                                                <label class="control-label">Tipo de Benefício</label>
+                                                <select id="tipoBeneficio" class="form-control">
+                                                    <option>..Selecione um Tipo de Benefício..</option>
+                                                    @foreach (var item in ViewBag.TiposBeneficio)
+                                                    {
+                                                        <option value="@item.Id">@item.Nome</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 espaco-input">
+                                                <label  class="control-label required"> Benefício </label>
+                                                <select id="beneficioId" class="form-control">
+                                                    <option>..Selecione um Benefício..</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-md-4 espaco-input">
+                                                <label class="control-label">Fornecedor</label>
+                                                <select id="fornecedor" class="form-control">
+                                                    <option>..Selecione um Fornecedor..</option>
+                                                    @foreach (var item in ViewBag.Fornecedor)
+                                                    {
+                                                        <option value="@item.Id">@item.Nome</option>
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-6 espaco-input">
+                                                <label asp-for="Descricao" class="control-label required"> Descrição do apoio </label>
+                                                <input type="text1" asp-for="Descricao" id="Descricao" class="form-control required" data-val-required="" />
+                                                <span asp-validation-for="Descricao" class="text-danger"></span>
+                                            </div>
+
+                                            <div class="col-12 col-sm-6 col-md-3 espaco-input">
+                                                <label asp-for="Valor" class="control-label">Valor (AKZ) </label>
+                                                <input asp-for="Valor" type="number" id="Valor" class="form-control" />
+                                                <span asp-validation-for="Valor" class="text-danger"></span>
+                                            </div>
+
+
+
+                                            <div class="col-12 col-md-12 col-lg-12">
+                                                <button type="button" id="btnAdicionar" class="btn btn-success float-right waves-effect"> Adicionar</button>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 " style="padding-right: 0px !important; margin-bottom: 5px; padding-left: 0 !important;">
+            <div class="row espaco">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="tbItemApoio" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left" style="display:none">Usuario ID</th>
+                                        <th class="text-left" style="display:none">Beneficio ID</th>
+                                        <th class="text-left" style="display:none">Fornecedor ID</th>
+                                        <th class="text-left" style="display:none">Socio ID</th>
+                                        <th>Descrição</th>
+                                        <th>Valor</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-12 col-sm-12 " style="padding-right: 0px !important; margin-bottom: 5px; padding-left: 0 !important;">
+            <div class="row espaco">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group col-12 col-sm-4 col-md-4">
+                                <input type="hidden" value="Ativo" id="EstoDoSocio" >
+                            </div>
+
+                            <div class="form-group">
+                                <input type="hidden" value="@DateTime.Now" id="DataCriacao" asp-for="DataCriacao">
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" value="true" id="Status" asp-for="Status">
+                            </div>
+
+                            <div class="form-group">
+                                <button type="button" onclick="AdicionarApoio()" id="concluir" class="btn btn-success ml-auto">Adicionar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@section Scripts{
+    <script>
+        function EditarBeneficio() {
+
+            if (!ValidarModalEditar()) {
+                return;
+            }
+            else {
+                $('#loading-overlay').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/Beneficio/Editar",
+                    data: {
+                        Id: $("#Id").val(),
+                        Nome: $("#nomeEdit").val(),
+                        TipoBeneficioId: $("#tipoId").val(),
+                        DataCriacao: $("#dataCriacaoEdit").val(),
+                        Status: $("#statusEdit").val()
+                    },
+                    success: function (result) {
+                        if (result.substring(0, 1) == "x") {
+                            NotificarErro("error", "Erro!", result);
+                            return false;
+                        }
+                        setTimeout(function () {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Sucesso!",
+                                text: result,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then((result) => {
+                                window.location = "/Beneficio/Index";
+                            });
+                        }, 2500);
+                    },
+                    error: function (result) {
+                        Notificar("error", "Erro!", result);
+                    }
+                });
+            }
+        }
+        function ValidarModalEditar() {
+            if ($("#nomeEdit").val() == "") {
+                $("#nomeEdit").focus();
+                NotificarErro("error", "Erro!", "O Nome do Benefício deve ser preenchido.");
+                return false;
+            }
+            return true;
+        }
+
+
+        $(document).ready(function () {
+            var selectedValues = [];
+
+            $("#btnAdicionar").click(function () {
+                var beneficioId = $("#beneficioId").val();
+                var fornecedorId = $("#fornecedor").val();
+                var socioId = $("#socioId").val();
+                var descricao = $("#Descricao").val();
+                var valor = $("#Valor").val();
+
+                var newRow = "<tr>" +
+                    "<td>" + beneficioId + "</td>" +
+                    "<td>" + fornecedorId + "</td>" +
+                    "<td>" + socioId + "</td>" +
+                    "<td>" + descricao + "</td>" +
+                    "<td>" + valor + "</td>" +
+                    "<td><button class='btn btn-danger removeRow'>Remover</button></td>" +
+                    "</tr>";
+                $("#tbItemApoio tbody").append(newRow);
+            });
+
+            $("#tbItemApoio").on('click', '.removeRow', function () {
+                $(this).closest('tr').remove();
+            });
+
+            $("#concluir").click(function () {
+                var dataToSend = [];
+
+                $("#tbItemApoio tbody tr").each(function () {
+                    var row = $(this);
+                    var rowData = {
+                        beneficioId: row.find("td:eq(0)").text(),
+                        fornecedorId: row.find("td:eq(1)").text(),
+                        socioId: row.find("td:eq(2)").text(),
+                        descricao: row.find("td:eq(3)").text(),
+                        valor: row.find("td:eq(4)").text()
+                    };
+                    dataToSend.push(rowData);
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Apoio/Criar",
+                    data: JSON.stringify(dataToSend),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        alert("Dados adicionados com sucesso!");
+                    },
+                    error: function (response) {
+                        alert("Erro ao adicionar dados.");
+                    }
+                });
+            });
+        });
+
+
+
+        function NotificarErro(icone, titulo, mensagem) {
+            Swal.fire({
+                icon: icone,
+                title: titulo,
+                text: mensagem,
+                showConfirmButton: false,
+                iconSize: "10px",
+                timer: 2500
+            });
+        }
+
+    </script>
+}

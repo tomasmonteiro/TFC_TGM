@@ -1,11 +1,13 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
+using CPF_CACL.GestaoSocio.UI.MVC.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
+    [Autorizacao("Admin")]
     public class MunicipioController : BaseController
     {
         private readonly IMunicipioAppService _municipioAppService;

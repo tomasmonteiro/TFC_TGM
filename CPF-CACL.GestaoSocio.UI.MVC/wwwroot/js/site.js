@@ -10,6 +10,140 @@ $(document).ready(function () {
         .appendTo('#myDataTable_erapper .col-md-6:eq(0)');
 });
 
+$(document).ready(function () {
+    var selectedValues = [];
+
+    $("#btnAdicionar").click(function () {
+        $('#loading-overlay').show();
+        $.ajax({
+            url: "/Apoio/GetValorCapital",
+            type: "GET",
+            data: {
+                benefiioId: $('#beneficioId').val(),
+                socioId: $('#socioId').val()
+            },
+            success: function (response) {
+                $('#valorCapital').val(response);
+
+                if ($("#valorCapital").val() == 0) {
+                    Notificar("error", "Erro!", "A categoria do sócio não possui cobertura para este benefício.");
+                    return;
+                }
+                else {
+                    if ($("#valorCapital").val() < $("#Valor").val()) {
+                        Notificar("error", "Erro!", "O valor inserido é superior ao plafond do sócio.");
+                        return;
+                    }
+                    else {
+
+                        $('#loading-overlay').hide();
+
+                        var usuarioId = $("#usuarioId").val();
+                        var beneficioId = $("#beneficioId").val();
+                        var fornecedorId = $("#fornecedor").val();
+                        var socioId = $("#socioId").val();
+                        var descricao = $("#Descricao").val();
+                        var valor = $("#Valor").val();
+
+
+                        var newRow = "<tr>" +
+                            "<td style='display:none'>" + usuarioId + "</td>" +
+                            "<td style='display:none'>" + beneficioId + "</td>" +
+                            "<td style='display:none'>" + fornecedorId + "</td>" +
+                            "<td  style='display:none'>" + socioId + "</td>" +
+                            "<td>" + descricao + "</td>" +
+                            "<td>" + valor + "</td>" +
+                            "<td><button class='btn btn-danger removeRow'>Remover</button></td>" +
+                            "</tr>";
+                        $("#tbItemApoio tbody").append(newRow);
+                    }
+                }
+            },
+            error: function (result) {
+                Notificar("error", "Erro!", "Ocorreu um erro.");
+            }
+        });
+
+
+    });
+
+    $("#tbItemApoio").on('click', '.removeRow', function () {
+        $(this).closest('tr').remove();
+    });
+
+    $("#concluir").click(function () {
+
+        $('#loading-overlay').show(); 
+
+        var dataToSend = [];
+        $("#tbItemApoio tbody tr").each(function () {
+            var row = $(this);
+            var rowData = {
+                usuarioId:  row.find("td:eq(0)").text(),
+                beneficioId: row.find("td:eq(1)").text(),
+                fornecedorId: row.find("td:eq(2)").text(),
+                socioId: row.find("td:eq(3)").text(),
+                descricao: row.find("td:eq(4)").text(),
+                valor: row.find("td:eq(5)").text()
+            };
+            dataToSend.push(rowData);
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: '/Apoio/Criar',
+            contentType: "application/json",
+            data: JSON.stringify(dataToSend),
+            success: function (result) {
+                if (result.substring(0, 1) == "x") {
+                    Notificar("error", "Erro!", result);
+                    return false;
+                }
+                Notificar("success", "Sucesso!", result);
+                $("#Valor").val("");
+                $("#Descricao").val("");
+            },
+            error: function (result) {
+                Notificar("error", "Erro!", result);
+            }
+        });
+    });
+});
+
+/*
+
+   $.ajax({
+        url: "/Apoio/GetValorCapital",
+        type: "GET",
+        data: {
+            benefiioId: $('#beneficioId').val(),
+            socioId: $('#socioId').val()
+        },
+        success: function (response) {
+            $('#valorCapital').val(response);
+        },
+        error: function (result) {
+            Notificar("error", "Erro!", "Ocorreu um erro.");
+        }
+    });
+
+    if ($("#valorCapital").val() == 0) {
+        Notificar("error", "Erro!", "A categoria do sócio não possui cobertura para este benefício.");
+        $("#Valor").val() = "";
+        return false;
+    }
+    else {
+        if ($("#valorCapital").val() < $("#Valor").val()) {
+            Notificar("error", "Erro!", "O valor inserido é superior ao plafond do sócio.");
+            $("#Valor").val() = "";
+            return false;
+        }
+    }
+    return true;
+
+*/
+
+
 
 //------Script do btnTopo para regressar no topo da página
 document.addEventListener("DOMContentLoaded", function () {
@@ -373,7 +507,7 @@ function AdicionarBeneficio() {
             },
             success: function (result) {
                 if (result.substring(0, 1) == "x") {
-                    NotificarErro("error", "Erro!", result);
+                    Notificar("error", "Erro!", result);
                     return false;
                 }
                 setTimeout(function () {
@@ -390,7 +524,7 @@ function AdicionarBeneficio() {
                 }, 2500);
             },
             error: function (result) {
-                NotificarErro("error", "Erro!", result);
+                Notificar("error", "Erro!", result);
             }
         });
     }
@@ -405,6 +539,58 @@ function ValidarBeneficio() {
 }
 
 
+//----- CAPITAL
+
+///----Adicionar--
+
+function AdicionarCapital() {
+    if (!ValidarCapital()) {
+        return;
+    }
+    else {
+        $('#loading-overlay').show();
+        $.ajax({
+            type: "POST",
+            url: "/Capital/Criar",
+            data: {
+                Valor: $("#valor").val(),
+                BeneficioId: $("#beneficioId").val(),
+                CategoriaSocioId: $("#categoriaId").val(),
+                DataCriacao: $("#dataCriacao").val(),
+                Status: $("#status").val()
+            },
+            success: function (result) {
+                if (result.substring(0, 1) == "x") {
+                    Notificar("error", "Erro!", result);
+                    return false;
+                }
+                setTimeout(function () {
+                    $('#loading-overlay').hide();
+                    Swal.fire({
+                        icon: "success",
+                        title: "Sucesso!",
+                        text: result,
+                        showConfirmButton: false,
+                        timer: 2500
+                    }).then((result) => {
+                        window.location = "/Capital/Index";
+                    });
+                }, 2500);
+            },
+            error: function (result) {
+                Notificar("error", "Erro!", result);
+            }
+        });
+    }
+}
+function ValidarCapital() {
+    if ($("#valor").val() == "") {
+        $("#valor").focus();
+        NotificarErro("error", "Erro!", "O Valor do Capital deve ser preenchido.");
+        return false;
+    }
+    return true;
+}
 
 
 ///---- USUARIO--
@@ -1399,6 +1585,32 @@ function EliminarRelacao() {
 }
 
 
+//Preencher o Select de Beneficios com base no Tipo de Beneficio selecionado
+$(document).on('change', '#tipoBeneficio', function carregarBeneficios() {
+    var tipoBeneficioId = document.getElementById("tipoBeneficio").value;
+
+    //Usar AJAX para chamar o método no controlador
+    $.ajax({
+        url: '/Apoio/GetBeneficioPorTipo',
+        type: 'GET',
+        data: { tipoId: tipoBeneficioId },
+        success: function (data) {
+            //Limpar o dropDown atual
+            $('#beneficioId').empty();
+
+            //Preencher o dropDown
+            $.each(data, function (index, beneficio) {
+                $('#beneficioId').append($('<option>', {
+                    value: beneficio.id,
+                    text: beneficio.nome
+                }));
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+});
 
 
 //Script para abrir a Modall

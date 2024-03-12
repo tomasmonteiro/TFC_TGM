@@ -1,0 +1,374 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+@using CPF_CACL.GestaoSocio.Domain.Enums;
+
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.ApoioViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Apoios";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="container d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev icone"><i class="icon ion ion-android-apps icone" style="font-size: 32px;"></i> Listagem de Apoios</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Valor</th>
+                                    <th scope="col">Data do Apoio</th>
+                                    <th scope="col">Sócio</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Acão</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (ApoioViewModel apoio in Model)
+                                    {
+                                        <tr role="row" class="">
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@apoio.Descricao</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@apoio.Valor</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@apoio.DataApoio</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@apoio.SocioId</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@apoio.EstadoApoio</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link text-left font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+
+                                                        <a class="dropdown-item" href="/Apoio/Detalhes/@apoio.Id"><i class="dw dw-eye"></i> Detalhes</a>
+                                                        @if (HttpContextAccessor.HttpContext.Session.GetString("perfil") == EPerfilUsuario.Admin.ToString())
+                                                        {
+                                                            <a class="dropdown-item" href="#" onclick="SetApoioEditar('@apoio.Id', '@apoio.SocioId',  '@apoio.Descricao', '@apoio.Valor', '@apoio.DataApoio','@apoio.EstadoApoio')" data-toggle="modal" data-target="#editarApoio"><i class="dw dw-edit2"></i> Editar</a>
+                                                            <a class="dropdown-item" href="#" onclick="SetApoioInativar('@apoio.Id')" data-toggle="modal" data-target="#inativarApoio"><i class="dw dw-ban"></i> Inativar</a>
+                                                            <a class="dropdown-item" href="#" onclick="SetApoioEliminar('@apoio.Id')" data-toggle="modal" data-target="#eliminarApoio"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--Modal-->
+
+
+<!--Editar Apoio-->
+
+<div class="modal fade" id="editarApoio" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarApoioLabel">Editar  Apoio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div><div class="modal-body">
+
+                    <input type="hidden" id="Id" />
+
+                    <input type="hidden" id="socioId" />
+
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <input type="text" id="descricaoEdit" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Valor</label>
+                        <input type="number" id="valorEdit" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Data do Apoio</label>
+                        <input type="date" id="dataApoioEdit" value="@DateTime.Now.ToString("dd-MM-yyyy")" class="form-control">
+                    </div>
+                    <div class="">
+                        <input type="hidden" id="estadoEdit">
+                    </div>
+                    <div class="">
+                        <input type="hidden" id="dataCriacaoEdit">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="true" id="statusEdit">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="EditarApoio()" class="btn btn-success waves-effect">Salvar</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para inativar----------->
+
+<div class="modal fade" id="inativarApoio" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarBeneficioLabel">Inativar Apoio</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idInativar" name="id" />
+                <span>Desejas inativar este Apoio?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="InativarApoio()" class="btn btn-danger waves-effect">Inativar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para eliminar----------->
+
+<div class="modal fade" id="eliminarApoio" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarApoioLabel">Eliminar Apoio</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idEliminar" />
+                <p>Desejas eliminar permanentemente este apoio?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EliminarApoio()" class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Script-->
+@section Scripts{
+    <script>
+
+        //------------------Editar-------
+        function SetApoioEditar(apoioId, socioId, descricao, valor, dataApoio, estado) {
+            $("#Id").val(apoioId);
+            $("#socioId").val(socioId);
+            $("#descricaoEdit").val(descricao);
+            $("#valorEdit").val(valor);
+            $("#dataApoioEdit").val(dataApoio);
+            $("#estadoEdit").val(estado);
+        }
+        function EditarApoio() {
+
+            if (!ValidarModalEditar()) {
+                return;
+            }
+            else {
+                $('#loading-overlay').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/Apoio/Editar",
+                    data: {
+                        Id: $("#Id").val(),
+                        Descricao: $("#descricaoEdit").val(),
+                        DataApoio: $("#dataApoioEdit").val(),
+                        Valor: $("#valorEdit").val(),
+                        Estado: $("#estadoEdit").val(),
+                        SocioId: $("#socioId").val()
+                    },
+                    success: function (result) {
+                        if (result.substring(0, 1) == "x") {
+                            NotificarErro("error", "Erro!", result);
+                            return false;
+                        }
+                        setTimeout(function () {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Sucesso!",
+                                text: result,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then((result) => {
+                                window.location = "/Apoio/Index";
+                            });
+                        }, 2500);
+                    },
+                    error: function (result) {
+                        Notificar("error", "Erro!", result);
+                    }
+                });
+            }
+        }
+        function ValidarModalEditar() {
+            if ($("#descricaoEdit").val() == "") {
+                $("#descricaoEdit").focus();
+                NotificarErro("error", "Erro!", "A Descrição do Apoio deve ser preenchida.");
+                return false;
+            }
+            else {
+                if ($("#valorEdit").val() == "") {
+                    $("#valorEdit").focus();
+                    NotificarErro("error", "Erro!", "O Valor do Apoio deve ser preenchido.");
+                    return false;
+                }
+                else {
+                    if ($("#dataApoioEdit").val() == "") {
+                        $("#dataApoioEdit").focus();
+                        NotificarErro("error", "Erro!", "A Data do Apoio deve ser preenchida.");
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        /*------------------Inativar-------*/
+        function SetApoioInativar(apoioId) {
+
+            $("#idInativar").val(apoioId);
+        }
+        function InativarApoio() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Apoio/Inativar",
+                data: {
+                    id: $("#idInativar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Apoio/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+
+        /*------------------Eliminar-------*/
+        function SetApoioEliminar(apoioId) {
+
+            $("#idEliminar").val(apoioId);
+        }
+        function EliminarBeneficio() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Apoio/Eliminar",
+                data: {
+                    id: $("#idEliminar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Apoio/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+
+
+        function NotificarErro(icone, titulo, mensagem) {
+            Swal.fire({
+                icon: icone,
+                title: titulo,
+                text: mensagem,
+                showConfirmButton: false,
+                iconSize: "10px",
+                timer: 2500
+            });
+        }
+
+    </script>
+}

@@ -43,7 +43,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             var beneficio = _beneficioRepository.GetById(id);
             if (beneficio == null)
             {
-                Notificar("O Beneficio qu pretende eliminar não existe.");
+                Notificar("O Beneficio que pretende inativar não existe.");
                 return;
             }
             beneficio.Status = false;
@@ -66,7 +66,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             var beneficio = _beneficioRepository.GetById(benef.Id);
             if (beneficio == null)
             {
-                Notificar("O Beneficio qu pretende eliminar não existe.");
+                Notificar("O Beneficio que pretende eliminar não existe.");
                 return;
             }
             _beneficioRepository.Remove(beneficio);

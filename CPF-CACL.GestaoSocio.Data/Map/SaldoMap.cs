@@ -15,7 +15,7 @@ namespace CPF_CACL.GestaoSocio.Data.Map
 
 
             builder.Property(x => x.Recibo).HasColumnType("varchar(50)").IsRequired(true);
-            builder.Property(x => x.Valor).HasColumnType("smallmoney").IsRequired(true);
+            builder.Property(x => x.Valor).HasColumnType("money").IsRequired(true);
             builder.Property(x => x.Estado).HasColumnType("varchar(20)").IsRequired(true);
             builder.Property(x => x.SocioId).HasColumnType("uniqueidentifier").IsRequired(true);
             builder.Property(x => x.PagamentoId).HasColumnType("uniqueidentifier").IsRequired(true);

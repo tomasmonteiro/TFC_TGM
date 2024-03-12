@@ -87,6 +87,18 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Configuration
             services.AddScoped<IBeneficioAppService, BeneficioAppService>();
             services.AddScoped<IBeneficioService, BeneficioService>();
 
+            services.AddScoped<ICapitalRepository, CapitalRepository>();
+            services.AddScoped<ICapitalAppService, CapitalAppService>();
+            services.AddScoped<ICapitalService, CapitalService>();
+
+            services.AddScoped<IApoioRepository, ApoioRepository>();
+            services.AddScoped<IApoioAppService, ApoioAppService>();
+            services.AddScoped<IApoioService, ApoioService>();
+
+            services.AddScoped<IItemApoioRepository, ItemApoioRepository>();
+            //services.AddScoped<IItemApoioAppService, ItemApoioAppService>();
+            //services.AddScoped<IItemApoioService, ItemApoioService>();
+
             return services;
         }
     }

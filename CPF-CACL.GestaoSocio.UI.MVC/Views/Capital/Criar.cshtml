@@ -1,0 +1,59 @@
+﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.CapitalViewModel
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+
+<div class="modal fade" id="adicionarCapital" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="capitalLabel">Cadastrar Capital</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <label asp-for="BeneficioId" class="control-label">Benefício</label>
+                    <select id="beneficioId" class="form-control">
+                        @foreach (var item in Model.Beneficio)
+                        {
+                            <option value="@item.Id">@item.Nome</option>
+                        }
+                    </select>
+
+                    <label asp-for="CategoriaSocioId" class="control-label">Categoria</label>
+                    <select id="categoriaId" class="form-control">
+                        @foreach (var item in Model.Categoria)
+                        {
+                            <option value="@item.Id">@item.Nome</option>
+                        }
+                    </select>
+
+                    <div class="form-group">
+                        <label asp-for="Valor">Valor do Capital (AKZ )</label>
+                        <input type="number" id="valor" class="form-control" placeholder="Digite o valor do capital">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="@DateTime.Now" id="dataCriacao">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="true" id="status" asp-for="Status">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="AdicionarCapital()" class="btn btn-success waves-effect">Cadastrar</button>
+                    <button type="button" class="btn btn-link waves-effect" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

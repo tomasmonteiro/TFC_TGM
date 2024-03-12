@@ -1,9 +1,11 @@
-﻿using CPF_CACL.GestaoSocio.UI.MVC.Models;
+﻿using CPF_CACL.GestaoSocio.UI.MVC.Extensions;
+using CPF_CACL.GestaoSocio.UI.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
+    [Autorizacao("Admin", "Vogal", "Secretario", "Tesoureiro", "Presidente")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

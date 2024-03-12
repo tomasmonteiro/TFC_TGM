@@ -8,5 +8,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Services
         Socio BuscarPorCod(string codigo);
         public Guid Adicionar(Socio socio);
         public string GerarDodigoSocio();
+        public double BuscarValorCapital(Guid socioId, Guid beneficioId);
     }
 }

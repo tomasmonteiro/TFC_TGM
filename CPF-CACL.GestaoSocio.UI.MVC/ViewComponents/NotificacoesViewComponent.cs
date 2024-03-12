@@ -9,7 +9,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.ViewComponents
         {
             var notificacao = new Notificacao
             {
-                Mensagem = "4"
+                Mensagem = "10"
             };
             return View(notificacao); 
         }

@@ -9,5 +9,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 {
     public interface ICapitalRepository : IRepositoryBase<Capital>
     {
+        IEnumerable<Capital> BuscarTodos();
     }
 }

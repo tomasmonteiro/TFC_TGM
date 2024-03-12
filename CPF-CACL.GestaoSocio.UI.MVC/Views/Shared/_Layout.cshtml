@@ -72,7 +72,15 @@
                         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
+                        
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("userName") != null)
+                    {
+                        <a href="/Admin/Home/Index" class="nav-link">Home</a>
+                    }
+                    else
+                    {
                         <a asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
+                    }
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
                         <a href="#" class="nav-link">Contacto</a>
@@ -108,15 +116,14 @@
                     </li>
                     <!--Menu de Login/Logout-->
                     <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fas fa-user-tie"></i>
-                    </a>
-                        <div class="dropdown-menu dropdown-menu-right" role="menu" title="Logout">
-                        <a href="#" class="dropdown-item azul"><i class="fas fa-user"></i>  Perfil</a>
-                        <form action="/Acesso/Logout" method="post">
-                            <button class="dropdown-item" type="submit"><i class="dw dw-logout"></i> Log Out</button>
-                        </form>
-                        <a asp-controller="Acesso" asp-action="Logout" class="dropdown-item azul fa fa-right-from-bracket"><i class="fas fa-sign-out-alt"></i>  Sair</a>
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="fas fa-user-tie"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                            <a href="#" class="dropdown-item azul" title="Perfil"><i class="dw dw-user"></i>  Perfil</a>
+                            <form action="/Acesso/Logout" method="post">
+                                <button class="dropdown-item" title="Sair" type="submit"><i class="dw dw-logout"></i> Sair</button>
+                            </form>
                         </div>
                     </li>
                 </ul>
@@ -126,10 +133,21 @@
             <!-- Container do Menu Lateral -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
                 <!-- Logotipo -->
-                <a asp-controller="Home" asp-action="Index" class="brand-link navbar-blue active">
-                <img src="~/img/logo.png" alt="Gest-Prev Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">GEST-PREV</span>
-                </a>
+                @if (HttpContextAccessor.HttpContext.Session.GetString("userName") != null)
+                {
+                    <a href="/Admin/Home/Index" class="brand-link navbar-blue active">
+                        <img src="~/img/logo.png" alt="Gest-Prev Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                        <span class="brand-text font-weight-light">GEST-PREV</span>
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Home" asp-action="Index" class="brand-link navbar-blue active">
+                        <img src="~/img/logo.png" alt="Gest-Prev Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                        <span class="brand-text font-weight-light">GEST-PREV</span>
+                    </a>
+                }
+
                 <!-- Menu Lateral -->
                 <div class="sidebar">
                     <!-- Painel de usuário -->

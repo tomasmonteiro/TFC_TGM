@@ -1,10 +1,12 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
+using CPF_CACL.GestaoSocio.UI.MVC.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
+    [Autorizacao("Admin")]
     public class OrganismoController : BaseController
     {
         private readonly IOrganismoAppService _organismoAppService;

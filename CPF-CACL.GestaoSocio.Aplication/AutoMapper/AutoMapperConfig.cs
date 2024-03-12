@@ -28,6 +28,9 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
             CreateMap<UsuarioViewModel, Usuario>().ReverseMap();
             CreateMap<TipoBeneficioViewModel, TipoBeneficio>().ReverseMap();
             CreateMap<BeneficioViewModel, Beneficio>().ReverseMap();
+            CreateMap<CapitalViewModel, Capital>().ReverseMap();
+            CreateMap<ApoioViewModel, Apoio>().ReverseMap();
+            CreateMap<DadosApoioViewModel, DadosApoio>().ReverseMap();
 
 
             #endregion
@@ -97,6 +100,20 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
             CreateMap<Beneficio, BeneficioViewModel>()
                 .ForMember(c => c.TipoBeneficio, opt => opt.Ignore())
                 .ForMember(dest => dest.NomeTipo, opt => opt.MapFrom(src => src.TipoBeneficio.Nome));
+
+            CreateMap<Capital, CapitalViewModel>()
+                .ForMember(c => c.Beneficio, opt => opt.Ignore())
+                .ForMember(dest => dest.NomeBeneficio, opt => opt.MapFrom(src => src.Beneficio.Nome))
+                .ForMember(c => c.Categoria, opt => opt.Ignore())
+                .ForMember(dest => dest.NomeCategoria, opt => opt.MapFrom(src => src.CategoriaSocio.Nome));
+
+
+            CreateMap<Apoio, ApoioViewModel>().ReverseMap()
+                    .ForMember(c => c.Usuario, opt => opt.Ignore())
+                    .ForMember(c => c.ItemApoios, opt => opt.Ignore())
+                    .ForMember(c => c.Despesas, opt => opt.Ignore());
+
+            CreateMap<DadosApoio, DadosApoioViewModel>().ReverseMap();
 
             #endregion
         }

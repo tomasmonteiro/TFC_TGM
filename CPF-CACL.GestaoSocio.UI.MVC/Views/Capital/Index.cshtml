@@ -1,0 +1,357 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.CapitalViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Capitais";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="container d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev icone"><i class="icon ion ion-android-apps icone" style="font-size: 32px;"></i> Lista de Capitais</h3>
+               @*              <button type="button" class="btn btn-success ml-auto" data-toggle="ajax-modal" data-target="#adicionarCapital" data-url="@Url.Action("Criar")"><i class="fas fa-plus"></i> Novo</button>
+
+ *@
+                            <button type="button" class="btn btn-success ml-auto" href="" data-toggle="ajax-modal" data-target="#adicionarCapital" data-url="@Url.Action("Criar")">
+                                <i class="fas fa-user-plus"></i> Cadastrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 5;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">Beneficio</th>
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Valor</th>
+                                    <th scope="col">Registo</th>
+                                    <th scope="col">Actualização</th>
+                                    <th scope="col">Acão</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (CapitalViewModel capital in Model)
+                                    {
+                                        <tr role="row" class="">
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@capital.NomeBeneficio</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@capital.NomeCategoria</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@capital.Valor</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@capital.DataCriacao</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@capital.DataAtualizacao</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link text-left font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="#" onclick="SetCapitalEditar('@capital.Id', '@capital.Valor',  '@capital.BeneficioId',  '@capital.CategoriaSocioId', '@capital.DataCriacao', '@capital.Status')" data-toggle="modal" data-target="#editarCapital"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetCapitalInativar('@capital.Id')" data-toggle="modal" data-target="#inativarCapital"><i class="dw dw-ban"></i> Inativar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetCapitalEliminar('@capital.Id')" data-toggle="modal" data-target="#eliminarCapital"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--Modal-->
+
+
+<!--Editar Beneficio-->
+
+
+
+<div class="modal fade" id="editarCapital" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarCapitalLabel">Editar  Capital</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div><div class="modal-body">
+
+                    <input type="hidden" id="editId" />
+
+                    <input type="hidden" id="beneficioEditId" />
+
+                    <input type="hidden" id="categoriaEditId" />
+
+                    <div class="form-group">
+                        <label>Valor</label>
+                        <input type="text" id="valorEdit" class="form-control">
+                    </div>
+                    <div class="">
+                        <input type="hidden" id="dataCriacaoEdit">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="true" id="statusEdit">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="EditarCapital()" class="btn btn-success waves-effect">Salvar</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para inativar----------->
+
+<div class="modal fade" id="inativarCapital" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarCapitalLabel">Inativar Capital</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idInativar" name="id" />
+                <span>Desejas inativar este capital <?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="InativarCapital()" class="btn btn-danger waves-effect">Inativar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para eliminar----------->
+
+<div class="modal fade" id="eliminarCapital" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarCapitalLabel">Eliminar Capital</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idEliminar" />
+                <p>Desejas eliminar permanentemente este Capital?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EliminarCapital()" class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Script-->
+@section Scripts{
+    <script>
+
+
+
+
+        //------------------Editar-------
+        function SetCapitalEditar(capitalId, valor, beneficioId, categoriaId, dataCriacao, status) {
+            $("#editId").val(capitalId);
+            $("#valorEdit").val(valor);
+            $("#beneficioEditId").val(beneficioId);
+            $("#categoriaEditId").val(categoriaId);
+            $("#dataCriacaoEdit").val(dataCriacao);
+            $("#statusEdit").val(status);
+        }
+        function EditarCapital() {
+
+            if (!ValidarModalEditar()) {
+                return;
+            }
+            else {
+                $('#loading-overlay').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/Capital/Editar",
+                    data: {
+                        Id: $("#editId").val(),
+                        Valor: $("#valorEdit").val(),
+                        BeneficioId: $("#beneficioEditId").val(),
+                        CategoriaSocioId: $("#categoriaEditId").val(),
+                        DataCriacao: $("#dataCriacaoEdit").val(),
+                        Status: $("#statusEdit").val()
+                    },
+                    success: function (result) {
+                        if (result.substring(0, 1) == "x") {
+                            NotificarErro("error", "Erro!", result);
+                            return false;
+                        }
+                        setTimeout(function () {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Sucesso!",
+                                text: result,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then((result) => {
+                                window.location = "/Capital/Index";
+                            });
+                        }, 2500);
+                    },
+                    error: function (result) {
+                        Notificar("error", "Erro!", result);
+                    }
+                });
+            }
+        }
+        function ValidarModalEditar() {
+            if ($("#valorEdit").val() == "") {
+                $("#valorEdit").focus();
+                NotificarErro("error", "Erro!", "O Valor do capital deve ser preenchido.");
+                return false;
+            }
+            return true;
+        }
+        /*------------------Inativar-------*/
+        function SetCapitalInativar(capitalId) {
+
+            $("#idInativar").val(capitalId);
+        }
+        function InativarCapital() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Capital/Inativar",
+                data: {
+                    id: $("#idInativar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Capital/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+
+        /*------------------Eliminar-------*/
+        function SetCapitalEliminar(capitalId) {
+
+            $("#idEliminar").val(capitalId);
+        }
+        function EliminarCapital() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Capital/Eliminar",
+                data: {
+                    id: $("#idEliminar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Capital/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+
+
+        function NotificarErro(icone, titulo, mensagem) {
+            Swal.fire({
+                icon: icone,
+                title: titulo,
+                text: mensagem,
+                showConfirmButton: false,
+                iconSize: "10px",
+                timer: 2500
+            });
+        }
+
+    </script>
+}
+
+

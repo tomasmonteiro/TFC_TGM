@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
-    [Autorizacao("Admin", "Vogal", "Secretario", "Tesoureiro")]
+    [Autorizacao("Admin", "Presidente", "Tesoureiro", "Secretario", "Vogal")]
     public class SocioController : BaseController
     {
         private readonly ISocioAppService _socioAppService;
@@ -80,7 +80,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
                 })
                 .ToList();
 
-            //Buscar Categorias para preencher o Select
+            //Buscar Organismo para preencher o Select
             var organismos = _organismoRepository.BuscarTodos();
             organismos = organismos.OrderBy(m => m.Nome).ToList();
             ViewBag.Organismo = viewModel.Organismo
@@ -163,7 +163,6 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 
         // POST: SocioController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try

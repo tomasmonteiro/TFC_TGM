@@ -20,7 +20,7 @@ namespace CPF_CACL.GestaoSocio.Data.Map
 
             builder.Property(x => x.Descricao).HasColumnType("varchar(300)");
             builder.Property(x => x.DataApoio).HasColumnType("date").IsRequired();
-            builder.Property(x => x.Valor).HasColumnType("smallmoney").HasDefaultValue("0.00");
+            builder.Property(x => x.Valor).HasColumnType("money");
             builder.Property(x => x.EstadoApoio).HasColumnType("varchar(300)");
 
             builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
