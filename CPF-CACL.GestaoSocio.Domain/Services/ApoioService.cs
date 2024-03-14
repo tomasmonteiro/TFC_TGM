@@ -14,10 +14,12 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
     {
         private readonly IApoioRepository _apoioRepository;
         private readonly IItemApoioRepository _itemApoioRepository;
-        public ApoioService(IApoioRepository apoioRepository, IItemApoioRepository itemApoioRepository, INotificador notificador) : base(notificador)
+        private readonly IDespesaRepository _despesaRepository;
+        public ApoioService(IApoioRepository apoioRepository, IItemApoioRepository itemApoioRepository, IDespesaRepository despesaRepository, INotificador notificador) : base(notificador)
         {
             _apoioRepository = apoioRepository;
             _itemApoioRepository = itemApoioRepository;
+            _despesaRepository = despesaRepository;
         }
 
 
@@ -87,7 +89,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         public void AdicionarApoio(List<DadosApoio> dadosApoio)
         {
             var apoio = new Apoio();
-            apoio.DataApoio = DateTime.Now;
+            apoio.DataApoio = dadosApoio[0].DataApoio;
             apoio.Descricao = dadosApoio[0].Descricao;
             apoio.Valor = dadosApoio.Sum(x => x.Valor);
             apoio.UsuarioId = dadosApoio[0].UsuarioId;
@@ -118,8 +120,17 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
                 itemApoio.Quantidade = item.Quantidade;
 
                 _itemApoioRepository.Add(itemApoio);
-
+                var despesa = new Despesa();
+                despesa.DataCriacao = DateTime.Now;
+                despesa.Status = true;
+                despesa.Valor = itemApoio.Valor;
+                despesa.ApoioId = itemApoio.ApoioId;
+                despesa.FornecedorId = itemApoio.ForneceorId;
+                despesa.EstadoDespesa = Enums.EEstadoDespesa.NaoPago;
+                _despesaRepository.Add(despesa);
             }
+
+
         }
     }
 }

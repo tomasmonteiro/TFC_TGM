@@ -23,27 +23,37 @@ $(document).ready(function () {
                 socioId: $('#socioId').val()
             },
             success: function (response) {
-                $('#valorCapital').val(response);
+                $("#valorCapital").val(response);
+                var capital = $("#valorCapital").val();
+                var valorInserido = $("#Valor").val();
 
-                if ($("#valorCapital").val() == 0) {
+                var capitalC = parseFloat(capital);
+                var valorInseridoC = parseFloat(valorInserido);
+                if (capital == 0 || capital == null) {
                     Notificar("error", "Erro!", "A categoria do sócio não possui cobertura para este benefício.");
                     return;
                 }
                 else {
-                    if ($("#valorCapital").val() < $("#Valor").val()) {
-                        Notificar("error", "Erro!", "O valor inserido é superior ao plafond do sócio.");
+                    if (valorInseridoC > capitalC) {
+                        Notificar("error", "Erro!", "O valor inserido excede o limite do plafound do caital do Sócio.");
                         return;
                     }
                     else {
 
                         $('#loading-overlay').hide();
+                        var selectedElement = document.getElementById("beneficioId");
+                        var selectedIndex = selectedElement.selectedIndex;
+
+
 
                         var usuarioId = $("#usuarioId").val();
                         var beneficioId = $("#beneficioId").val();
                         var fornecedorId = $("#fornecedor").val();
                         var socioId = $("#socioId").val();
+                        var nomeBeneficio = selectedElement.options[selectedIndex].text;
                         var descricao = $("#Descricao").val();
                         var valor = $("#Valor").val();
+                        var dataApoio = $("#DataApoio").val();
 
 
                         var newRow = "<tr>" +
@@ -51,11 +61,18 @@ $(document).ready(function () {
                             "<td style='display:none'>" + beneficioId + "</td>" +
                             "<td style='display:none'>" + fornecedorId + "</td>" +
                             "<td  style='display:none'>" + socioId + "</td>" +
-                            "<td>" + descricao + "</td>" +
+                            "<td>" + nomeBeneficio + "</td>" +
+                            "<td   style='display:none'>" + descricao + "</td>" +
                             "<td>" + valor + "</td>" +
-                            "<td><button class='btn btn-danger removeRow'>Remover</button></td>" +
+                            "<td>" + dataApoio + "</td>" +
+                            "<td class='text-right'><button class='btn btn-danger removeRow'>Remover</button></td>" +
                             "</tr>";
                         $("#tbItemApoio tbody").append(newRow);
+
+                        $("#Descricao").prop('disabled', true);
+                        $("#DataApoio").prop('disabled', true);
+                        $("#valorCapital").val("");
+                        $("#Valor").val("");
                     }
                 }
             },
@@ -83,8 +100,10 @@ $(document).ready(function () {
                 beneficioId: row.find("td:eq(1)").text(),
                 fornecedorId: row.find("td:eq(2)").text(),
                 socioId: row.find("td:eq(3)").text(),
-                descricao: row.find("td:eq(4)").text(),
-                valor: row.find("td:eq(5)").text()
+                descricao: row.find("td:eq(5)").text(),
+                valor: row.find("td:eq(6)").text(),
+                dataApoio: row.find("td:eq(7)").text()
+
             };
             dataToSend.push(rowData);
         });
@@ -102,6 +121,11 @@ $(document).ready(function () {
                 Notificar("success", "Sucesso!", result);
                 $("#Valor").val("");
                 $("#Descricao").val("");
+                $("#Descricao").prop('disabled', false);
+                $("#DataApoio").prop('disabled', false);
+
+                $("#tbItemApoio tbody").empty();
+
             },
             error: function (result) {
                 Notificar("error", "Erro!", result);

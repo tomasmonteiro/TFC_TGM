@@ -11,6 +11,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Entities
         public double Valor { get; set; }
         public int Quantidade { get; set; } = 1;
         public string Descricao { get; set; }
+        public DateTime DataApoio { get; set; }
 
         public Guid SocioId { get; set; }
 

@@ -13,7 +13,7 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.Id);
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Total).HasColumnType("money").IsRequired();
+            builder.Property(x => x.Valor).HasColumnType("money").IsRequired();
             builder.Property(x => x.EstadoDespesa).HasColumnType("varchar(20)").IsRequired();
             
             builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
@@ -21,10 +21,16 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.Status).HasColumnType("bit").IsRequired();
 
             builder.Property(x => x.ApoioId).HasColumnType("uniqueidentifier").IsRequired(true);
+            builder.Property(x => x.FornecedorId).HasColumnType("uniqueidentifier").IsRequired(true);
 
             builder.HasOne(x => x.Apoio)
                 .WithMany(a => a.Despesas)
                 .HasForeignKey(x => x.ApoioId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.Fornecedor)
+                .WithMany(a => a.Despesas)
+                .HasForeignKey(x => x.FornecedorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
         }

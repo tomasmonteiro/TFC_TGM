@@ -99,6 +99,10 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Configuration
             //services.AddScoped<IItemApoioAppService, ItemApoioAppService>();
             //services.AddScoped<IItemApoioService, ItemApoioService>();
 
+            services.AddScoped<IDespesaRepository, DespesaRepository>();
+            //services.AddScoped<IItemApoioAppService, ItemApoioAppService>();
+            //services.AddScoped<IItemApoioService, ItemApoioService>();
+
             return services;
         }
     }

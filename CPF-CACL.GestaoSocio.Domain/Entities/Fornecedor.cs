@@ -9,5 +9,6 @@
         public string Telefone { get; set; }
         public string? Email { get; set; }
         public ICollection<ItemApoio> ItemApoios { get; set; }
+        public ICollection<Despesa> Despesas { get; set; }
     }
 }

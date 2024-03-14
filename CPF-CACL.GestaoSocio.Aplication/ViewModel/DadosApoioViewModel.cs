@@ -10,6 +10,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
         public double Valor { get; set; }
         public int Quantidade { get; set; } = 1;
         public string Descricao { get; set; }
+        public DateTime DataApoio { get; set; }
 
         public Guid SocioId { get; set; }
 
