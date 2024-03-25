@@ -14,6 +14,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         private readonly ICategoriaSocioRepository _categoriaSocioRepository;
         private readonly IItemService _itemService;
         private readonly IPagamentoRepository _pagamentoRepository;
+        private readonly IPeriodoService _periodoService;
 
         public ItemPagamentoService(
             IItemRepository itemRepository, 
@@ -23,6 +24,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             ICategoriaSocioRepository categoriaSocioRepository,
             IItemService itemService,
             IPagamentoRepository pagamentoRepository,
+            IPeriodoService periodoService,
             INotificador notificador) : base(notificador)
         {
             _itemPagamentoRepository = itemPagamentoRepository;
@@ -32,6 +34,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             _categoriaSocioRepository = categoriaSocioRepository;
             _itemService = itemService;
             _pagamentoRepository = pagamentoRepository;
+            _periodoService = periodoService;
         }
 
         public void Add(ItemPagamento itemPagamento)
@@ -79,6 +82,16 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
                         socio.EstadoSocio = Enums.EEstadoSocio.Ativo;
                         socio.DataAtualizacao = DateTime.Now;
                         _socioRepository.Update(socio);
+
+                        //Verifica se existe um periodo do mês atual
+
+                        //1º Gerar o codigo do priodo com a data atual
+                        var dataAtual = DateTime.Now;
+                        var codigoPeriodo = _periodoService.GerarCodigoPeriodo(dataAtual.Date);
+                        var periodoExistente = _periodoService.BuscarPorCod(codigoPeriodo);
+
+                        _itemPagamentoRepository.CriarQuota(socio, periodoExistente);
+
                     }
 
                     //Gerar multa em caso de a data limite de pagamento da Quota ter excedido

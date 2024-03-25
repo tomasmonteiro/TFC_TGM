@@ -12,7 +12,9 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         private readonly IPeriodoService _periodoService;
         private readonly ITipoItemRepository _tipoItemRepository;
         private readonly ICapitalRepository _capitalRepository;
-        public SocioService(ICapitalRepository capitalRepository, ISocioRepository socioRepository, IItemService itemService, IPeriodoService periodoService, ITipoItemRepository tipoItemRepository, INotificador notificador) 
+        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IUsuarioSocioRepository _usuarioSocioRepository;
+        public SocioService(IUsuarioRepository usuarioRepository, IUsuarioSocioRepository usuarioSocioRepository, ICapitalRepository capitalRepository, ISocioRepository socioRepository, IItemService itemService, IPeriodoService periodoService, ITipoItemRepository tipoItemRepository, INotificador notificador) 
             : base(notificador)
         {
             _socioRepository = socioRepository;
@@ -20,6 +22,8 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             _periodoService = periodoService;
             _tipoItemRepository = tipoItemRepository;
             _capitalRepository = capitalRepository;
+            _usuarioRepository = usuarioRepository;
+            _usuarioSocioRepository = usuarioSocioRepository;
         }
 
         public IEnumerable<Socio> BuscarPorNome(string nome)
@@ -52,6 +56,9 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         }
         public void Update(Socio socio)
         {
+            //var novoSocio = _socioRepository.GetById(socio.Id);
+            //novoSocio.CategoriaSocioId = socio.CategoriaSocioId;
+
             //if (!ExecutarValidacao(new SocioValidation(), socio)) return;
             socio.DataAtualizacao = DateTime.Now;
             _socioRepository.Update(socio);
@@ -90,31 +97,63 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
 
         public Guid Adicionar(Socio socio)
         {
-			socio.EstadoSocio = Enums.EEstadoSocio.Pendente;
-			socio.Cod = GerarDodigoSocio();
-            _socioRepository.Add(socio);
-
-            //Criar codigo do perio
-            var codPeriodo = _periodoService.GerarCodigoPeriodo(DateTime.Now);
-
-            var periodo = _periodoService.BuscarPorCod(codPeriodo);
-
-            var tipoItem = _tipoItemRepository.BuscarJoia();
-
-            var item = new Item
+            try
             {
-                Descricao = "Jóia",
-                PeriodoId = periodo.Id,
-                SocioId = socio.Id,
-                TipoItemId = tipoItem.Id,
-                DataCriacao = DateTime.Now,
-                Status = true,
-                Valor = 5000
-            };
-            //Adicionar Joia
-            _itemService.Add(item);
 
-            return socio.Id;
+			    socio.EstadoSocio = Enums.EEstadoSocio.Pendente;
+			    socio.Cod = GerarDodigoSocio();
+                _socioRepository.Add(socio);
+
+                //Criar codigo do perio
+                var codPeriodo = _periodoService.GerarCodigoPeriodo(DateTime.Now);
+
+                var periodo = _periodoService.BuscarPorCod(codPeriodo);
+
+                var tipoItem = _tipoItemRepository.BuscarJoia();
+
+                var item = new Item
+                {
+                    Descricao = "Jóia",
+                    PeriodoId = periodo.Id,
+                    SocioId = socio.Id,
+                    TipoItemId = tipoItem.Id,
+                    DataCriacao = DateTime.Now,
+                    Status = true,
+                    Valor = 5000
+                };
+                //Adicionar Joia
+                _itemService.Add(item);
+
+                //Criar um usuario para o Socio
+                var usuario = new Usuario {
+                    Nome = socio.Nome,
+                    Email = socio.Email,
+                    Login = socio.Cod,
+                    Senha = "123456",
+                    Perfil = Enums.EPerfilUsuario.Socio,
+                    DataCriacao = DateTime.Now,
+                    Status = true
+                };
+                _usuarioRepository.Add(usuario);
+
+                //Crir o Usuario-Socio
+                var usuarioSocio = new UsuarioSocio
+                {
+                    UsuarioId = usuario.Id,
+                    SocioId = socio.Id,
+                    DataCriacao = DateTime.Now,
+                    Status = true
+                };
+                _usuarioSocioRepository.Add(usuarioSocio);
+
+                return socio.Id;
+            }
+            catch (Exception erro)
+            {
+                Notificar("Ocorreu um erro: "+erro.Message.ToString());
+                return Guid.Empty;
+            }
+
         }
 
         public string GerarDodigoSocio()
@@ -147,5 +186,10 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
 
             return capital.Valor;
         }
-    }
+
+		public Socio BuscarPorSemTrack(Guid socioId)
+		{
+            return _socioRepository.BuscarPorSemTrack(socioId);
+		}
+	}
 }

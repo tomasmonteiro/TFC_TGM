@@ -143,7 +143,7 @@
 
 							<div class="tab-pane fade" id="custom-tabs-one-financeira" role="tabpanel" aria-labelledby="custom-tabs-one-financeira-tab">
 								<a class="btn btn-app bg-primary" href="#" onclick="abrirModalPagamento('@Model.Id')" data-toggle="modal" data-target="#modalPagamento">
-									<i class="fas fa-money-bill-wave"></i> Registar Pagamento
+									<i class="fas fa-money-bill-wave"></i> Adicionar Pagamento
 								</a>
 
 								<a class="btn btn-app bg-info" href="@Url.Action("Efectuar-Pagamento","Pagamento", new {id = @Model.Id})" >
@@ -151,7 +151,7 @@
 								</a>
 
 								<a class="btn btn-app bg-success" href="@Url.Action("Unir-Recibo","Pagamento", new {id = @Model.Id})">
-									<i class="fas fa-play"></i> Unir Recibos
+									<i class="fas fa-link"></i> Unir Recibos
 								</a>
 								<a class="btn btn-app bg-yellow" href="@Url.Action("Extrato","Pagamento", new {id = @Model.Id})">
 									<i class="fas fa-chart-line"></i> Extracto
@@ -224,9 +224,38 @@
 							<div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
 								
 								<a class="btn btn-app bg-success" href="/Apoio/Criar/@Model.Id">
-									<i class="fas fa-group"></i> Registar Apoio
+									<i class="fas fa-hands-helping"></i> Registar Apoio
 								</a>
 
+								<div class="">
+									<div class="card-header">
+										@* <h3 class="card-title text-center text-bold">APOIOS</h3> *@
+									</div>
+									<div class="card-body">
+										<table class="table table-bordered stripe">
+											<thead>
+												<tr>
+													<td colspan="3" class="text-center text-bold bg-cyan">APOIOS</td>
+												</tr>
+												<tr>
+													<th class="text-left" style="width: 50px">Data</th>
+													<th class="text-left">Descrição</th>
+													<th class="text-left">Valor</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach (var itens in ViewBag.ItemApoio)
+												{
+													<tr role="row" class="">
+														<td class="text-left">@itens.DataApoio.ToString("dd/MM/yyyy")</td>
+														<td class="text-left">@itens.NomeBeneficio</td>
+														<td class="text-left">@itens.Valor</td>
+													</tr>
+												}
+											</tbody>
+										</table>
+									</div>
+								</div>
 
 							</div>
 
@@ -237,7 +266,7 @@
 									<i class="fas fa-group"></i> Alterar senha
 								</a>
 
-								<a class="btn btn-app bg-info" href="#" onclick="abrirModalAgregado('@Model.Id')" data-toggle="modal" data-target="#">
+								<a class="btn btn-app bg-info" href="#" onclick="abrirModalCategoria('@Model.Id')" data-toggle="modal" data-target="#alterarCategoria">
 									<i class="fas fa-group"></i> Mudar categoria
 								</a>
 
@@ -307,5 +336,117 @@
 	</div>
 </div>
 
+<!-- Alterar categoria -->
+<div class="modal fade customscroll mCustomScrollbar _mCS_4 mCS_no_scrollbar" id="alterarCategoria" tabindex="-1" role="dialog" style="">
+	<div id="mCSB_4" class="mCustomScrollBox mCS-dark-2 mCSB_vertical mCSB_inside" style="max-height: none;" tabindex="0">
+		<div id="mCSB_4_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLongTitle">Adicionar grupo</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Fechar Modal">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body pd-0">
+						<input type="hidden" id="IdSocio" value="@Model.Id" />
+						<div>
+							<label class="control-label">Categoria atual</label>
+							<select disabled id="categoriaAtualId" class="form-control">
+								<option value="@ViewBag.CategoriaId">@ViewBag.CategoriaNome</option>
+							</select>
+						</div>
+						<div>
+							<label class="control-label">Nova categoria</label>
+							<select id="novaCategoriaId" class="form-control">
+								@foreach (var item in ViewBag.Cate)
+								{
+									<option value="@item.Id">@item.Nome</option>
+								}
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="EditarCategoria()">Alterar</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 
+
+
+
+<!--Script-->
+@section Scripts{
+	<script>
+
+		function EditarCategoria() {
+
+			var id = $("#IdSocio").val();
+
+			if (!ValidarModalEditar()) {
+				return;
+			}
+			else {
+				$('#loading-overlay').show();
+				$.ajax({
+					type: "POST",
+					url: "/Socio/MudarCategoria",
+					data: {
+						SocioId: $("#IdSocio").val(),
+						NovaCategoria: $("#novaCategoriaId").val()
+					},
+					success: function (result) {
+						if (result.substring(0, 1) == "x") {
+							Notificar("error", "Erro!", result);
+							return false;
+						}
+						setTimeout(function () {
+							$('#loading-overlay').hide();
+							Swal.fire({
+								icon: "success",
+								title: "Sucesso!",
+								text: result,
+								showConfirmButton: false,
+								timer: 2500
+							}).then((result) => {
+								window.location = "/Socio/Details/"+id;
+							});
+						}, 2500);
+					},
+					error: function (result) {
+						$('#loading-overlay').hide();
+						Notificar("error", "Erro!", result);
+					}
+				});
+			}
+		}
+
+		function ValidarModalEditar() {
+			if ($("#novaCategoriaId").val() === $("#categoriaAtualId").val()) {
+				$("#novaCategoriaId").focus();
+				Notificar("error", "Erro!", "O Sócio pertence a esta categoria.");
+				return false;
+			}
+			return true;
+		}
+
+		function NotificarErro(icone, titulo, mensagem) {
+
+			$('#loading-overlay').hide();
+			Swal.fire({
+				icon: icone,
+				title: titulo,
+				text: mensagem,
+				showConfirmButton: false,
+				iconSize: "10px",
+				timer: 2500
+			});
+		}
+
+	</script>
+}

@@ -59,8 +59,8 @@
                                         <tr role="row" class="">
                                             <td class="table-plus sorting_1 text-left" tabindex="0">@apoio.Descricao</td>
                                             <td class="table-plus sorting_1 text-left" tabindex="0">@apoio.Valor</td>
-                                            <td class="table-plus sorting_1 text-left" tabindex="0">@apoio.DataApoio</td>
-                                            <td class="table-plus sorting_1 text-left" tabindex="0">@apoio.SocioId</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@apoio.DataApoio.ToString("dd/MM/yyyy")</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@apoio.NomeSocio</td>
                                             <td class="table-plus sorting_1 text-left" tabindex="0">@apoio.EstadoApoio</td>
                                             <td>
                                                 <div class="dropdown">
@@ -72,7 +72,7 @@
                                                         <a class="dropdown-item" href="/Apoio/Detalhes/@apoio.Id"><i class="dw dw-eye"></i> Detalhes</a>
                                                         @if (HttpContextAccessor.HttpContext.Session.GetString("perfil") == EPerfilUsuario.Admin.ToString())
                                                         {
-                                                            <a class="dropdown-item" href="#" onclick="SetApoioEditar('@apoio.Id', '@apoio.SocioId',  '@apoio.Descricao', '@apoio.Valor', '@apoio.DataApoio','@apoio.EstadoApoio')" data-toggle="modal" data-target="#editarApoio"><i class="dw dw-edit2"></i> Editar</a>
+                                                            <a class="dropdown-item" href="#" onclick="SetApoioEditar('@apoio.Id', '@apoio.SocioId',  '@apoio.Descricao', '@apoio.Valor', '@apoio.DataApoio','@apoio.EstadoApoio','@apoio.DataCriacao','@apoio.Status')" data-toggle="modal" data-target="#editarApoio"><i class="dw dw-edit2"></i> Editar</a>
                                                             <a class="dropdown-item" href="#" onclick="SetApoioInativar('@apoio.Id')" data-toggle="modal" data-target="#inativarApoio"><i class="dw dw-ban"></i> Inativar</a>
                                                             <a class="dropdown-item" href="#" onclick="SetApoioEliminar('@apoio.Id')" data-toggle="modal" data-target="#eliminarApoio"><i class="dw dw-delete-3"></i> Eliminar</a>
                                                         }
@@ -112,7 +112,7 @@
 
                 </div><div class="modal-body">
 
-                    <input type="hidden" id="Id" />
+                    <input type="hidden" id="idEdit" />
 
                     <input type="hidden" id="socioId" />
 
@@ -122,11 +122,11 @@
                     </div>
                     <div class="form-group">
                         <label>Valor</label>
-                        <input type="number" id="valorEdit" class="form-control">
+                        <input type="number" disabled id="valorEdit" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Data do Apoio</label>
-                        <input type="date" id="dataApoioEdit" value="@DateTime.Now.ToString("dd-MM-yyyy")" class="form-control">
+                        <input type="text" disabled id="dataApoioEdit" class="form-control">
                     </div>
                     <div class="">
                         <input type="hidden" id="estadoEdit">
@@ -136,6 +136,9 @@
                     </div>
                     <div class="">
                         <input type="hidden" value="true" id="statusEdit">
+                    </div>
+                    <div class="">
+                        <input type="hidden" id="usuarioEdit" value="@HttpContextAccessor.HttpContext.Session.GetString("userId")">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -198,165 +201,6 @@
 <!--Script-->
 @section Scripts{
     <script>
-
-        //------------------Editar-------
-        function SetApoioEditar(apoioId, socioId, descricao, valor, dataApoio, estado) {
-            $("#Id").val(apoioId);
-            $("#socioId").val(socioId);
-            $("#descricaoEdit").val(descricao);
-            $("#valorEdit").val(valor);
-            $("#dataApoioEdit").val(dataApoio);
-            $("#estadoEdit").val(estado);
-        }
-        function EditarApoio() {
-
-            if (!ValidarModalEditar()) {
-                return;
-            }
-            else {
-                $('#loading-overlay').show();
-                $.ajax({
-                    type: "POST",
-                    url: "/Apoio/Editar",
-                    data: {
-                        Id: $("#Id").val(),
-                        Descricao: $("#descricaoEdit").val(),
-                        DataApoio: $("#dataApoioEdit").val(),
-                        Valor: $("#valorEdit").val(),
-                        Estado: $("#estadoEdit").val(),
-                        SocioId: $("#socioId").val()
-                    },
-                    success: function (result) {
-                        if (result.substring(0, 1) == "x") {
-                            NotificarErro("error", "Erro!", result);
-                            return false;
-                        }
-                        setTimeout(function () {
-                            $('#loading-overlay').hide();
-                            Swal.fire({
-                                icon: "success",
-                                title: "Sucesso!",
-                                text: result,
-                                showConfirmButton: false,
-                                timer: 2500
-                            }).then((result) => {
-                                window.location = "/Apoio/Index";
-                            });
-                        }, 2500);
-                    },
-                    error: function (result) {
-                        Notificar("error", "Erro!", result);
-                    }
-                });
-            }
-        }
-        function ValidarModalEditar() {
-            if ($("#descricaoEdit").val() == "") {
-                $("#descricaoEdit").focus();
-                NotificarErro("error", "Erro!", "A Descrição do Apoio deve ser preenchida.");
-                return false;
-            }
-            else {
-                if ($("#valorEdit").val() == "") {
-                    $("#valorEdit").focus();
-                    NotificarErro("error", "Erro!", "O Valor do Apoio deve ser preenchido.");
-                    return false;
-                }
-                else {
-                    if ($("#dataApoioEdit").val() == "") {
-                        $("#dataApoioEdit").focus();
-                        NotificarErro("error", "Erro!", "A Data do Apoio deve ser preenchida.");
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-        /*------------------Inativar-------*/
-        function SetApoioInativar(apoioId) {
-
-            $("#idInativar").val(apoioId);
-        }
-        function InativarApoio() {
-            $('#loading-overlay').show();
-            $.ajax({
-                type: "POST",
-                url: "/Apoio/Inativar",
-                data: {
-                    id: $("#idInativar").val()
-                },
-                success: function (result) {
-                    if (result.substring(0, 1) == "x") {
-                        Notificar("error", "Erro!", result);
-                        return false;
-                    }
-                    setTimeout(function () {
-                        $('#loading-overlay').hide();
-                        Swal.fire({
-                            icon: "success",
-                            title: result,
-                            showConfirmButton: false,
-                            timer: 2500
-                        }).then((result) => {
-                            window.location = "/Apoio/Index";
-                        });
-                    }, 2500);
-                },
-                error: function (result) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Erro!",
-                        text: result,
-                        showConfirmButton: false,
-                        iconSize: "10px",
-                        timer: 2500
-                    });
-                }
-            });
-        }
-
-        /*------------------Eliminar-------*/
-        function SetApoioEliminar(apoioId) {
-
-            $("#idEliminar").val(apoioId);
-        }
-        function EliminarBeneficio() {
-            $('#loading-overlay').show();
-            $.ajax({
-                type: "POST",
-                url: "/Apoio/Eliminar",
-                data: {
-                    id: $("#idEliminar").val()
-                },
-                success: function (result) {
-                    if (result.substring(0, 1) == "x") {
-                        Notificar("error", "Erro!", result);
-                        return false;
-                    }
-                    setTimeout(function () {
-                        $('#loading-overlay').hide();
-                        Swal.fire({
-                            icon: "success",
-                            title: result,
-                            showConfirmButton: false,
-                            timer: 2500
-                        }).then((result) => {
-                            window.location = "/Apoio/Index";
-                        });
-                    }, 2500);
-                },
-                error: function (result) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Erro!",
-                        text: result,
-                        showConfirmButton: false,
-                        iconSize: "10px",
-                        timer: 2500
-                    });
-                }
-            });
-        }
 
 
         function NotificarErro(icone, titulo, mensagem) {

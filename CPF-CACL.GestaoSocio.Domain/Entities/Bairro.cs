@@ -13,5 +13,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Entities
         public virtual Municipio Municipio { get; set; }
 
         public ICollection<Socio> Socios { get; set; }
+        public ICollection<Fornecedor> Fornecedores { get; set; }
     }
 }

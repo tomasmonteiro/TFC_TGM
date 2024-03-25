@@ -69,9 +69,9 @@
                                             <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.Telefone</td>
                                             <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.Email</td>
                                             <td class="table-plus sorting_1 text-left" tabindex="0">
-                                                <p class="p-1" style="@(fornecedor.Status == "false" ? "background-color: yellow; color: black;" :
-                                            fornecedor.Status == "true" ? "background-color: green; color: #fff;" : "")">
-                                                    @if (fornecedor.Status == "true")
+                                                <p class="p-1" style="@(fornecedor.Status.ToString() == "false" ? "background-color: yellow; color: black;" :
+                                            fornecedor.Status.ToString() == "true" ? "background-color: green; color: #fff;" : "")">
+                                                    @if (fornecedor.Status.ToString() == "true")
                                                     {
                                                         <span>Ativo</span>
                                                     }
@@ -130,6 +130,14 @@
                     <br />
                     <input type="text" id="NIF" class="form-control" placeholder="Digite o NIF do fornecedor">
                 </div>
+
+                <label class="control-label">Bairro</label>
+                <select id="bairroId" class="form-control">
+                    @foreach (var item in ViewBag.Bairro)
+                    {
+                        <option value="@item.Id">@item.Nome</option>
+                    }
+                </select>
                 <div class="form-group">
                     <label>Endereço</label>
                     <br />
@@ -187,6 +195,11 @@
                     <label>NIF</label>
                     <br />
                     <input type="text" id="NIFEd" class="form-control" placeholder="Digite o NIF do fornecedor">
+                </div>
+                <div class="form-group">
+                    <label>Bairro</label>
+                    <br />
+                    <input type="text" id="bairroEd" class="form-control" disabled>
                 </div>
                 <div class="form-group">
                     <label>Endereço</label>
@@ -367,14 +380,15 @@
         }
  //------------------Editar-------
 
-        function SetFornecedorEditar(fornecedorId, cod, nome, nif, endereco, telefone, email, dataCriacao, status) {
+        function SetFornecedorEditar(fornecedorId, cod, nome, nif, endereco, telefone, email, bairroId, dataCriacao, status) {
             $("#FornecedorId").val(fornecedorId);
             $("#CodigoEd").val(cod);
             $("#NomeEd").val(nome);
             $("#NIFEd").val(nif);
             $("#EnderecoEd").val(endereco);
-            $("#TelefoneEd").val(telefone);
+            $("#TelefoneEd").val(telefone); 
             $("#EmailEd").val(email);
+            $("#bairroEd").val(bairroId);
             $("#DataCriacaoEd").val(dataCriacao);
             $("#StatusEd").val(status);
         }
@@ -396,6 +410,7 @@
                         Endereco: $("#EnderecoEd").val(),
                         Telefone: $("#TelefoneEd").val(),
                         Email: $("#EmailEd").val(),
+                        BairroId: $("#bairroEd").val(),
                         DataCriacao: $("#DataCriacaoEd").val(),
                         DataAtualizacao: $("#DataAtualizacaoEd").val(),
                         Status: $("#StatusEd").val()

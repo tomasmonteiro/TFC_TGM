@@ -75,6 +75,14 @@ body {
     height: 100vh;
 }*/
 
+.menu-open>.nav-link{
+    background-color: #007bff !important;
+    color: #fff !important;
+}
+.nav-link.nav-principal {
+    background-color: rgba(255, 255, 255, .1);
+    color: #fff;
+}
 
 .icone {
     display: inline-block;

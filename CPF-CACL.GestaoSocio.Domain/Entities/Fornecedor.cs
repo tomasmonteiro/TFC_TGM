@@ -5,9 +5,11 @@
         public string Cod { get; set; }
         public string Nome { get; set; }
         public string? NIF { get; set; }
-        public string? Endereco { get; set; }
         public string Telefone { get; set; }
         public string? Email { get; set; }
+        public string? Endereco { get; set; }
+        public Guid BairroId { get; set; }
+        public virtual Bairro Bairros { get; set; }
         public ICollection<ItemApoio> ItemApoios { get; set; }
         public ICollection<Despesa> Despesas { get; set; }
     }

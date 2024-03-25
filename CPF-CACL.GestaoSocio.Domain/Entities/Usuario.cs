@@ -12,5 +12,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Entities
 
         public ICollection<Apoio> Apoios { get; set; }
         public ICollection<Pagamento> Pagamentos { get; set; }
+        public ICollection<UsuarioSocio> UsuarioSocios { get; set; }
     }
 }

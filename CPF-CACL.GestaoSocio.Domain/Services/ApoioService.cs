@@ -42,7 +42,11 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             return _apoioRepository.BuscarTodos();
         }
-        public void Eliminar(Guid id)
+		public IEnumerable<Apoio> BuscarApoioPorSocio(Guid socioId)
+		{
+			return _apoioRepository.BuscarApoioPorSocio(socioId);
+		}
+		public void Eliminar(Guid id)
         {
             var apoio = _apoioRepository.GetById(id);
             if (apoio == null)

@@ -13,6 +13,10 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
         public double Valor { get; set; }
         public EEstadoApoio EstadoApoio { get; set; }
         public Guid SocioId { get; set; }
+        public string NomeSocio { get; set; }
+        public List<Socio> Socios { get; set; }
+        public List<ItemDropDown> Socio { get; set; }
+
         public Guid UsuarioId { get; set; }
 
         public string Status { get; set; } = "true";

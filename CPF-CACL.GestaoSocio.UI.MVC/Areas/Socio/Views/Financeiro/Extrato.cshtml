@@ -1,9 +1,11 @@
-﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 
 @model List<ExtratoViewModel>
 
 @{
-    ViewData["Title"] = "Registar Pagamento";
+    ViewData["Title"] = "Extrato financeiro";
 }
 
 <div class="page-header">
@@ -23,8 +25,11 @@
     </div>
 </div>
 
+<a href="@Url.Action("ExtratoImprimir","Financeiro", new {id = @HttpContextAccessor.HttpContext.Session.GetString("userId"), area = "Socio"})" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Imprimir</a>
 
+@* <a href="#" onclick="imprimir()" rel="noopener" class="btn btn-default no-print"><i class="fas fa-print"></i> Imprimir</a>
 
+<a href="" class="dropdown-item">Extrato Financeiro</a> *@
 
 <!-- Main content -->
 <section class="content">
@@ -34,8 +39,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title text-center text-bold">PAGAMENTOS EFECTUADOS</h3>
-                    </div>
-                    <!-- /.card-header -->
+                    </div><!-- /.card-header -->
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
@@ -68,3 +72,14 @@
         </div>
     </div>
 </section>
+
+
+<!--Script-->
+@section Scripts{
+    <script>
+        function imprimir() {
+            window.print();
+        }
+        //window.addEventListener("load", window.print());
+    </script>
+}

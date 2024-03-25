@@ -45,10 +45,9 @@
             <div class="margem-container card-body">
                 <div class="margens col-12 col-md-12 col-lg-12">
                     <div class="text-center col-12 col-md-12 col-lg-12">
-                        <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 5;" id="myDataTable">
+                        <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 4;" id="myDataTable">
                             <thead class="navbar-primary">
                                 <tr>
-                                    <th scope="col">#</th>
                                     <th scope="col">Nome</th>
                                     <th scope="col">Registo</th>
                                     <th scope="col">Actualização</th>
@@ -61,7 +60,6 @@
                                     foreach (OrganismoViewModel organismo in Model)
                                     {
                                         <tr>
-                                            <th scope="row">@organismo.Id</th>
                                             <td>@organismo.Nome</td>
                                             <td>@organismo.DataCriacao</td>
                                             <td>@organismo.DataAtualizacao</td>

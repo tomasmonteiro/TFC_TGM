@@ -13,7 +13,8 @@ namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
         public void Adicionar(ApoioViewModel apoio);
         public void AdicionarApoio(List<DadosApoioViewModel> dadosApoioViewModel);
         public ApoioViewModel BuscarPorId(Guid id);
-        public IEnumerable<ApoioViewModel> BuscarApoioConcluido();
+		public IEnumerable<ApoioViewModel> BuscarItemPorSocio(Guid socioId);
+		public IEnumerable<ApoioViewModel> BuscarApoioConcluido();
         public IEnumerable<ApoioViewModel> BuscarApoioPendente();
         public IEnumerable<ApoioViewModel> BuscarTodosAtivos();
         public IEnumerable<ApoioViewModel> BuscarTodos();

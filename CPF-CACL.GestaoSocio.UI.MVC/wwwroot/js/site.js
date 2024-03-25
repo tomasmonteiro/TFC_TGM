@@ -134,41 +134,6 @@ $(document).ready(function () {
     });
 });
 
-/*
-
-   $.ajax({
-        url: "/Apoio/GetValorCapital",
-        type: "GET",
-        data: {
-            benefiioId: $('#beneficioId').val(),
-            socioId: $('#socioId').val()
-        },
-        success: function (response) {
-            $('#valorCapital').val(response);
-        },
-        error: function (result) {
-            Notificar("error", "Erro!", "Ocorreu um erro.");
-        }
-    });
-
-    if ($("#valorCapital").val() == 0) {
-        Notificar("error", "Erro!", "A categoria do sócio não possui cobertura para este benefício.");
-        $("#Valor").val() = "";
-        return false;
-    }
-    else {
-        if ($("#valorCapital").val() < $("#Valor").val()) {
-            Notificar("error", "Erro!", "O valor inserido é superior ao plafond do sócio.");
-            $("#Valor").val() = "";
-            return false;
-        }
-    }
-    return true;
-
-*/
-
-
-
 //------Script do btnTopo para regressar no topo da página
 document.addEventListener("DOMContentLoaded", function () {
     var irAoTopoBtn = document.getElementById("irAoTopoBtn");
@@ -218,7 +183,12 @@ function Notificacao(icone, titulo, mensagem) {
         timer: 2500
     });
 }
+
+
+
 function NotificarErro(icone, titulo, mensagem) {
+
+    $('#loading-overlay').hide();
     Swal.fire({
         icon: icone,
         title: titulo,
@@ -747,6 +717,48 @@ function pesquisarSocio() {
     })
 }
 
+//-----PESQUISAR SOCIO PARA ATRIBUIR APOIO
+function pesquisarPAApoio() {
+
+    Swal.fire({
+        title: 'Digite o código do Sócio para atribuir o Apoio:',
+        input: 'text',
+        showCancelButton: true,
+        confirmButtonText: 'Pesquisar',
+        cancelButtonText: 'Cancelar',
+        showLoaderOnConfirm: true,
+        preConfirm: (valor) => {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(fetch(`/Socio/Pesquisar?codigo=${encodeURIComponent(valor)}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText)
+                            }
+                            return response.json()
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage('A pesquisa falhou!')
+                        }));
+                }, 1000);
+            });
+        },
+        allowOutsideClick: false,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            if (result.value.socioId) {
+                window.location = "/Apoio/Criar/" + result.value.socioId;
+            }
+            else {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: `${result.value}`,
+                    icon: 'error'
+                });
+            }
+        }
+    })
+}
 
 
 ///----LOGIN--
@@ -793,7 +805,7 @@ function ValidarLogin() {
 }
 
 
-///----AGREGADO--
+///----FORNECEDOR--
 function AdicionarFornecedor() {
     if (!ValidarFornecedor()) {
         return;
@@ -809,6 +821,7 @@ function AdicionarFornecedor() {
                 Endereco: $("#Endereco").val(),
                 Telefone: $("#Telefone").val(),
                 Email: $("#Email").val(),
+                BairroId: $("#bairroId").val(),
                 DataCriacao: $("#DataCriacao").val(),
                 Status: $("#Status").val()
             },
@@ -848,7 +861,170 @@ function ValidarFornecedor() {
 
 
 
+//---- APOIOS -----
 
+//------------------Editar-------
+function SetApoioEditar(apoioId, socioId, descricao, valor, dataApoio, estado, dataCriacao, status) {
+    $("#idEdit").val(apoioId);
+    $("#socioId").val(socioId);
+    $("#descricaoEdit").val(descricao);
+    $("#valorEdit").val(valor);
+    $("#dataApoioEdit").val(dataApoio);
+    $("#estadoEdit").val(estado);
+    $("#dataCriacaoEdit").val(dataCriacao);
+    $("#statusEdit").val(status);
+}
+function EditarApoio() {
+
+    if (!ValidarModalEditar()) {
+        return;
+    }
+    else {
+        $('#loading-overlay').show();
+        $.ajax({
+            type: "POST",
+            url: "/Apoio/Editar",
+            data: {
+                Id: $("#idEdit").val(),
+                Descricao: $("#descricaoEdit").val(),
+                DataApoio: $("#dataApoioEdit").val(),
+                Valor: $("#valorEdit").val(),
+                Estado: $("#estadoEdit").val(),
+                SocioId: $("#socioId").val(),
+                UsuarioId: $("#usuarioEdit").val(),
+                DataCriacao: $("#dataCriacaoEdit").val(),
+                Status: $("#statusEdit").val()
+            },
+            success: function (result) {
+                if (result.substring(0, 1) == "x") {
+                    NotificarErro("error", "Erro!", result);
+                    return false;
+                }
+                setTimeout(function () {
+                    $('#loading-overlay').hide();
+                    Swal.fire({
+                        icon: "success",
+                        title: "Sucesso!",
+                        text: result,
+                        showConfirmButton: false,
+                        timer: 2500
+                    }).then((result) => {
+                        window.location = "/Apoio/Index";
+                    });
+                }, 2500);
+            },
+            error: function (result) {
+                NotificarErro("error", "Erro!", result);
+            }
+        });
+    }
+}
+function ValidarModalEditar() {
+    if ($("#descricaoEdit").val() == "") {
+        $("#descricaoEdit").focus();
+        NotificarErro("error", "Erro!", "A Descrição do Apoio deve ser preenchida.");
+        return false;
+    }
+    else {
+        if ($("#valorEdit").val() == "") {
+            $("#valorEdit").focus();
+            NotificarErro("error", "Erro!", "O Valor do Apoio deve ser preenchido.");
+            return false;
+        }
+        else {
+            if ($("#dataApoioEdit").val() == "") {
+                $("#dataApoioEdit").focus();
+                NotificarErro("error", "Erro!", "A Data do Apoio deve ser preenchida.");
+                return false;
+            }
+        }
+    }
+    return true;
+}
+/*------------------Inativar-------*/
+function SetApoioInativar(apoioId) {
+
+    $("#idInativar").val(apoioId);
+}
+function InativarApoio() {
+    $('#loading-overlay').show();
+    $.ajax({
+        type: "POST",
+        url: "/Apoio/Inativar",
+        data: {
+            id: $("#idInativar").val()
+        },
+        success: function (result) {
+            if (result.substring(0, 1) == "x") {
+                Notificar("error", "Erro!", result);
+                return false;
+            }
+            setTimeout(function () {
+                $('#loading-overlay').hide();
+                Swal.fire({
+                    icon: "success",
+                    title: result,
+                    showConfirmButton: false,
+                    timer: 2500
+                }).then((result) => {
+                    window.location = "/Apoio/Index";
+                });
+            }, 2500);
+        },
+        error: function (result) {
+            Swal.fire({
+                icon: "error",
+                title: "Erro!",
+                text: result,
+                showConfirmButton: false,
+                iconSize: "10px",
+                timer: 2500
+            });
+        }
+    });
+}
+
+/*------------------Eliminar-------*/
+function SetApoioEliminar(apoioId) {
+    $("#idEliminar").val(apoioId);
+}
+function EliminarBeneficio() {
+    $('#loading-overlay').show();
+    $.ajax({
+        type: "POST",
+        url: "/Apoio/Eliminar",
+        data: {
+            id: $("#idEliminar").val()
+        },
+        success: function (result) {
+            if (result.substring(0, 1) == "x") {
+                Notificar("error", "Erro!", result);
+                return false;
+            }
+            setTimeout(function () {
+                $('#loading-overlay').hide();
+                Swal.fire({
+                    icon: "success",
+                    title: result,
+                    showConfirmButton: false,
+                    timer: 2500
+                }).then((result) => {
+                    window.location = "/Apoio/Index";
+                });
+            }, 2500);
+        },
+        error: function (result) {
+            Swal.fire({
+                icon: "error",
+                title: "Erro!",
+                text: result,
+                showConfirmButton: false,
+                iconSize: "10px",
+                timer: 2500
+            });
+        }
+    });
+}
 
 
 
@@ -942,7 +1118,7 @@ function ValidarModalPagamento() {
 }
 
 
-//----------------Registar Pagamento------------
+//---------Registar Pagamento------------
 function RegistarPagamento() {
 
     var saldoSelecionado = $('#tabelaSaldo input[name="opcaoSaldo"]:checked').closest('tr');
@@ -1117,6 +1293,9 @@ function SetBairro(bairroId, municipioId,dataCriacao, nomeBairro) {
     $("#nomeBairro").val(nomeBairro);
     $("#dataCriacao").val(dataCriacao);
 }
+
+
+
 function EditarBairro() {
     
     if ($("#nomeBairro").val() == "") {

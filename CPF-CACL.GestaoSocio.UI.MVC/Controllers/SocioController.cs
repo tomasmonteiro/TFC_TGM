@@ -1,9 +1,13 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
+using CPF_CACL.GestaoSocio.Aplication.Services;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+using CPF_CACL.GestaoSocio.Domain.Entities;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
+using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
 using CPF_CACL.GestaoSocio.UI.MVC.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
@@ -18,11 +22,12 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         private readonly ICategoriaSocioRepository _categoriaRepository;
         private readonly ISaldoAppService _saldoAppService;
         private readonly IItemAppService _itemAppService;
-
+        private readonly IItemApoioAppService _itemApoioAppService;
 		private readonly IDependenteAppService _agregadoAppService;
 
-		public SocioController(ISocioAppService socioAppService, ISocioRepository socioRepository, IItemAppService itemAppService, IOrganismoRepository organismoRepository,  IBairroRepository bairroRepository, ICategoriaSocioRepository categoriaRepository, IMunicipioRepository municipioRepository, ISaldoAppService saldoAppService, IDependenteAppService agregadoAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+		public SocioController(IItemApoioAppService itemApoioAppService, ISocioAppService socioAppService, ISocioRepository socioRepository, IItemAppService itemAppService, IOrganismoRepository organismoRepository,  IBairroRepository bairroRepository, ICategoriaSocioRepository categoriaRepository, IMunicipioRepository municipioRepository, ISaldoAppService saldoAppService, IDependenteAppService agregadoAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
+            _itemApoioAppService = itemApoioAppService;
             _socioAppService = socioAppService;
             _socioRepository = socioRepository;
             _organismoRepository = organismoRepository;
@@ -50,18 +55,48 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         
         public ActionResult Details(Guid id)
         {
-            //IEnumerable<PagamentoViewModel> pagamentos = _pagamentoAppService.BuscarDisponivel(id);
-            IEnumerable<SaldoViewModel> saldos = _saldoAppService.BuscarDisponivel(id);
+            var idSocio = id;
+            var idSaldo = id;
+            var idItens = id;
+            var idAgregado = id;
+
+
+			//IEnumerable<PagamentoViewModel> pagamentos = _pagamentoAppService.BuscarDisponivel(id);
+			IEnumerable<SaldoViewModel> saldos = _saldoAppService.BuscarDisponivel(idSaldo);
             ViewBag.Saldo = saldos;
 
-            IEnumerable<ItemViewModel> itens = _itemAppService.BuscarItemPorSocio(id);
+            IEnumerable<ItemViewModel> itens = _itemAppService.BuscarItemPorSocio(idItens);
 			ViewBag.Itens = itens;
 
-            IEnumerable<DependenteViewModel> agregado = _agregadoAppService.BuscarDependentePorSocio(id);
+            IEnumerable<DependenteViewModel> agregado = _agregadoAppService.BuscarDependentePorSocio(idAgregado);
             ViewBag.Agregado = agregado;
 
-			var socio = _socioAppService.BuscarPorId(id);
-            return View(socio);
+			IEnumerable<ItemApoioViewModel> itemApoio = _itemApoioAppService.BuscarItemApoioPorSocio(idSocio);
+			ViewBag.ItemApoio = itemApoio;
+
+			var socio = _socioAppService.BuscarPorId(idSocio);
+
+			var viewModel = new SocioViewModel();
+
+			//Buscar Categorias para preencher o Select
+			var categorias = _categoriaRepository.BuscarTodos();
+			categorias = categorias.OrderBy(m => m.Nome).ToList();
+			ViewBag.Cate = viewModel.CategoriaSocio
+				= categorias
+				.Select(item => new ItemDropDown
+				{
+					Id = item.Id,
+					Nome = item.Nome
+				})
+				.ToList();
+
+
+
+            var categoriaAtual = _categoriaRepository.GetById(socio.CategoriaSocioId);
+            ViewBag.CategoriaNome = categoriaAtual.Nome;
+			ViewBag.CategoriaId = categoriaAtual.Id;
+
+			return View(socio);
         }
 
         // GET: SocioController/Create
@@ -221,5 +256,32 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             return Json(bairros);
 
         }
-    }
+
+		// POST: SocioController/MudarCategoria
+		[HttpPost]
+		public ActionResult MudarCategoria(Guid SocioId, Guid NovaCategoria)
+		{
+			try
+			{
+				var socio = _socioAppService.BuscarPorSemTrack(SocioId);
+                socio.CategoriaSocioId = NovaCategoria;
+                _socioAppService.Atualizar(socio);
+
+				if (!ValidOperation())
+				{
+					var sb = new StringBuilder();
+					foreach (var item in BuscarMensagemErro())
+					{
+						sb.AppendLine($"x {item}\n");
+					}
+					return Json(sb.ToString());
+				}
+				return Json("Registo atualizado com sucesso!");
+			}
+			catch (Exception erro)
+			{
+				return Json($"x Ocorreu um erro: {erro.Message}");
+			}
+		}
+	}
 }

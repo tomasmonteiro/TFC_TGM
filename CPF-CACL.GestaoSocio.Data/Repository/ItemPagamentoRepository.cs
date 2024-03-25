@@ -9,11 +9,13 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
 {
     public class ItemPagamentoRepository : RepositoryBase<ItemPagamento>, IItemPagamentoRepository
     {
+        private readonly IItemRepository _itemRepository;
         private readonly GSContext _gsContext;
 
-        public ItemPagamentoRepository(GSContext gsContext) : base(gsContext)
+        public ItemPagamentoRepository(IItemRepository itemRepository, GSContext gsContext) : base(gsContext)
         {
             _gsContext = gsContext;
+            _itemRepository = itemRepository;
         }
 
         public IEnumerable<ItemPagamento> BuscarItemPagamentoPorSocio(Guid socioId)
@@ -34,5 +36,60 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
             return _gsContext.ItemPagamento.Where(p => p.Status == true);
 
         }
+
+        public void CriarQuota(Socio socio, Periodo periodo)
+        {
+            //Busca o Tipo de Item "Quota"
+            var tipoItem = _gsContext.TipoItem.Where(a => a.Descricao == "Quota" && a.Status == true).FirstOrDefault();
+
+            //Cria as Quotas para os Sócios ativos
+
+            var categoriaSocio = _gsContext.CategoriaSocio.Find(socio.CategoriaSocioId);
+            var novoItem = new Item
+            {
+                Cod = GerarCodigoItem("Q"),
+                Descricao = "Quota",
+                Valor = categoriaSocio.Quota,
+                DataVencimento = periodo.UltimoDiaUtil,
+                DataCriacao = DateTime.Now,
+                PeriodoId = periodo.Id,
+                TipoItemId = tipoItem.Id,
+                SocioId = socio.Id,
+                Status = true
+            };
+            _itemRepository.Add(novoItem);
+
+        }
+
+
+        //Método para gerar o Código do Período
+        public string GerarCodigoItem(string tipoItem)
+        {
+            int anoAtual = DateTime.Now.Year % 100;
+
+            var ultimoCodigo = ConsultarUltimoCodigo(tipoItem, anoAtual);
+
+            int proximoNumero = 1;
+
+            if (ultimoCodigo != null)
+            {
+                proximoNumero = int.Parse(ultimoCodigo.Substring(2 + tipoItem.Length)) + 1;
+            }
+
+            return $"{tipoItem}{anoAtual:D2}{proximoNumero:D4}";
+        }
+
+        public string ConsultarUltimoCodigo(string tipoEntidade, int anoAtual)
+        {
+            var ultimoCodigo = _gsContext.Item
+                .Where(p => p.Cod.StartsWith($"{tipoEntidade}{anoAtual}"))
+                .OrderByDescending(p => p.Cod)
+                .Select(p => p.Cod)
+                .FirstOrDefault();
+
+            return ultimoCodigo;
+        }
+
+
     }
 }

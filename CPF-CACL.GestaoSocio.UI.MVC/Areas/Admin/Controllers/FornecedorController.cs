@@ -15,14 +15,28 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Admin.Controllers
     {
         private readonly IFornecedorAppService _fornecedorAppService;
         private readonly IFornecedorRepository _fornecedorRepository;
-        public FornecedorController(IFornecedorAppService fornecedorAppService, IFornecedorRepository fornecedorRepository,  INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+        private readonly IBairroRepository _bairroRepository;
+        public FornecedorController(IFornecedorAppService fornecedorAppService, IFornecedorRepository fornecedorRepository, IBairroRepository bairroRepository,  INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _fornecedorAppService = fornecedorAppService;
             _fornecedorRepository = fornecedorRepository;
+            _bairroRepository = bairroRepository;
         }
 
         public ActionResult Index()
         {
+            var viewModel = new FornecedorViewModel();
+            var bairros = _bairroRepository.BuscarTodos();
+            bairros = bairros.OrderBy(m => m.Nome).ToList();
+            ViewBag.Bairro= viewModel.Bairro
+                = bairros
+                .Select(item => new ItemDropDown
+                {
+                    Id = item.Id,
+                    Nome = item.Nome
+                })
+                .ToList();
+
             var fornecedor = _fornecedorAppService.GetAll();
             return View(fornecedor);
         }
@@ -35,6 +49,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Admin.Controllers
 
         public ActionResult Criar()
         {
+
             return View();
         }
 

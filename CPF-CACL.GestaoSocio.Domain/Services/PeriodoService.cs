@@ -138,14 +138,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         //Método para gerar o Código do Período
         public string GerarCodigoPeriodo(DateTime dataInicial)
         {
-            ////Pegar as três primeiras letras do mês atual
-            //string nomeMes = DateTime.Now.ToString("MMM", CultureInfo.CurrentCulture);
-            ////Pegar os dois últimos dígitos do ano atual
-            //string ano = DateTime.Now.ToString("yy");
-
-            ////Retornar a junção do mês e ano
-            //return $"{nomeMes}{ano}";
-
             //Pegar as três primeiras letras do mês atual
             string nomeMes = dataInicial.ToString("MMM", CultureInfo.CurrentCulture).ToUpper();
             //Pegar os dois últimos dígitos do ano atual

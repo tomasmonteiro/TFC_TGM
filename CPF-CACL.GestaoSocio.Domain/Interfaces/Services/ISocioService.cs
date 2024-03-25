@@ -6,7 +6,8 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Services
     {
         IEnumerable<Socio> BuscarPorNome(string nome);
         Socio BuscarPorCod(string codigo);
-        public Guid Adicionar(Socio socio);
+		Socio BuscarPorSemTrack(Guid socioId);
+		public Guid Adicionar(Socio socio);
         public string GerarDodigoSocio();
         public double BuscarValorCapital(Guid socioId, Guid beneficioId);
     }

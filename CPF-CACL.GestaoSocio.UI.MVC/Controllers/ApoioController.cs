@@ -75,7 +75,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
                 })
                 .ToList();
 
-            
+
 
 
             var apoio = new ApoioViewModel();

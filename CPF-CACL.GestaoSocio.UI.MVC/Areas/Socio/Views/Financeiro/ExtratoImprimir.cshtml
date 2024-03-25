@@ -1,0 +1,115 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model List<ExtratoViewModel>
+
+@{
+    ViewData["Title"] = "Imprimir extrato financeiro";
+}
+
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Main content -->
+                    <div class="invoice p-3 mb-3">
+                        <!-- title row -->
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>
+                                    <i class="fas fa-globe"></i> CPF-CACL
+                                    <small class="float-right">Data: @ViewBag.DataAtual</small>
+                                </h4>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- info row -->
+                        <div class="row invoice-info">
+                            <div class="col-sm-4 invoice-col">
+                                <address>
+                                    <br>
+                                    Biblioteca da Samba, 2º Andar<br>
+                                    Município de Luanda <br>
+                                    Luanda<br>
+                                    Telefone: (244) 990888810<br>
+                                    Email: geral.cpfcacl@gmail.com
+                                </address>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+                                Socio
+                                <address>
+                                    <strong>@HttpContextAccessor.HttpContext.Session.GetString("nome")</strong><br>
+                                    @ViewBag.Bairro <br>
+                                    @ViewBag.Endereco<br>
+                                    Tel.: @ViewBag.Telefone<br>
+                                    Email: @ViewBag.Email
+                                    
+                                </address>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+                                <br>
+                                <b>Cod. socio:</b> @ViewBag.CodSocio<br>
+                                <b>Categoria:</b> @ViewBag.Categoria<br>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                        <!-- Table row -->
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="col-12 table-responsive">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title text-center text-bold">PAGAMENTOS EFECTUADOS</h3>
+                                    </div><!-- /.card-header -->
+                                    <table id="example1" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Descrição</th>
+                                                <th>Recibo</th>
+                                                <th>Valor (KZ)</th>
+                                                <th>Data Pag.</th>
+                                                <th>Data Inserç.</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var itens in Model)
+                                            {
+                                                <tr role="row" class="">
+                                                    <td>@itens.DescricaoItem</td>
+                                                    <td>@itens.ReciboPagamento</td>
+                                                    <td>@itens.ValorItem</td>
+                                                    <td>@itens.DataPagamento.ToString("dd/MM/yyyy")</td>
+                                                    <td>@itens.DataRegisto.ToString("dd/MM/yyyy")</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.invoice -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!--Script-->
+@section Scripts{
+    <script>
+        window.addEventListener("load", window.print());
+    </script>
+}

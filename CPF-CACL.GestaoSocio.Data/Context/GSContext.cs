@@ -39,8 +39,9 @@ namespace CPF_CACL.GestaoSocio.Data.Context
         public DbSet<ItemPagamento> ItemPagamento { get; set; }
         public DbSet<Pagamento> Pagamento { get; set; }
         public DbSet<Periodo> Periodo { get; set; } 
-        public DbSet<Saldo> Saldo { get; set; } 
-         
+        public DbSet<Saldo> Saldo { get; set; }
+        public DbSet<UsuarioSocio> UsuarioSocio { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

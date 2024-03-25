@@ -46,7 +46,12 @@ namespace CPF_CACL.GestaoSocio.Aplication.Services
             return mapper.Map<IEnumerable<ApoioViewModel>>(apoioService.BuscarApoioPendente());
         }
 
-        public ApoioViewModel BuscarPorId(Guid id)
+		public IEnumerable<ApoioViewModel> BuscarItemPorSocio(Guid socioId)
+		{
+			return mapper.Map<IEnumerable<ApoioViewModel >> (apoioService.BuscarApoioPorSocio(socioId));
+		}
+
+		public ApoioViewModel BuscarPorId(Guid id)
         {
             return mapper.Map<ApoioViewModel>(apoioService.GetById(id));
         }

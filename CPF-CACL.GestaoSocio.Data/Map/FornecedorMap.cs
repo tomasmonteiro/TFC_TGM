@@ -25,6 +25,12 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");
             builder.Property(x => x.Status).HasColumnType("bit").IsRequired();
+
+            //Relacionamento: um Bairro para vários Fornecedores
+            builder.HasOne(x => x.Bairros)
+                .WithMany(a => a.Fornecedores)
+                .HasForeignKey(x => x.BairroId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

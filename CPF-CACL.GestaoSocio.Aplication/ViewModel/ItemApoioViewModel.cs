@@ -12,21 +12,22 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
 
         public Guid BeneficioId { get; set; }
         public string NomeBeneficio { get; set; }
-        public List<Beneficio> Beneficios { get; set; }
-        public List<ItemDropDown> Beneficio { get; set; }
+        public List<Beneficio>? Beneficios { get; set; }
+        public List<ItemDropDown>? Beneficio { get; set; }
 
         public Guid ApoioId { get; set; }
         public string DescricaoApoio { get; set; }
-        public List<Apoio> Apoios { get; set; }
-        public List<ItemDropDown> Apoio { get; set; }
+        public List<Apoio>? Apoios { get; set; }
+        public List<ItemDropDown>? Apoio { get; set; }
 
         public Guid FornecedorId { get; set; }
         public string NomeFornecedor { get; set; }
-        public List<Fornecedor> Fornecedores { get; set; }
-        public List<ItemDropDown> Fornecedor { get; set; }
+        public List<Fornecedor>? Fornecedores { get; set; }
+        public List<ItemDropDown>? Fornecedor { get; set; }
 
+		public DateTime DataApoio { get; set; }
 
-        public DateTime DataCriacao { get; set; }
+		public DateTime DataCriacao { get; set; }
         public string Status { get; set; }
         public Nullable<DateTime> DataAtualizacao { get; set; }
 

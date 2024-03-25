@@ -10,10 +10,10 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Autorizacao("Admin")]
-    public class BbeneficioController : BaseController
+    public class TipoBeneficioController : BaseController
     {
         private readonly ITipoBeneficioAppService _tipoBeneficioAppService;
-        public BbeneficioController(ITipoBeneficioAppService tipoBeneficioAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+        public TipoBeneficioController(ITipoBeneficioAppService tipoBeneficioAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _tipoBeneficioAppService = tipoBeneficioAppService;
         }

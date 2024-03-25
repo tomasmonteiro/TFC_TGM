@@ -275,6 +275,9 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("BairroId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Cod")
                         .IsRequired()
                         .HasColumnType("varchar(10)");
@@ -306,6 +309,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .HasColumnType("varchar(12)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BairroId");
 
                     b.HasIndex("Cod")
                         .IsUnique();
@@ -1027,6 +1032,36 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Usuario", (string)null);
                 });
 
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.UsuarioSocio", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid>("SocioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SocioId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("UsuarioSocio", (string)null);
+                });
+
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Apoio", b =>
                 {
                     b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Socio", "Socio")
@@ -1123,6 +1158,17 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Apoio");
 
                     b.Navigation("Fornecedor");
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Fornecedor", b =>
+                {
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Bairro", "Bairros")
+                        .WithMany("Fornecedores")
+                        .HasForeignKey("BairroId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Bairros");
                 });
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Item", b =>
@@ -1315,6 +1361,25 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .HasForeignKey("PerfilUsuarioId");
                 });
 
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.UsuarioSocio", b =>
+                {
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Socio", "Socio")
+                        .WithMany("UsuarioSocios")
+                        .HasForeignKey("SocioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Usuario", "Usuario")
+                        .WithMany("UsuarioSocios")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Socio");
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Apoio", b =>
                 {
                     b.Navigation("Despesas");
@@ -1324,6 +1389,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Bairro", b =>
                 {
+                    b.Navigation("Fornecedores");
+
                     b.Navigation("Socios");
                 });
 
@@ -1405,6 +1472,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("ProjectoSocios");
 
                     b.Navigation("Saldo");
+
+                    b.Navigation("UsuarioSocios");
                 });
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoBeneficio", b =>
@@ -1432,6 +1501,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Apoios");
 
                     b.Navigation("Pagamentos");
+
+                    b.Navigation("UsuarioSocios");
                 });
 #pragma warning restore 612, 618
         }

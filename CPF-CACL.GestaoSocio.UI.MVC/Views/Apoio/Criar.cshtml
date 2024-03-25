@@ -78,20 +78,20 @@
                                                 </select>
                                             </div>
 
-                                            <div class="col-12 col-sm-12 col-md-6 espaco-input">
+                                            <div class="col-12 col-sm-6 col-md-4 espaco-input">
                                                 <label asp-for="Descricao" class="control-label required"> Descrição do apoio </label>
-                                                <input type="text1" asp-for="Descricao" id="Descricao" class="form-control required" data-val-required="" />
+                                                <textarea  asp-for="Descricao" id="Descricao" class="form-control required" data-val-required="" ></textarea>
                                                 <span asp-validation-for="Descricao" class="text-danger"></span>
                                             </div>
 
 
-                                            <div class="col-12 col-sm-6 col-md-3 espaco-input">
+                                            <div class="col-12 col-sm-6 col-md-4 espaco-input">
                                                 <label asp-for="DataApoio" class="control-label required"> Data do Apoio </label>
                                                 <input type="date" asp-for="DataApoio" value="@DateTime.Now.ToString("dd-MM-yyyy")" id="DataApoio" class="form-control" data-val-required="" />
                                                 <span asp-validation-for="DataApoio" class="text-danger"></span>
                                             </div>
 
-                                            <div class="col-12 col-sm-6 col-md-3 espaco-input">
+                                            <div class="col-12 col-sm-6 col-md-4 espaco-input">
                                                 <label asp-for="Valor" class="control-label">Valor (AKZ) </label>
                                                 <input asp-for="Valor" type="number" id="Valor" class="form-control" />
                                                 <span asp-validation-for="Valor" class="text-danger"></span>
@@ -100,7 +100,7 @@
 
 
                                             <div class="col-12 col-md-12 col-lg-12">
-                                                <button type="button" id="btnAdicionar" class="btn btn-success float-right waves-effect"> Adicionar</button>
+                                                <button type="button" id="btnAdicionar" class="btn btn-success float-right waves-effect"><i class="fas fa-plus"></i> Adicionar</button>
                                             </div>
 
 
@@ -159,7 +159,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="button" onclick="AdicionarApoio()" id="concluir" class="btn btn-success float-right ml-auto">Adicionar</button>
+                                <button type="button" onclick="AdicionarApoio()" id="concluir" class="btn btn-success float-right ml-auto"><i class="fas fa-check"></i> Concluir</button>
                             </div>
                         </div>
                     </div>

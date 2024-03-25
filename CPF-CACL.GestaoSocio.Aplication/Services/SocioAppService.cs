@@ -3,6 +3,7 @@ using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 using CPF_CACL.GestaoSocio.Domain.Entities;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Services;
+using CPF_CACL.GestaoSocio.Domain.Services;
 
 namespace CPF_CACL.GestaoSocio.Aplication.Services
 {
@@ -46,6 +47,11 @@ namespace CPF_CACL.GestaoSocio.Aplication.Services
                 socio.CaminhoFoto = "img/user.png";
             }
 			return mapper.Map<SocioViewModel>(socio);
+		}
+
+		public SocioViewModel BuscarPorSemTrack(Guid socioId)
+		{
+			return mapper.Map<SocioViewModel>(socioService.BuscarPorSemTrack(socioId));
 		}
 
 		public void Eliminar(Guid id)

@@ -11,5 +11,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
     {
         IEnumerable<ItemPagamento> BuscarTodos();
         IEnumerable<ItemPagamento> BuscarItemPagamentoPorSocio(Guid socioId);
+        void CriarQuota(Socio socio, Periodo periodo);
     }
 }

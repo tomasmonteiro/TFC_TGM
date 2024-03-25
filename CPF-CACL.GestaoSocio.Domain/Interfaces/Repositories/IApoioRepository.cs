@@ -12,5 +12,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
         IEnumerable<Apoio> BuscarTodos();
         IEnumerable<Apoio> BuscarApoioPendente();
         IEnumerable<Apoio> BuscarApoioConcluido();
-    }
+		IEnumerable<Apoio> BuscarApoioPorSocio(Guid socioId);
+	}
 }
