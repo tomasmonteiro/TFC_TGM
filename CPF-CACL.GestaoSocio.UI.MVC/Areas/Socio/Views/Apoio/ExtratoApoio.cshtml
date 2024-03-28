@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model List<ApoioViewModel>
+
+@{
+    ViewData["Title"] = "Extrato de apoios";
+}
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-12 col-md-12 col-sm-12">
+            <div class="title">
+                <h4>Extrato de apoios</h4>
+            </div>
+            <nav class="col-12 col-md-12 col-sm-12" aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Socio/Home/Index">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Apoio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Extrato de apoios</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<a href="@Url.Action("ExtratoApoioImprimir","Apoio", new {id = @HttpContextAccessor.HttpContext.Session.GetString("userId"), area = "Socio"})" rel="noopener" target="_blank" class="btn btn-primary" style="margin-bottom: 10px;"><i class="fas fa-print"></i> Imprimir</a>
+<br>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title text-center text-bold">APOIOS RECEBIDOS</h3>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Data </th>
+                                    <th>Descrição</th>
+                                    <th>Valor (KZ)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var itens in ViewBag.ItemApoio)
+                                {
+                                    <tr role="row" class="">
+                                        <td>@itens.DataApoio.ToString("dd/MM/yyyy")</td>
+                                        <td>@itens.NomeBeneficio</td>
+                                        <td>@itens.Valor</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>

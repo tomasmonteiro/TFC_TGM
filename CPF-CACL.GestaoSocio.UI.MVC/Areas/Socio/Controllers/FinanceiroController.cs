@@ -1,4 +1,6 @@
-﻿using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
+using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+using CPF_CACL.GestaoSocio.Domain.Entities;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
 using CPF_CACL.GestaoSocio.UI.MVC.Controllers;
@@ -16,14 +18,18 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Socio.Controllers
         private readonly ISocioRepository _socioRepository;
         private readonly IBairroRepository _bairroRepository;
         private readonly ICategoriaSocioRepository _categoriaRepository;
+        private readonly ISaldoAppService _saldoAppService;
+        private readonly IItemAppService _itemAppService;
 
-        public FinanceiroController(IItemPagamentoRepository itemPagamentoRepository, IUsuarioSocioRepository usuarioSocioRepository, ISocioRepository socioRepository, IBairroRepository bairroRepository,ICategoriaSocioRepository categoriaSocioRepository,  INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+        public FinanceiroController(ISaldoAppService saldoAppService, IItemAppService itemAppService, IItemPagamentoRepository itemPagamentoRepository, IUsuarioSocioRepository usuarioSocioRepository, ISocioRepository socioRepository, IBairroRepository bairroRepository,ICategoriaSocioRepository categoriaSocioRepository,  INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _itemPagamentoRepository = itemPagamentoRepository;
             _usuarioSocioRepository = usuarioSocioRepository;
             _socioRepository = socioRepository;
             _bairroRepository = bairroRepository;
             _categoriaRepository = categoriaSocioRepository;
+            _saldoAppService = saldoAppService;
+            _itemAppService = itemAppService;
         }
 
         public IActionResult Index()
@@ -34,9 +40,15 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Socio.Controllers
         [Route("/Extrato/{id}")]
         public ActionResult Extrato(Guid id)
         {
-            var usuarioSicio = _usuarioSocioRepository.BuscarPorUsuarioId(id);
+            var usuarioSocio = _usuarioSocioRepository.BuscarPorUsuarioId(id);
 
-            var itemPagamentos = _itemPagamentoRepository.BuscarItemPagamentoPorSocio(usuarioSicio.SocioId);
+            IEnumerable<SaldoViewModel> saldos = _saldoAppService.BuscarDisponivel(usuarioSocio.SocioId);
+            ViewBag.Saldo = saldos;
+
+            IEnumerable<ItemViewModel> itens = _itemAppService.BuscarItemPorSocio(usuarioSocio.SocioId);
+            ViewBag.Itens = itens;
+
+            var itemPagamentos = _itemPagamentoRepository.BuscarItemPagamentoPorSocio(usuarioSocio.SocioId);
 
             var viewModelList = new List<ExtratoViewModel>();
             foreach (var item in itemPagamentos)
@@ -65,6 +77,13 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Socio.Controllers
         public ActionResult ExtratoImprimir(Guid id)
         {
             var usuarioSocio = _usuarioSocioRepository.BuscarPorUsuarioId(id);
+
+            IEnumerable<SaldoViewModel> saldos = _saldoAppService.BuscarDisponivel(usuarioSocio.SocioId);
+            ViewBag.Saldo = saldos;
+
+            IEnumerable<ItemViewModel> itens = _itemAppService.BuscarItemPorSocio(usuarioSocio.SocioId);
+            ViewBag.Itens = itens;
+
 
             var itemPagamentos = _itemPagamentoRepository.BuscarItemPagamentoPorSocio(usuarioSocio.SocioId);
 

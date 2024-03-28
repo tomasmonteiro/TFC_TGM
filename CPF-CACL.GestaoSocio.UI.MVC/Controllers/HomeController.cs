@@ -20,7 +20,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult SemAcesso()
         {
             return View();
         }

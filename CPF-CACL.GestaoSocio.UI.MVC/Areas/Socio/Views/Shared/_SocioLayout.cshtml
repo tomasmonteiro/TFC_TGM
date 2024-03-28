@@ -52,7 +52,7 @@
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Área Administrativa</a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                                 <li><a href="#" class="dropdown-item">Solicitar Apoio</a></li>
-                                <li><a href="#" class="dropdown-item">Consultar Apoio</a></li>
+                                <li><a href="@Url.Action("ExtratoApoio","Apoio", new {id = @HttpContextAccessor.HttpContext.Session.GetString("userId"), area = "Socio"})" class="dropdown-item">Consultar Apoio</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -63,54 +63,55 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Contactos</a>
+                            <a href="Socio/Contacto/Index" class="nav-link">Contactos</a>
+                        </li>
+                    </ul> 
+                    <!-- Right navbar links -->
+                    <ul class=" navbar-nav ml-auto">
+
+                        <!-- Notifications Dropdown Menu -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" href="#" style="width: 40px;">
+                                <i class="far fa-bell"></i>
+                                <span class="badge badge-warning navbar-badge">0</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                <span class="dropdown-header">0 Notificações</span>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-envelope mr-2"></i> Nenhuma notificação encontrada
+                                    <span class="float-right text-muted text-sm">3 mins</span> 
+                                </a>
+@*                                 <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-users mr-2"></i> 8 pedidos de amizade
+                                    <span class="float-right text-muted text-sm">12 hours</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-file mr-2"></i> 3 novas entradas
+                                    <span class="float-right text-muted text-sm">2 dias</span>
+                                </a> *@
+                                <div class="dropdown-divider"></div>
+                                @* <a href="#" class="dropdown-item dropdown-footer">Visualizar todas as notificações</a> *@
+                            </div>
+                        </li>
+                        <!--Menu de Login/Logout-->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" href="#">
+                                <i class="fas fa-user-tie"></i> @HttpContextAccessor.HttpContext.Session.GetString("nome")
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <a href="#" class="dropdown-item azul" title="Perfil"><i class="dw dw-user"></i>  Perfil</a>
+                                <form action="/Acesso/Logout" method="post">
+                                    <button class="dropdown-item" title="Sair" type="submit"><i class="dw dw-logout"></i> Sair</button>
+                                </form>
+                            </div>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Right navbar links -->
-                <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-                    
-                    <!-- Notifications Dropdown Menu -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="far fa-bell"></i>
-                            <span class="badge badge-warning navbar-badge">15</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <span class="dropdown-header">15 Notificações</span>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-envelope mr-2"></i> 4 novas mensagem
-                                <span class="float-right text-muted text-sm">3 mins</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-users mr-2"></i> 8 pedidos de amizade
-                                <span class="float-right text-muted text-sm">12 hours</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="fas fa-file mr-2"></i> 3 novas entradas
-                                <span class="float-right text-muted text-sm">2 dias</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item dropdown-footer">Visualizar todas as notificações</a>
-                        </div>
-                    </li> 
-                    <!--Menu de Login/Logout-->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-toggle="dropdown" href="#">
-                            <i class="fas fa-user-tie"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" role="menu">
-                            <a href="#" class="dropdown-item azul" title="Perfil"><i class="dw dw-user"></i>  Perfil</a>
-                            <form action="/Acesso/Logout" method="post">
-                                <button class="dropdown-item" title="Sair" type="submit"><i class="dw dw-logout"></i> Sair</button>
-                            </form>
-                        </div>
-                    </li>
-                </ul>
+               
             </div>
         </nav>
         <!-- /.navbar -->

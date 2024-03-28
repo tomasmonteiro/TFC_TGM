@@ -83,7 +83,7 @@
                     }
                     </li>
                     <li class="nav-item d-none d-sm-inline-block">
-                        <a href="#" class="nav-link">Contacto</a>
+                        <a href="/Contacto/Index" class="nav-link">Contacto</a>
                     </li>
                 </ul>
 
@@ -94,13 +94,13 @@
                     <li class="nav-item dropdown">
                         @await Component.InvokeAsync("Notificacoes")
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <span class="dropdown-item dropdown-header">9+ Notifications</span>
+                            <span class="dropdown-item dropdown-header">0 Notifications</span>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item">
-                                <i class="fas fa-envelope mr-2"></i> 4 new messages
+                            <i class="fas fa-envelope mr-2"></i> Nenhuma notificação encontrada
                                 <span class="float-right text-muted text-sm">3 mins</span>
                             </a>
-                            <div class="dropdown-divider"></div>
+@*                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item">
                                 <i class="fas fa-users mr-2"></i> 8 friend requests
                                 <span class="float-right text-muted text-sm">12 hours</span>
@@ -109,7 +109,7 @@
                             <a href="#" class="dropdown-item">
                                 <i class="fas fa-file mr-2"></i> 3 new reports
                                 <span class="float-right text-muted text-sm">2 days</span>
-                            </a>
+                            </a> *@
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                         </div>
@@ -181,7 +181,10 @@
                                     <li class="nav-item">
                                         <a href="#" onclick="pesquisarSocio()" class="nav-link">
                                             <i class="fas fa-search nav-icon"></i>
-                                            <p>Pesquisar</p>
+                                            <p>
+                                                Pesquisar
+                                            <span class="right badge badge-success">New</span>
+                                            </p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -198,18 +201,9 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-money-bill"></i>
-                                    <p>
-                                        Pagamento
-                                        <span class="right badge badge-success">New</span>
-                                    </p>
-                                </a>
-                            </li>
 
                             <li class="nav-item">
-                                <a href="#" class="nav-link active">
+                                <a href="#" class="nav-link nav-principal">
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>
                                         Apoio
@@ -233,7 +227,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="#" class="nav-link active">
+                                <a href="#" class="nav-link nav-principal">
                                     <i class="nav-icon fas fa-chart-pie"></i>
                                     <p>
                                         Dados estatíscos
@@ -255,7 +249,7 @@
                                             </a>
                                         </li>
                                     }
-                                <li class="nav-item">
+                                    <li class="nav-item">
                                         <a href="#" class="nav-link">
                                             <i class="fas fa-chart-bar nav-icon"></i>
                                             <p>Dados dos sócios</p>
@@ -265,6 +259,15 @@
                                         <a href="#" class="nav-link">
                                             <i class="fas fa-chart-area nav-icon"></i>
                                             <p>Outros dados</p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="/Pagamento/Index" class="nav-link">
+                                            <i class="nav-icon fas fa-money-bill"></i>
+                                            <p>
+                                                Pagamentos
+                                            </p>
                                         </a>
                                     </li>
                                

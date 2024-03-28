@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\SemAcesso\" />
     <Folder Include="wwwroot\vendors\images\" />
   </ItemGroup>
 

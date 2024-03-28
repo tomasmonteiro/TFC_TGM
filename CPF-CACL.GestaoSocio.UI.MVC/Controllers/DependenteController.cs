@@ -2,11 +2,13 @@
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
+using CPF_CACL.GestaoSocio.UI.MVC.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
+    [Autorizacao("Admin", "Vogal", "Secretario", "Tesoureiro")]
     public class DependenteController : BaseController
     {
         private readonly IRelacaoAppService _relacaoAppService;

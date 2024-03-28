@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 {
-	[Autorizacao("Admin", "Presidente", "Tesoureiro", "Secretario", "Vogal")]
+	[Autorizacao("Admin", "Presidente", "Tesoureiro", "Secretario")]
 	public class DespesaController : BaseController
 	{
 		private readonly IDespesaAppService _despesaAppService;
