@@ -74,5 +74,9 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Socio.Controllers
             return View();
         }
 
+        public IActionResult Solicitar()
+        {
+            return View();
+        }
     }
 }

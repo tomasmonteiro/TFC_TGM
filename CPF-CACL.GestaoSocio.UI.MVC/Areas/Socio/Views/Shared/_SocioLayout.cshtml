@@ -51,8 +51,9 @@
                         <li class="nav-item dropdown">
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Área Administrativa</a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a href="#" class="dropdown-item">Solicitar Apoio</a></li>
+                                <li><a href="/Socio/Apoio/Solicitar" class="dropdown-item">Solicitar Apoio</a></li>
                                 <li><a href="@Url.Action("ExtratoApoio","Apoio", new {id = @HttpContextAccessor.HttpContext.Session.GetString("userId"), area = "Socio"})" class="dropdown-item">Consultar Apoio</a></li>
+                                <li><a href="/Socio/Declaracao/Solicitar" class="dropdown-item">Solicitar Declaração</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">

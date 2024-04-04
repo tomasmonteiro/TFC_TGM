@@ -31,89 +31,139 @@
             </div>
         </div>
 
-        <div class="col-md-12 col-sm-12 " style="padding-right: 0px !important; margin-bottom: 5px; padding-left: 0 !important;">
-            <div class="card-box height-100-p overflow-hidden">
-                <div class="profile-tab height-100-p">
-                    <div class="tab height-100-p">
-                        <ul class="nav nav-tabs customtab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link cabecalho-sessao" data-toggle="tab" href="#dadosDoApoio" role="tab" aria-selected="true">DADOS DO APOIO</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active" id="dadosDoApoio" role="tabpanel">
-                                <div class="pd-20">
-                                    <div class="container pd-0">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-6 col-md-4 espaco-input">
-                                                <input type="hidden" id="socioId" value="@ViewBag.Socio.Id" />
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    <img class="profile-user-img img-fluid img-circle"
+                                         src="~/@ViewBag.FotoSocio"
+                                         alt="Foto do sócio">
+                                </div>
 
-                                                <input type="hidden" id="usuarioId" value="@HttpContextAccessor.HttpContext.Session.GetString("userId")" />
+                                <h3 class="profile-username text-center">@ViewBag.NomeSocio</h3>
 
-                                                <input type="hidden" id="valorCapital"/>
+                                <p class="text-muted text-center">@ViewBag.CategoriaSocio</p>
 
-                                                <label class="control-label">Tipo de Benefício</label>
-                                                <select id="tipoBeneficio" class="form-control">
-                                                    <option>..Selecione um Tipo de Benefício..</option>
-                                                    @foreach (var item in ViewBag.TiposBeneficio)
-                                                    {
-                                                        <option value="@item.Id">@item.Nome</option>
-                                                    }
-                                                </select>
+                                 <ul class="list-group list-group-unbordered mb-3">
+                                    <li class="list-group-item">
+                                        <span>Código: </span> <b class="float-right">@ViewBag.CodigoSocio</b>
+                                    </li>
+                                </ul>
+
+                                <strong><i class="fas fa-map-marker-alt mr-1"></i> Endereço: </strong>
+
+                                <p class="text-muted">@ViewBag.EnderecoSocio, @ViewBag.BairroSocio</p>
+
+                                <hr>
+
+         @*                        <strong><i class="fas  fa-phone-alt mr-1"></i> Telefone: </strong>
+
+                                <p class="text-muted">@ViewBag.TelefoneSocio</p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-envelope mr-1"></i> Email: </strong>
+
+                                <p class="text-muted">@ViewBag.EmailSocio</p>
+
+                                <hr> *@
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30 " style="padding-right: 0px !important; margin-bottom: 5px; padding-left: 0 !important;">
+                        <div class="card-box height-100-p overflow-hidden">
+                            <div class="profile-tab height-100-p">
+                                <div class="tab height-100-p">
+                                    <ul class="nav nav-tabs customtab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link cabecalho-sessao" data-toggle="tab" href="#dadosDoApoio" role="tab" aria-selected="true">DADOS DO APOIO</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="dadosDoApoio" role="tabpanel">
+                                            <div class="pd-20">
+                                                <div class="container pd-0">
+                                                    <div class="row">
+                                                        <div class="col-12 col-sm-6 col-md-4 espaco-input">
+                                                            <input type="hidden" id="socioId" value="@ViewBag.Socio.Id" />
+
+                                                            <input type="hidden" id="usuarioId" value="@HttpContextAccessor.HttpContext.Session.GetString("userId")" />
+
+                                                            <input type="hidden" id="valorCapital" />
+
+                                                            <label class="control-label">Tipo de Benefício</label>
+                                                            <select id="tipoBeneficio" class="form-control">
+                                                                <option>..Selecione um Tipo de Benefício..</option>
+                                                                @foreach (var item in ViewBag.TiposBeneficio)
+                                                                {
+                                                                    <option value="@item.Id">@item.Nome</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-12 col-sm-6 col-md-4 espaco-input">
+                                                            <label class="control-label required"> Benefício </label>
+                                                            <select id="beneficioId" class="form-control">
+                                                                <option>..Selecione um Benefício..</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-12 col-sm-6 col-md-4 espaco-input">
+                                                            <label class="control-label">Fornecedor</label>
+                                                            <select id="fornecedor" class="form-control">
+                                                                <option>..Selecione um Fornecedor..</option>
+                                                                @foreach (var item in ViewBag.Fornecedor)
+                                                                {
+                                                                    <option value="@item.Id">@item.Nome</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-12 col-sm-6 col-md-4 espaco-input">
+                                                            <label asp-for="Descricao" class="control-label required"> Descrição do apoio </label>
+                                                            <textarea asp-for="Descricao" id="Descricao" class="form-control required" data-val-required=""></textarea>
+                                                            <span asp-validation-for="Descricao" class="text-danger"></span>
+                                                        </div>
+
+
+                                                        <div class="col-12 col-sm-6 col-md-4 espaco-input">
+                                                            <label asp-for="DataApoio" class="control-label required"> Data do Apoio </label>
+                                                            <input type="date" asp-for="DataApoio" value="@DateTime.Now.ToString("dd-MM-yyyy")" id="DataApoio" class="form-control" data-val-required="" />
+                                                            <span asp-validation-for="DataApoio" class="text-danger"></span>
+                                                        </div>
+
+                                                        <div class="col-12 col-sm-6 col-md-4 espaco-input">
+                                                            <label asp-for="Valor" class="control-label">Valor (AKZ) </label>
+                                                            <input asp-for="Valor" type="number" id="Valor" class="form-control" />
+                                                            <span asp-validation-for="Valor" class="text-danger"></span>
+                                                        </div>
+
+
+
+                                                        <div class="col-12 col-md-12 col-lg-12">
+                                                            <button type="button" id="btnAdicionar" class="btn btn-success float-right waves-effect"><i class="fas fa-plus"></i> Adicionar</button>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-12 col-sm-6 col-md-4 espaco-input">
-                                                <label  class="control-label required"> Benefício </label>
-                                                <select id="beneficioId" class="form-control">
-                                                    <option>..Selecione um Benefício..</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-12 col-sm-6 col-md-4 espaco-input">
-                                                <label class="control-label">Fornecedor</label>
-                                                <select id="fornecedor" class="form-control">
-                                                    <option>..Selecione um Fornecedor..</option>
-                                                    @foreach (var item in ViewBag.Fornecedor)
-                                                    {
-                                                        <option value="@item.Id">@item.Nome</option>
-                                                    }
-                                                </select>
-                                            </div>
-
-                                            <div class="col-12 col-sm-6 col-md-4 espaco-input">
-                                                <label asp-for="Descricao" class="control-label required"> Descrição do apoio </label>
-                                                <textarea  asp-for="Descricao" id="Descricao" class="form-control required" data-val-required="" ></textarea>
-                                                <span asp-validation-for="Descricao" class="text-danger"></span>
-                                            </div>
-
-
-                                            <div class="col-12 col-sm-6 col-md-4 espaco-input">
-                                                <label asp-for="DataApoio" class="control-label required"> Data do Apoio </label>
-                                                <input type="date" asp-for="DataApoio" value="@DateTime.Now.ToString("dd-MM-yyyy")" id="DataApoio" class="form-control" data-val-required="" />
-                                                <span asp-validation-for="DataApoio" class="text-danger"></span>
-                                            </div>
-
-                                            <div class="col-12 col-sm-6 col-md-4 espaco-input">
-                                                <label asp-for="Valor" class="control-label">Valor (AKZ) </label>
-                                                <input asp-for="Valor" type="number" id="Valor" class="form-control" />
-                                                <span asp-validation-for="Valor" class="text-danger"></span>
-                                            </div>
-
-
-
-                                            <div class="col-12 col-md-12 col-lg-12">
-                                                <button type="button" id="btnAdicionar" class="btn btn-success float-right waves-effect"><i class="fas fa-plus"></i> Adicionar</button>
-                                            </div>
-
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
-        </div>
+        </section>
 
+       
         <div class="col-md-12 col-sm-12 " style="padding-right: 0px !important; margin-bottom: 5px; padding-left: 0 !important;">
             <div class="row espaco">
                 <div class="col-md-12">

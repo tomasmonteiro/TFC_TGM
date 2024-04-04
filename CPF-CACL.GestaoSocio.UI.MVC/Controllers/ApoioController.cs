@@ -19,7 +19,9 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         private readonly ISocioService _socioService;
         private readonly IFornecedorAppService _fornecedorAppService;
         private readonly IBeneficioRepository _beneficioRepository;
-        public ApoioController(IFornecedorAppService fornecedorAppService, IBeneficioRepository beneficioRepository, IApoioAppService apoioAppService, ITipoBeneficioRepository tipoBeneficioRepository, ISocioAppService socioAppService, ISocioService socioService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+        private readonly ICategoriaSocioRepository _categoriaSocioRepository;
+        private readonly IBairroRepository _bairroRepository;
+        public ApoioController(IFornecedorAppService fornecedorAppService, ICategoriaSocioRepository categoriaSocioRepository, IBeneficioRepository beneficioRepository, IBairroRepository bairroRepository, IApoioAppService apoioAppService, ITipoBeneficioRepository tipoBeneficioRepository, ISocioAppService socioAppService, ISocioService socioService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _apoioAppService = apoioAppService;
             _tipoBeneficioRepository = tipoBeneficioRepository;
@@ -27,6 +29,8 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             _beneficioRepository = beneficioRepository;
             _fornecedorAppService = fornecedorAppService;
             _socioService = socioService;
+            _categoriaSocioRepository = categoriaSocioRepository;
+            _bairroRepository = bairroRepository;
         }
 
         public IActionResult Index()
@@ -48,6 +52,18 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             var socio = _socioAppService.BuscarPorId(id);
             ViewBag.Socio = socio;
 
+            ViewBag.CodigoSocio = socio.Cod;
+            ViewBag.FotoSocio = socio.CaminhoFoto;
+            ViewBag.NomeSocio = socio.Nome;
+            ViewBag.EnderecoSocio = socio.Endereco;
+            ViewBag.TelefoneSocio = socio.Telefone;
+            ViewBag.EmailSocio = socio.Email;
+
+            var bairro = _bairroRepository.GetById(socio.BairroId);
+            ViewBag.BairroSocio = bairro.Nome;
+
+            var categoria = _categoriaSocioRepository.GetById(socio.CategoriaSocioId);
+            ViewBag.CategoriaSocio = categoria.Nome;
 
             var viewModel = new BeneficioViewModel();
 
