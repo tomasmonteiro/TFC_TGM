@@ -9,8 +9,8 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
     [Autorizacao("Admin", "Vogal", "Secretario", "Tesoureiro", "Presidente")]
     public class ItemController : BaseController
     {
-        private readonly IItemAppService _itemAppService;
-        public ItemController(IItemAppService itemAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+        private readonly IEmolumentoAppService _itemAppService;
+        public ItemController(IEmolumentoAppService itemAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _itemAppService = itemAppService;
         }

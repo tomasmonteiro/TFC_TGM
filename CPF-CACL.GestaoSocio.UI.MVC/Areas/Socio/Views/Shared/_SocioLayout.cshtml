@@ -11,20 +11,24 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
-
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <!-- Font Awesome -->
     <link rel="stylesheet" type="text/css" href="~/css/fontawesome/css/all.min.css" />
-    <!--Vendor-->
-    <link rel="stylesheet" type="text/css" href="~/vendors/styles/icon-font.css" />
-    <!-- Ionicons -->
     <link href="~/dist/css/css/ionicons.min.css" rel="stylesheet" />
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link href="~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+
+    <!--Vendor-->
+    <link href="~/vendors/styles/icon-font.min.css" rel="stylesheet" />
+    <link href="~/vendors/styles/core.css" rel="stylesheet" />
+    <link href="~/vendors/styles/style.css" rel="stylesheet" />
+
     <!--SweetAlert2-->
     <link rel="stylesheet" type="text/css" href="~/plugins/sweetalert2/sweetalert2.min.css" />
+
     <!-- Outros estilos -->
     <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
     <link href="~/css/datatables.min.css" rel="stylesheet" />
+    <link href="~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
 
 </head>
 <body class="hold-transition layout-top-nav">
@@ -141,15 +145,18 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
-    <!-- ./wrapper -->
-    <!-- REQUIRED SCRIPTS -->
-    <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!--Trabalhar com as notificação-->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <script src="~/plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="../../dist/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="../../dist/js/demo.js"></script>
+    <script src="~/dist/js/adminlte.js"></script>
+
+    <script src="~/js/datatables.min.js"></script>
+
+
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/plugins/jquery/jquery.validate.min.js"></script>
+    <script src="~/plugins/jquery/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/plugins/jquery/messages_pt_pt.js"></script>
 </body>
 </html>

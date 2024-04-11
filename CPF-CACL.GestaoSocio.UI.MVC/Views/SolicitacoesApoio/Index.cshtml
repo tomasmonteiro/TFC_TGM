@@ -1,0 +1,129 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+@using CPF_CACL.GestaoSocio.Domain.Enums;
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.SolicitacaoApoioViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Solicitações de Apoio";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="container d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev icone"><i class="icon ion ion-android-apps icone" style="font-size: 32px;"></i> Listagem de solicitações de apoio</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Tipo de Apoio</th>
+                                    <th scope="col">Sócio</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Registo</th>
+                                    <th scope="col">Acão</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var solicitacao in Model)
+                                {
+                                    <tr role="row" class="">
+                                        <td class="table-plus sorting_1 text-left" tabindex="0">@solicitacao.Mensagem</td>
+                                        <td class="table-plus sorting_1 text-left" tabindex="0">@solicitacao.NomeTipoApoio</td>
+                                        <td class="table-plus sorting_1 text-left" tabindex="0">@solicitacao.NomeSocio</td>
+                                        <td class="table-plus sorting_1 text-left" tabindex="0">@solicitacao.EstadoSolicitacao</td>
+                                        <td class="table-plus sorting_1 text-left" tabindex="0">@solicitacao.DataCriacao.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a class="btn btn-link text-left font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                    <i class="dw dw-more"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+
+                                                    <a class="dropdown-item" href="/SolicitacoesApoio/Detalhes/@solicitacao.Id"><i class="dw dw-eye"></i> Detalhes</a>
+                                                    @if (HttpContextAccessor.HttpContext.Session.GetString("perfil") == EPerfilUsuario.Presidente.ToString())
+                                                    {
+                                                        <a class="dropdown-item" href="#" onclick="AprovarPedidoApoio('@solicitacao.Id')" ><i class="fas fa-check"></i> Aprovar</a>
+                                                    }
+                                                    <a class="dropdown-item" href="/Apoio/Criar/@solicitacao.SocioId"><i class="fas fa-hands-helping"></i> Apoiar</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Script-->
+@section Scripts{
+    <script>
+        ///----Adicionar--
+
+        function AtribuirApoio() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/SolicitacoesApoio/Solicitar",
+                data: {
+                    id: $("#status").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        NotificarErro("error", "Erro!", result);
+                        return false;
+                    }
+                    $('#loading-overlay').hide();
+                    Swal.fire({
+                        icon: "success",
+                        title: "Sucesso",
+                        text: result,
+                        showConfirmButton: false,
+                        timer: 2500
+                    })
+                    $("#nome").val("");
+                },
+                error: function (result) {
+                    NotificarErro("error", "Erro!", result);
+                }
+            });
+        }
+
+
+    </script>
+}
+
+

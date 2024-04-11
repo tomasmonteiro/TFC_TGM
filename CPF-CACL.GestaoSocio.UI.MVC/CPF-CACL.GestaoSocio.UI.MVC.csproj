@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <Folder Include="Views\SemAcesso\" />
+    <Folder Include="wwwroot\img\Anexos\" />
     <Folder Include="wwwroot\vendors\images\" />
   </ItemGroup>
 

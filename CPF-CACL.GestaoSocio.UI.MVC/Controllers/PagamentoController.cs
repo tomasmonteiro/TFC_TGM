@@ -19,11 +19,11 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         private readonly ISaldoService _saldoService;
         private readonly IPagamentoAppService _pagamentoAppService;
         private readonly ITipoPagamentoRepository _tipoPagamentoRepository;
-        private readonly IItemAppService _itemAppService;
-        private readonly IItemPagamentoAppService _itemPagamentoAppService;
-		private readonly IItemPagamentoRepository _itemPagamentoRepository;
+        private readonly IEmolumentoAppService _itemAppService;
+        private readonly IPagamentoEmolumentoAppService _itemPagamentoAppService;
+		private readonly IPagamentoEmolumentoRepository _itemPagamentoRepository;
 		private readonly ISocioAppService _socioAppService;
-        public PagamentoController(ITipoPagamentoRepository tipoPagamentoRepository, IItemPagamentoRepository itemPagamentoRepository, IPagamentoAppService pagamentoAppService, ISaldoService saldoService, IItemPagamentoAppService itemPagamentoAppService, IItemAppService itemAppService, ISaldoAppService saldoAppService, ISocioAppService socioAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+        public PagamentoController(ITipoPagamentoRepository tipoPagamentoRepository, IPagamentoEmolumentoRepository itemPagamentoRepository, IPagamentoAppService pagamentoAppService, ISaldoService saldoService, IPagamentoEmolumentoAppService itemPagamentoAppService, IEmolumentoAppService itemAppService, ISaldoAppService saldoAppService, ISocioAppService socioAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _tipoPagamentoRepository = tipoPagamentoRepository;
             _saldoAppService = saldoAppService;
@@ -145,7 +145,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             IEnumerable<SaldoViewModel> saldos = _saldoAppService.BuscarDisponivel(id);
             ViewBag.Saldo = saldos;
 
-            IEnumerable<ItemViewModel> itens = _itemAppService.BuscarItemPorSocio(id);
+            IEnumerable<EmolumentoViewModel> itens = _itemAppService.BuscarItemPorSocio(id);
             ViewBag.Itens = itens;
 
             var socio = _socioAppService.BuscarPorId(id);
@@ -171,7 +171,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 		{
 			try
 			{
-                var itemPagamento = new ItemPagamentoViewModel
+                var itemPagamento = new PagamentoEmolumentoViewModel
                 {
                     DataInsercao = DataInsercao,
                     PagamentoId = PagamentoId,

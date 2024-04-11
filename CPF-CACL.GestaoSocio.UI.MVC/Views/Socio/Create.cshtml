@@ -57,8 +57,8 @@
                                             <div class="col-12 col-sm-6 col-md-3 espaco-input">
                                                 <label asp-for="Genero" class="control-label required"> Genero </label>
                                                 <select asp-for="Genero" id="Genero" class="form-control" data-val-required="">
-                                                    <option>Feminino</option>
-                                                    <option>Masculino</option>
+                                                    <option>F</option>
+                                                    <option>M</option>
                                                 </select>
                                                 <span asp-validation-for="Genero" class="text-danger"></span>
                                             </div>
@@ -92,16 +92,6 @@
                                                 <span asp-validation-for="Habilitacoes" class="text-danger"></span>
                                             </div>
 
-                                            <div class="col-12 col-sm-6 col-md-3 espaco-input">
-                                                <label asp-for="Nacionalidade" class="control-label required"> Nacionalidade </label>
-                                                <input asp-for="Nacionalidade" id="Nacionalidade" class="form-control" data-val-required="" />
-                                                <span asp-validation-for="Nacionalidade" class="text-danger"></span>
-                                            </div>
-                                            <div class="col-12 col-sm-6 col-md-6 espaco-input">
-                                                <label asp-for="Profissao" class="control-label"> Profissão </label>
-                                                <input asp-for="Profissao" id="Profissao" class="form-control" />
-                                                <span asp-validation-for="Profissao" class="text-danger"></span>
-                                            </div>
                                             <div class="col-12 col-sm-6 col-md-6 espaco-input">
                                                 <label asp-for="Foto" name="Foto" class="control-label imagem-upload">Adicionar Foto </label>
                                                 <input asp-for="Foto" type="file" accept=".jpg, .jpeg, .png" id="Foto" class="form-control btn-file" />

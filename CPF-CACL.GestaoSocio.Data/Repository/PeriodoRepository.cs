@@ -9,9 +9,9 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
     public class PeriodoRepository : RepositoryBase<Periodo>, IPeriodoRepository
     {
         private readonly GSContext _gsContext;
-        private readonly IItemRepository _itemRepository;
+        private readonly IEmolumentoRepository _itemRepository;
         int numeroItens = 0;
-        public PeriodoRepository(IItemRepository itemRepository, GSContext gsContext) : base(gsContext)
+        public PeriodoRepository(IEmolumentoRepository itemRepository, GSContext gsContext) : base(gsContext)
         {
             _gsContext = gsContext;
             _itemRepository = itemRepository;
@@ -36,9 +36,9 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
             foreach (var socio in sociosAtivos)
             {
                 var categoriaSocio = _gsContext.CategoriaSocio.Find(socio.CategoriaSocioId);
-                var novoItem = new Item
+                var novoItem = new Emolumento
                 {
-                    Cod = GerarDodigoItem("Q"),
+                    Codigo = GerarDodigoItem("Q"),
                     Descricao = "Quota",
                     Valor = categoriaSocio.Quota,
                     DataVencimento = novoPeriodo.UltimoDiaUtil,
@@ -81,9 +81,9 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
         public string ConsultarUltimoCodigo(string tipoEntidade, int anoAtual)
         {
             var ultimoCodigo = _gsContext.Item
-                .Where(p => p.Cod.StartsWith($"{tipoEntidade}{anoAtual}"))
-                .OrderByDescending(p => p.Cod)
-                .Select(p => p.Cod)
+                .Where(p => p.Codigo.StartsWith($"{tipoEntidade}{anoAtual}"))
+                .OrderByDescending(p => p.Codigo)
+                .Select(p => p.Codigo)
                 .FirstOrDefault();
 
             return ultimoCodigo;
@@ -91,7 +91,7 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
 
         public Periodo BuscarPorCod(string codigo)
         {
-            return _gsContext.Periodo.Where(p => p.Cod == codigo).FirstOrDefault();
+            return _gsContext.Periodo.Where(p => p.Codigo == codigo).FirstOrDefault();
         }
 
         public IEnumerable<Periodo> BuscarTodos()

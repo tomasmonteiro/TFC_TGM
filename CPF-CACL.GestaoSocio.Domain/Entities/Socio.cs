@@ -4,11 +4,9 @@ namespace CPF_CACL.GestaoSocio.Domain.Entities
 {
     public class Socio : Pessoa
     {
-        public string Cod { get; set; }
+        public string Codigo { get; set; }
         public EEstadoCivil EstadoCivil { get; set; }
-        public string? Profissao { get; set; }
         public string? Habilitacoes { get; set; }
-        public string Nacionalidade { get; set; }
         public string NomeDoPai { get; set; }
         public string NomeDaMae { get; set; }
         public string? LocalDeTrabalho { get; set; }
@@ -27,9 +25,11 @@ namespace CPF_CACL.GestaoSocio.Domain.Entities
         public ICollection<Pagamento> Pagamentos { get; set; }
         public ICollection<PedidoApoio> PedidoApoios { get; set; }
         public ICollection<ProjectoSocio> ProjectoSocios { get; set; }
-        public ICollection<Item> Items { get; set; }
+        public ICollection<Emolumento> Items { get; set; }
         public ICollection<Saldo> Saldo { get; set; }
         public ICollection<UsuarioSocio> UsuarioSocios { get; set; }
+        public ICollection<SolicitacaoDeclaracao> SolicitacaoDeclaracoes { get; set; }
+        public ICollection<SolicitacaoApoio> SolicitacaoApoios { get; set; }
 
 
     }

@@ -62,7 +62,7 @@
                                     foreach (FornecedorViewModel fornecedor in Model)
                                     {
                                         <tr role="row" class="">
-                                            <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.Cod</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.Codigo</td>
                                             <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.Nome</td>
                                             <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.NIF</td>
                                             <td class="table-plus sorting_1 text-left" tabindex="0">@fornecedor.Endereco</td>
@@ -88,7 +88,7 @@
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                         <a class="dropdown-item" href="/Admin/Fornecedor/Detalhes/@fornecedor.Id"><i class="dw dw-eye"></i> Detalhes</a>
-                                                        <a class="dropdown-item" href="#" onclick="SetFornecedorEditar('@fornecedor.Id', '@fornecedor.Cod', '@fornecedor.Nome', '@fornecedor.NIF', '@fornecedor.Endereco', '@fornecedor.Telefone', '@fornecedor.Email', '@fornecedor.DataCriacao', '@fornecedor.Status')" data-toggle="modal" data-target="#editarFornecedor"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetFornecedorEditar('@fornecedor.Id', '@fornecedor.Codigo', '@fornecedor.Nome', '@fornecedor.NIF', '@fornecedor.Endereco', '@fornecedor.Telefone', '@fornecedor.Email', '@fornecedor.DataCriacao', '@fornecedor.Status')" data-toggle="modal" data-target="#editarFornecedor"><i class="dw dw-edit2"></i> Editar</a>
                                                         <a class="dropdown-item" href="#" onclick="SetFornecedorInativar('@fornecedor.Id', '@fornecedor.Nome')" data-toggle="modal" data-target="#inativarFornecedor"><i class="dw dw-ban"></i> Inativar</a>
                                                         <a class="dropdown-item" href="#" onclick="SetFornecedorEliminar('@fornecedor.Id', '@fornecedor.Nome')" data-toggle="modal" data-target="#eliminarFornecedor"><i class="dw dw-delete-3"></i> Eliminar</a>
                                                     </div>

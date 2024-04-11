@@ -10,10 +10,10 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
     [Autorizacao("Admin")]
     public class TipoItemController : BaseController
     {
-        private readonly ITipoItemRepository _tipoItemRepository;
-        private readonly ITipoItemAppService _tipoItemAppService;
+        private readonly ITipoEmolumentoRepository _tipoItemRepository;
+        private readonly ITipoEmolumentoAppService _tipoItemAppService;
         //
-        public TipoItemController(ITipoItemRepository tipoItemRepository, ITipoItemAppService tipoItemAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+        public TipoItemController(ITipoEmolumentoRepository tipoItemRepository, ITipoEmolumentoAppService tipoItemAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _tipoItemAppService = tipoItemAppService;
             _tipoItemRepository = tipoItemRepository;
@@ -35,13 +35,13 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // GET: TipoItemController/Create
         public ActionResult Criar()
         {
-            TipoItemViewModel tipoItem = new TipoItemViewModel();
+            TipoEmolumentoViewModel tipoItem = new TipoEmolumentoViewModel();
             return PartialView("Criar", tipoItem);
         }
 
         // POST: TipoItemController/Criar
         [HttpPost]
-        public ActionResult Criar(TipoItemViewModel tipoItem)
+        public ActionResult Criar(TipoEmolumentoViewModel tipoItem)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         {
             try
             {
-                var tipoItem = new TipoItemViewModel()
+                var tipoItem = new TipoEmolumentoViewModel()
                 {
                     Id = id,
                     Descricao = Descricao,

@@ -1,0 +1,44 @@
+﻿@model CPF_CACL.GestaoSocio.Aplication.ViewModel.TipoApoioViewModel
+
+
+<div class="modal fade" id="tipoApoio" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tipoApoioLabel">Criar Tipo de Apoio</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    
+                </div><div class="modal-body">
+                    @* <form asp-asp-controller="TipoPagamento" asp-action="Create" method="post"> *@
+                    <div class="form-group">
+                        <label for="nome">Tipo</label>
+                        <input type="text" asp-for="Tipo" class="form-control" placeholder="Digite o tipo de Apoio">
+                    </div>
+
+                    <br />
+                    <div class="">
+                        <input type="hidden" value="@DateTime.Now" id="dataCriacao">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="true" asp-for="Status" id="status">
+                    </div>
+
+                    <button type="button" onclick="AdicionarTipoApoio()" class="btn btn-success waves-effect">Adicionar</button>
+                    <a role="button" class="btn btn-link waves-effect" asp-controller="TipoApoio" asp-action="Index"> Cancelar</a>
+                    @* </form> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -39,11 +39,11 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("varchar(300)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("EstadoApoio")
                         .IsRequired()
-                        .HasColumnType("varchar(300)");
+                        .HasColumnType("varchar(9)");
 
                     b.Property<Guid>("SocioId")
                         .HasColumnType("uniqueidentifier");
@@ -83,7 +83,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -109,7 +109,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(40)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -171,7 +171,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(7)");
 
                     b.Property<decimal>("Quota")
                         .HasColumnType("smallmoney");
@@ -212,7 +212,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<Guid>("RelacaoId")
                         .HasColumnType("uniqueidentifier");
@@ -249,7 +249,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("EstadoDespesa")
                         .IsRequired()
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar(8)");
 
                     b.Property<Guid>("FornecedorId")
                         .HasColumnType("uniqueidentifier");
@@ -269,62 +269,13 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Despesa", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Fornecedor", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Emolumento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BairroId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Cod")
-                        .IsRequired()
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("varchar(300)");
-
-                    b.Property<string>("Endereco")
-                        .HasColumnType("varchar(300)");
-
-                    b.Property<string>("NIF")
-                        .HasColumnType("varchar(15)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("varchar(150)");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Telefone")
-                        .IsRequired()
-                        .HasColumnType("varchar(12)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BairroId");
-
-                    b.HasIndex("Cod")
-                        .IsUnique();
-
-                    b.ToTable("Fornecedor", (string)null);
-                });
-
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Item", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Cod")
+                    b.Property<string>("Codigo")
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
@@ -339,11 +290,11 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(5)");
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(9)");
 
                     b.Property<Guid>("PeriodoId")
                         .HasColumnType("uniqueidentifier");
@@ -362,7 +313,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Cod")
+                    b.HasIndex("Codigo")
                         .IsUnique();
 
                     b.HasIndex("PeriodoId");
@@ -371,7 +322,56 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.HasIndex("TipoItemId");
 
-                    b.ToTable("Item");
+                    b.ToTable("Emolumento", (string)null);
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Fornecedor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BairroId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Endereco")
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("NIF")
+                        .HasColumnType("varchar(15)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("varchar(60)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasColumnType("varchar(12)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BairroId");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
+
+                    b.ToTable("Fornecedor", (string)null);
                 });
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.ItemApoio", b =>
@@ -395,8 +395,8 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Property<Guid>("ForneceorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
+                    b.Property<byte>("Quantidade")
+                        .HasColumnType("tinyint");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -415,39 +415,6 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("ItemApoio", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.ItemPagamento", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("DataInsercao")
-                        .HasColumnType("datetime");
-
-                    b.Property<Guid>("ItemId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PagamentoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
-
-                    b.HasIndex("PagamentoId");
-
-                    b.ToTable("ItemPagamento");
-                });
-
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Municipio", b =>
                 {
                     b.Property<Guid>("Id")
@@ -462,7 +429,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -486,7 +453,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -509,15 +476,15 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<DateTime>("DataPagamento")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("Recibo")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<Guid>("SocioId")
                         .HasColumnType("uniqueidentifier");
@@ -548,6 +515,39 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("Pagamento", (string)null);
                 });
 
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.PagamentoEmolumento", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DataInsercao")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PagamentoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("PagamentoId");
+
+                    b.ToTable("PagamentoEmolumento", (string)null);
+                });
+
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.PedidoApoio", b =>
                 {
                     b.Property<Guid>("Id")
@@ -561,11 +561,11 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("varchar(300)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("EstadoPedido")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<Guid>("SocioId")
                         .HasColumnType("uniqueidentifier");
@@ -594,7 +594,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(13)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -613,7 +613,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Property<int>("Ano")
                         .HasColumnType("int");
 
-                    b.Property<string>("Cod")
+                    b.Property<string>("Codigo")
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
@@ -631,7 +631,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar(7)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -641,7 +641,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Cod")
+                    b.HasIndex("Codigo")
                         .IsUnique();
 
                     b.ToTable("Periodo");
@@ -664,10 +664,10 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(50)");
 
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
+                    b.Property<byte>("Quantidade")
+                        .HasColumnType("tinyint");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -689,7 +689,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataAtribuicao")
-                        .HasColumnType("datetime");
+                        .HasColumnType("date");
 
                     b.Property<DateTime?>("DataAtualizacao")
                         .HasColumnType("datetime");
@@ -699,7 +699,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<Guid>("ProjectoId")
                         .HasColumnType("uniqueidentifier");
@@ -733,7 +733,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("varchar(7)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -760,14 +760,14 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<Guid>("PagamentoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Recibo")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<Guid>("SocioId")
                         .HasColumnType("uniqueidentifier");
@@ -800,12 +800,12 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CaminhoFoto")
-                        .HasColumnType("varchar(1000)");
+                        .HasColumnType("varchar(200)");
 
                     b.Property<Guid>("CategoriaSocioId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Cod")
+                    b.Property<string>("Codigo")
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
@@ -819,57 +819,49 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("Departamento")
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("varchar(300)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Endereco")
-                        .HasColumnType("varchar(300)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("EstadoCivil")
                         .IsRequired()
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("EstadoSocio")
                         .IsRequired()
-                        .HasColumnType("varchar(10)")
-                        .HasColumnName("EstadoSocio");
+                        .HasColumnType("varchar(8)");
 
                     b.Property<string>("Funcao")
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("Genero")
                         .IsRequired()
-                        .HasColumnType("varchar(9)");
+                        .HasColumnType("char(1)");
 
                     b.Property<string>("Habilitacoes")
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar(13)");
 
                     b.Property<string>("LocalDeTrabalho")
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("Nacionalidade")
-                        .IsRequired()
                         .HasColumnType("varchar(20)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("NomeDaMae")
                         .IsRequired()
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("NomeDoPai")
                         .IsRequired()
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<Guid>("OrganismoId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Profissao")
-                        .HasColumnType("varchar(100)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -884,12 +876,110 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.HasIndex("CategoriaSocioId");
 
-                    b.HasIndex("Cod")
+                    b.HasIndex("Codigo")
                         .IsUnique();
 
                     b.HasIndex("OrganismoId");
 
                     b.ToTable("Socio", (string)null);
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.SolicitacaoApoio", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("EstadoSolicitacao")
+                        .IsRequired()
+                        .HasColumnType("varchar(9)");
+
+                    b.Property<string>("Mensagem")
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<Guid>("SocioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("TipoApoioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UrlAnexo")
+                        .HasColumnType("varchar(70)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SocioId");
+
+                    b.HasIndex("TipoApoioId");
+
+                    b.ToTable("SolicitacaoApoio", (string)null);
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.SolicitacaoDeclaracao", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("EstadoSolicitacao")
+                        .IsRequired()
+                        .HasColumnType("varchar(9)");
+
+                    b.Property<Guid>("SocioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("TipoDeclaracaoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SocioId");
+
+                    b.HasIndex("TipoDeclaracaoId");
+
+                    b.ToTable("SolicitacaoDeclaracao", (string)null);
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoApoio", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoApoio", (string)null);
                 });
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoBeneficio", b =>
@@ -916,7 +1006,31 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.ToTable("TipoBeneficio", (string)null);
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoItem", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoDeclaracao", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasColumnType("varchar(25)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoDeclaracao", (string)null);
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoEmolumento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -930,14 +1044,14 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(5)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoItem", (string)null);
+                    b.ToTable("TipoEmolumento", (string)null);
                 });
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoPagamento", b =>
@@ -954,7 +1068,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(17)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -1001,19 +1115,19 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Email")
-                        .HasColumnType("varchar(300)");
+                        .HasColumnType("varchar(60)");
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Perfil")
                         .IsRequired()
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("varchar(13)");
 
                     b.Property<Guid?>("PerfilUsuarioId")
                         .HasColumnType("uniqueidentifier");
@@ -1160,18 +1274,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Fornecedor");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Fornecedor", b =>
-                {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Bairro", "Bairros")
-                        .WithMany("Fornecedores")
-                        .HasForeignKey("BairroId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Bairros");
-                });
-
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Item", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Emolumento", b =>
                 {
                     b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Periodo", "Periodo")
                         .WithMany("Items")
@@ -1185,7 +1288,7 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.TipoItem", "TipoItem")
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.TipoEmolumento", "TipoItem")
                         .WithMany("Items")
                         .HasForeignKey("TipoItemId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1196,6 +1299,17 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Socio");
 
                     b.Navigation("TipoItem");
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Fornecedor", b =>
+                {
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Bairro", "Bairros")
+                        .WithMany("Fornecedores")
+                        .HasForeignKey("BairroId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Bairros");
                 });
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.ItemApoio", b =>
@@ -1225,25 +1339,6 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Fornecedor");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.ItemPagamento", b =>
-                {
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Item", "Item")
-                        .WithMany("ItemPagamnetos")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Pagamento", "Pagamento")
-                        .WithMany("ItemPagamnetos")
-                        .HasForeignKey("PagamentoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Item");
-
-                    b.Navigation("Pagamento");
-                });
-
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Pagamento", b =>
                 {
                     b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Socio", "Socio")
@@ -1265,6 +1360,25 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Socio");
 
                     b.Navigation("TipoPagamento");
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.PagamentoEmolumento", b =>
+                {
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Emolumento", "Item")
+                        .WithMany("ItemPagamnetos")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Pagamento", "Pagamento")
+                        .WithMany("ItemPagamnetos")
+                        .HasForeignKey("PagamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Pagamento");
                 });
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.PedidoApoio", b =>
@@ -1354,6 +1468,44 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Organismo");
                 });
 
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.SolicitacaoApoio", b =>
+                {
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Socio", "Socio")
+                        .WithMany("SolicitacaoApoios")
+                        .HasForeignKey("SocioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.TipoApoio", "TipoApoio")
+                        .WithMany("SolicitacaoApoios")
+                        .HasForeignKey("TipoApoioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Socio");
+
+                    b.Navigation("TipoApoio");
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.SolicitacaoDeclaracao", b =>
+                {
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.Socio", "Socio")
+                        .WithMany("SolicitacaoDeclaracoes")
+                        .HasForeignKey("SocioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.TipoDeclaracao", "TipoDeclaracao")
+                        .WithMany("SolicitacaoDeclaracoes")
+                        .HasForeignKey("TipoDeclaracaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Socio");
+
+                    b.Navigation("TipoDeclaracao");
+                });
+
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Usuario", b =>
                 {
                     b.HasOne("CPF_CACL.GestaoSocio.Domain.Entities.PerfilUsuario", null)
@@ -1408,16 +1560,16 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Socios");
                 });
 
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Emolumento", b =>
+                {
+                    b.Navigation("ItemPagamnetos");
+                });
+
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Fornecedor", b =>
                 {
                     b.Navigation("Despesas");
 
                     b.Navigation("ItemApoios");
-                });
-
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Item", b =>
-                {
-                    b.Navigation("ItemPagamnetos");
                 });
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.Municipio", b =>
@@ -1473,7 +1625,16 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
 
                     b.Navigation("Saldo");
 
+                    b.Navigation("SolicitacaoApoios");
+
+                    b.Navigation("SolicitacaoDeclaracoes");
+
                     b.Navigation("UsuarioSocios");
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoApoio", b =>
+                {
+                    b.Navigation("SolicitacaoApoios");
                 });
 
             modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoBeneficio", b =>
@@ -1481,7 +1642,12 @@ namespace CPF_CACL.GestaoSocio.Data.Migrations
                     b.Navigation("Beneficios");
                 });
 
-            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoItem", b =>
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoDeclaracao", b =>
+                {
+                    b.Navigation("SolicitacaoDeclaracoes");
+                });
+
+            modelBuilder.Entity("CPF_CACL.GestaoSocio.Domain.Entities.TipoEmolumento", b =>
                 {
                     b.Navigation("Items");
                 });

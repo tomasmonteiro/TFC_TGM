@@ -19,11 +19,11 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
             CreateMap<DependenteViewModel, Dependente>().ReverseMap();
             CreateMap<RelacaoViewModel, Relacao>().ReverseMap();
 
-            CreateMap<ItemViewModel, Item>().ReverseMap();
-            CreateMap<TipoItemViewModel, TipoItem>().ReverseMap();
+            CreateMap<EmolumentoViewModel, Emolumento>().ReverseMap();
+            CreateMap<TipoEmolumentoViewModel, TipoEmolumento>().ReverseMap();
             CreateMap<PagamentoViewModel, Pagamento>().ReverseMap();
             CreateMap<PeriodoViewModel, Periodo>().ReverseMap();
-            CreateMap<ItemPagamentoViewModel, ItemPagamento>().ReverseMap();
+            CreateMap<PagamentoEmolumentoViewModel, PagamentoEmolumento>().ReverseMap();
             CreateMap<SaldoViewModel, Saldo>().ReverseMap();
             CreateMap<UsuarioViewModel, Usuario>().ReverseMap();
             CreateMap<TipoBeneficioViewModel, TipoBeneficio>().ReverseMap();
@@ -36,13 +36,18 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
 
 			CreateMap<DespesaViewModel, Despesa>().ReverseMap();
 
-			#endregion
+            CreateMap<TipoApoioViewModel, TipoApoio>().ReverseMap();
+            CreateMap<TipoDeclaracaoViewModel, TipoDeclaracao>().ReverseMap();
+            CreateMap<SolicitacaoDeclaracaoViewModel, SolicitacaoDeclaracao>().ReverseMap();
+            CreateMap<SolicitacaoApoioViewModel, SolicitacaoApoio>().ReverseMap();
 
-			#region DomainToViewModel
+            #endregion
+
+            #region DomainToViewModel
 
 
 
-			CreateMap<TipoPagamento, TipoPagamentoViewModel>().ReverseMap().ForMember(c => c.Pagamentos, opt => opt.Ignore());
+            CreateMap<TipoPagamento, TipoPagamentoViewModel>().ReverseMap().ForMember(c => c.Pagamentos, opt => opt.Ignore());
             CreateMap<Municipio, MunicipioViewModel>().ReverseMap().ForMember(c => c.Bairros, opt => opt.Ignore());
             
             CreateMap<Bairro, BairroViewModel>()
@@ -68,12 +73,12 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
             CreateMap<Relacao, RelacaoViewModel>().ReverseMap()
                 .ForMember(c => c.Dependentes, opt => opt.Ignore());
 
-            CreateMap<Item, ItemViewModel>()
+            CreateMap<Emolumento, EmolumentoViewModel>()
                 .ForMember(dest => dest.NomeTipoItem, opt => opt.MapFrom(src => src.TipoItem.Descricao))
                 .ForMember(dest => dest.NomeSocio, opt => opt.MapFrom(src => src.Socio.Nome))
-                .ForMember(dest => dest.CodPeriodo, opt => opt.MapFrom(src => src.Periodo.Cod));
+                .ForMember(dest => dest.CodPeriodo, opt => opt.MapFrom(src => src.Periodo.Codigo));
 
-            CreateMap<TipoItem, TipoItemViewModel>().ReverseMap()
+            CreateMap<TipoEmolumento, TipoEmolumentoViewModel>().ReverseMap()
                 .ForMember(c => c.Items, opt => opt.Ignore());
 
             CreateMap<Pagamento, PagamentoViewModel>()
@@ -84,7 +89,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
                 .ForMember(c => c.Items, opt => opt.Ignore());
 
 
-            CreateMap<ItemPagamento, ItemPagamentoViewModel>().ReverseMap()
+            CreateMap<PagamentoEmolumento, PagamentoEmolumentoViewModel>().ReverseMap()
                 .ForMember(c => c.Pagamento, opt => opt.Ignore())
                 .ForMember(c => c.Item, opt => opt.Ignore());
 
@@ -135,8 +140,26 @@ namespace CPF_CACL.GestaoSocio.Aplication.AutoMapper
 				.ForMember(c => c.Apoio, opt => opt.Ignore())
 				.ForMember(dest => dest.DescricaoApoio, opt => opt.MapFrom(src => src.Apoio.Descricao));
 
+            CreateMap<TipoApoio, TipoApoioViewModel>().ReverseMap()
+                .ForMember(c => c.SolicitacaoApoios, opt => opt.Ignore());
 
-			#endregion
-		}
+            CreateMap<TipoDeclaracao, TipoDeclaracaoViewModel>().ReverseMap()
+                .ForMember(c => c.SolicitacaoDeclaracoes, opt => opt.Ignore());
+
+            CreateMap<TipoDeclaracao, TipoDeclaracaoViewModel>().ReverseMap()
+                .ForMember(c => c.SolicitacaoDeclaracoes, opt => opt.Ignore());
+
+            CreateMap<SolicitacaoDeclaracao, SolicitacaoDeclaracaoViewModel>()
+                .ForMember(c => c.TipoDeclaracao, opt => opt.Ignore())
+                .ForMember(dest => dest.NomeTipoDeclaracao, opt => opt.MapFrom(src => src.TipoDeclaracao.Tipo))
+                .ForMember(dest => dest.NomeSocio, opt => opt.MapFrom(src => src.Socio.Nome));
+
+            CreateMap<SolicitacaoApoio, SolicitacaoApoioViewModel>()
+                .ForMember(c => c.TipoApoio, opt => opt.Ignore())
+                .ForMember(dest => dest.NomeTipoApoio, opt => opt.MapFrom(src => src.TipoApoio.Tipo))
+                .ForMember(dest => dest.NomeSocio, opt => opt.MapFrom(src => src.Socio.Nome));
+
+            #endregion
+        }
 	}
 }

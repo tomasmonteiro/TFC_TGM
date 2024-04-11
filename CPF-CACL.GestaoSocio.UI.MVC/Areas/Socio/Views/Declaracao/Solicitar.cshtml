@@ -2,11 +2,19 @@
 @inject IHttpContextAccessor HttpContextAccessor;
 @using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 
-@* @model List<ApoioViewModel> *@
+@model SolicitacaoDeclaracaoViewModel;
 
 @{
     ViewData["Title"] = "Solicitar declaração";
 }
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+
 <div class="container">
     <br>
     <div class="page-header">
@@ -23,4 +31,113 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    <div class="min-height-200px">
+
+        <div class="row espaco">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-12 col-sm-12 col-md-6 espaco-input">
+                            <label asp-for="TipoDeclaracaoId" class="control-label required"> Tipo de declaração </label>
+                            <select asp-for="TipoDeclaracaoId" id="tipoDeclaracaoId" class="form-control">
+                                <option>..Selecione um Tipo..</option>
+                                @foreach (var item in ViewBag.TipoDeclaracao)
+                                {
+                                    <option value="@item.Id">@item.Nome</option>
+                                }
+                            </select>
+                            <span asp-validation-for="TipoDeclaracaoId" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="hidden" value="@HttpContextAccessor.HttpContext.Session.GetString("userId")" id="socioId" asp-for="SocioId">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" value="@DateTime.Now" id="dataCriacao" asp-for="DataCriacao">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" value="true" id="status" asp-for="Status">
+                        </div>
+
+                        <div class="form-group">
+                            <button type="button" onclick="SolicitarDeclaracao()" class="btn btn-success">Solicitar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Script-->
+@section Scripts{
+    <script>
+
+
+        ///----Adicionar--
+
+        function SolicitarDeclaracao() {
+            if (!ValidarSolicitacaoDeclaracao()) {
+                return;
+            }
+            else {
+                $('#loading-overlay').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/Socio/Declaracao/Solicitar",
+                    data: {
+                        TipoDeclaracaoId: $("#tipoDeclaracaoId").val(),
+                        SocioId: $("#socioId").val(),
+                        DataCriacao: $("#dataCriacao").val(),
+                        Status: $("#status").val()
+                    },
+                    success: function (result) {
+                        if (result.substring(0, 1) == "x") {
+                            NotificarErro("error", "Erro!", result);
+                            return false;
+                        }
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: "Sucesso",
+                            text: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        })
+                        $("#nome").val("");
+                    },
+                    error: function (result) {
+                        NotificarErro("error", "Erro!", result);
+                    }
+                });
+            }
+        }
+        function ValidarSolicitacaoDeclaracao() {
+            if ($("#tipoDeclaracaoId").text() == "..Selecione um Tipo..") {
+                $("#tipoDeclaracaoId").focus();
+                NotificarErro("error", "Erro!", "Selecione o tipo de declaração que pretende solicitar.");
+                return false;
+            }
+            return true;
+        }
+
+
+
+        function NotificarErro(icone, titulo, mensagem) {
+            $('#loading-overlay').hide();
+            Swal.fire({
+                icon: icone,
+                title: titulo,
+                text: mensagem,
+                showConfirmButton: false,
+                iconSize: "10px",
+                timer: 2500
+            });
+        }
+
+    </script>
+}
 

@@ -13,11 +13,12 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.Id);
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Recibo).HasColumnType("varchar(50)").IsRequired(true);
+            builder.Property(x => x.Recibo).HasColumnType("varchar(10)").IsRequired(true);
             builder.HasIndex(x => x.Recibo).IsUnique(true);
 
             builder.Property(x => x.Valor).HasColumnType("money").IsRequired(true);
-            builder.Property(x => x.Estado).HasColumnType("varchar(20)").IsRequired(true);
+            builder.Property(x => x.Estado).HasColumnType("varchar(10)").IsRequired(true);
+            builder.Property(x => x.DataPagamento).HasColumnType("date").IsRequired(true);
 
             builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");

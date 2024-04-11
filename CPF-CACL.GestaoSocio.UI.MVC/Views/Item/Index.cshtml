@@ -1,7 +1,7 @@
 ﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
 @using CPF_CACL.GestaoSocio.Domain.Enums;
 
-@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.ItemViewModel>
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.EmolumentoViewModel>
 
 @{
     ViewData["Title"] = "Lista de Itens";
@@ -57,7 +57,7 @@
                             <tbody>
                                 @if (Model != null && Model.Any())
                                 {
-                                    foreach (ItemViewModel item in Model)
+                                    foreach (EmolumentoViewModel item in Model)
                                     {
                                         <tr role="row" class="">
                                             <th class="text-left" scope="row">@item.Cod</th>

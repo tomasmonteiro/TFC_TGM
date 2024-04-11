@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+@using CPF_CACL.GestaoSocio.Domain.Enums;
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.SolicitacaoDeclaracaoViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Solicitações de Declaração";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="container d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev icone"><i class="icon ion ion-android-apps icone" style="font-size: 32px;"></i> Listagem de solicitações de Declaração</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 5;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">Tipo de Declaração</th>
+                                    <th scope="col">Sócio</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Data de solic.</th>
+                                    <th scope="col">Acão</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var solicitacao in Model)
+                                {
+                                    <tr role="row" class="">
+                                        <td class="table-plus sorting_1 text-left" tabindex="0">@solicitacao.NomeTipoDeclaracao</td>
+                                        <td class="table-plus sorting_1 text-left" tabindex="0">@solicitacao.NomeSocio</td>
+                                        <td class="table-plus sorting_1 text-left" tabindex="0">@solicitacao.EstadoSolicitacao</td>
+                                        <td class="table-plus sorting_1 text-left" tabindex="0">@solicitacao.DataCriacao.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a class="btn btn-link text-left font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                    <i class="dw dw-more"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                    <a class="dropdown-item" href="/SolicitacoesDeclaracao/Imprimir/@solicitacao.Id"><i class="dw dw-print"></i> Imprimir</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -11,7 +11,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
 
         [MaxLength(10, ErrorMessage = "O Código precisa ter no márixo {1} caracteres")]
         [MinLength(2, ErrorMessage = "O Código precisa ter no mínimo {1} caracteres")]
-        public string Cod { get; set; }
+        public string Codigo { get; set; }
 
         //[Required(ErrorMessage = "Preencha o campo Nome")]
         [MaxLength(300, ErrorMessage = "O nome precisa ter no márixo {1} caracteres")]
@@ -44,15 +44,6 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
         //[Required(ErrorMessage = "Preencha o campo Habilitações Literárias")]
         //[MaxLength(20, ErrorMessage = "O campo habilitações precisa ter no márixo {1} caracteres")]
         public string? Habilitacoes { get; set; }
-
-        [Required(ErrorMessage = "Preencha o campo Nacionalidade")]
-        [MaxLength(20, ErrorMessage = "A nacionalidade precisa ter no márixo {1} caracteres")]
-        [MinLength(2, ErrorMessage = "A nacionalidade precisa ter no mínimo {1} caracteres")]
-        public string Nacionalidade { get; set; }
-         
-        [MaxLength(100, ErrorMessage = "A profissão precisa ter no márixo {1} caracteres")]
-        [MinLength(2, ErrorMessage = "A profissão precisa ter no mínimo  {1} caracteres")]
-        public string? Profissao { get; set; }
 
         [MaxLength(300, ErrorMessage = "O nome do pai precisa ter no márixo {1} caracteres")]
         [MinLength(2, ErrorMessage = "O nome do pai precisa ter no mínimo {1} caracteres")]

@@ -1,0 +1,144 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel; 
+@model IEnumerable<TipoApoioViewModel>
+
+@{
+    ViewData["Title"] = "Listagem de Tipos de Apoio";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+
+
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="container d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev icone"><i class="icon ion ion-android-apps icone" style="font-size: 32px;"></i>Listagem de Tipo de Apoio</h3>
+                            <button type="button" class="btn btn-success ml-auto" data-toggle="ajax-modal" data-target="#tipoApoio" data-url="@Url.Action("Create")"><i class="fas fa-plus"></i> Novo</button>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 4;" id="myDataTable">
+                            <thead class="navbar-primary">
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Registo</th>
+                                    <th scope="col">Actualização</th>
+                                    <th scope="col">Acão</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (TipoApoioViewModel tipoApoio in Model)
+                                    {
+                                        <tr>
+                                            <td>@tipoApoio.Tipo</td>
+                                            <td>@tipoApoio.DataCriacao</td>
+                                            <td>@tipoApoio.DataAtualizacao</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="" onclick="SetTipoApoioEditar('@tipoApoio.Id', '@tipoApoio.Tipo', '@tipoApoio.DataCriacao')" data-toggle="modal" data-target="#editarTipoApoio"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetTipoApoioEliminar('@tipoApoio.Id', '@tipoApoio.Tipo')" data-toggle="modal" data-target="#eliminarTipoApoio"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!---------MODAL---------->
+<!---------Modal para Edição--------------->
+
+<div class="modal fade" id="editarTipoApoio" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="cabecalhoModalEditarTipoApoio">Editar Tipo de Apoio</h4>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input type="hidden" id="tipoApoioId" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeTipoApoio" class="control-label">Nome do Tipo de Apoio</label>
+                        <input id="nomeTipoApoio" name="nomeTipoApoio" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="dataCriacao" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="dataAtualizacao" value="@DateTime.Now" class="form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EditarTipoApoio()" class="btn btn-success waves-effect">Salvar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para eliminar----------->
+
+<div class="modal fade" id="eliminarTipoApoio" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarTipoApoioLabel">Eliminar Tipo de Apoio</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="id" name="id" />
+                Desejas eliminar o tipo de apoio <b><label id="nome"></label></b>?
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EliminarTipoApoio()" class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

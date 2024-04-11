@@ -8,13 +8,13 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
     public class SocioService : ServiceBase, ISocioService
     {
         private readonly ISocioRepository _socioRepository;
-        private readonly IItemService _itemService;
+        private readonly IEmolumentoService _itemService;
         private readonly IPeriodoService _periodoService;
-        private readonly ITipoItemRepository _tipoItemRepository;
+        private readonly ITipoEmolumentoRepository _tipoItemRepository;
         private readonly ICapitalRepository _capitalRepository;
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IUsuarioSocioRepository _usuarioSocioRepository;
-        public SocioService(IUsuarioRepository usuarioRepository, IUsuarioSocioRepository usuarioSocioRepository, ICapitalRepository capitalRepository, ISocioRepository socioRepository, IItemService itemService, IPeriodoService periodoService, ITipoItemRepository tipoItemRepository, INotificador notificador) 
+        public SocioService(IUsuarioRepository usuarioRepository, IUsuarioSocioRepository usuarioSocioRepository, ICapitalRepository capitalRepository, ISocioRepository socioRepository, IEmolumentoService itemService, IPeriodoService periodoService, ITipoEmolumentoRepository tipoItemRepository, INotificador notificador) 
             : base(notificador)
         {
             _socioRepository = socioRepository;
@@ -101,34 +101,50 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             {
 
 			    socio.EstadoSocio = Enums.EEstadoSocio.Pendente;
-			    socio.Cod = GerarDodigoSocio();
+			    socio.Codigo = GerarDodigoSocio();
                 _socioRepository.Add(socio);
 
                 //Criar codigo do perio
                 var codPeriodo = _periodoService.GerarCodigoPeriodo(DateTime.Now);
 
                 var periodo = _periodoService.BuscarPorCod(codPeriodo);
-
-                var tipoItem = _tipoItemRepository.BuscarJoia();
-
-                var item = new Item
+                if (periodo != null)
                 {
-                    Descricao = "Jóia",
-                    PeriodoId = periodo.Id,
-                    SocioId = socio.Id,
-                    TipoItemId = tipoItem.Id,
-                    DataCriacao = DateTime.Now,
-                    Status = true,
-                    Valor = 5000
-                };
-                //Adicionar Joia
-                _itemService.Add(item);
+                    var tipoItem = _tipoItemRepository.BuscarJoia();
+
+                    var item = new Emolumento
+                    {
+                        Descricao = "Jóia",
+                        PeriodoId = periodo.Id,
+                        SocioId = socio.Id,
+                        TipoItemId = tipoItem.Id,
+                        DataCriacao = DateTime.Now,
+                        Status = true,
+                        Valor = 5000
+                    };
+                    //Adicionar Joia
+                    _itemService.Add(item);
+
+                    //var dataAtual = DateTime.Now;
+                    //var diasNoMes = DateTime.DaysInMonth(dataAtual.Year, dataAtual.Month);
+                    //var novoPeriodo = new Periodo
+                    //{
+                    //    Codigo = codPeriodo,
+                    //    Ano = dataAtual.Year,
+                    //    DataInicio = new DateTime(dataAtual.Year, dataAtual.Month, 1),
+                    //    DataFim = new DateTime(dataAtual.Year, dataAtual.Month, diasNoMes),
+                    //    DataCriacao = DateTime.Now,
+                    //    UltimoDiaUtil ,
+                    //    Estado
+                    //};
+                }
+
 
                 //Criar um usuario para o Socio
                 var usuario = new Usuario {
                     Nome = socio.Nome,
                     Email = socio.Email,
-                    Login = socio.Cod,
+                    Login = socio.Codigo,
                     Senha = "123456",
                     Perfil = Enums.EPerfilUsuario.Socio,
                     DataCriacao = DateTime.Now,

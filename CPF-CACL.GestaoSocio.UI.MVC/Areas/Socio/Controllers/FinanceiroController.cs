@@ -13,15 +13,15 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Socio.Controllers
     [Autorizacao("Socio")]
     public class FinanceiroController : BaseController
     {
-        private readonly IItemPagamentoRepository _itemPagamentoRepository;
+        private readonly IPagamentoEmolumentoRepository _itemPagamentoRepository;
         private readonly IUsuarioSocioRepository _usuarioSocioRepository;
         private readonly ISocioRepository _socioRepository;
         private readonly IBairroRepository _bairroRepository;
         private readonly ICategoriaSocioRepository _categoriaRepository;
         private readonly ISaldoAppService _saldoAppService;
-        private readonly IItemAppService _itemAppService;
+        private readonly IEmolumentoAppService _itemAppService;
 
-        public FinanceiroController(ISaldoAppService saldoAppService, IItemAppService itemAppService, IItemPagamentoRepository itemPagamentoRepository, IUsuarioSocioRepository usuarioSocioRepository, ISocioRepository socioRepository, IBairroRepository bairroRepository,ICategoriaSocioRepository categoriaSocioRepository,  INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+        public FinanceiroController(ISaldoAppService saldoAppService, IEmolumentoAppService itemAppService, IPagamentoEmolumentoRepository itemPagamentoRepository, IUsuarioSocioRepository usuarioSocioRepository, ISocioRepository socioRepository, IBairroRepository bairroRepository,ICategoriaSocioRepository categoriaSocioRepository,  INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _itemPagamentoRepository = itemPagamentoRepository;
             _usuarioSocioRepository = usuarioSocioRepository;
@@ -45,7 +45,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Socio.Controllers
             IEnumerable<SaldoViewModel> saldos = _saldoAppService.BuscarDisponivel(usuarioSocio.SocioId);
             ViewBag.Saldo = saldos;
 
-            IEnumerable<ItemViewModel> itens = _itemAppService.BuscarItemPorSocio(usuarioSocio.SocioId);
+            IEnumerable<EmolumentoViewModel> itens = _itemAppService.BuscarItemPorSocio(usuarioSocio.SocioId);
             ViewBag.Itens = itens;
 
             var itemPagamentos = _itemPagamentoRepository.BuscarItemPagamentoPorSocio(usuarioSocio.SocioId);
@@ -81,7 +81,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Socio.Controllers
             IEnumerable<SaldoViewModel> saldos = _saldoAppService.BuscarDisponivel(usuarioSocio.SocioId);
             ViewBag.Saldo = saldos;
 
-            IEnumerable<ItemViewModel> itens = _itemAppService.BuscarItemPorSocio(usuarioSocio.SocioId);
+            IEnumerable<EmolumentoViewModel> itens = _itemAppService.BuscarItemPorSocio(usuarioSocio.SocioId);
             ViewBag.Itens = itens;
 
 
@@ -111,7 +111,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Socio.Controllers
             var categoria = _categoriaRepository.GetById(socio.CategoriaSocioId);
 
             ViewBag.Categoria = categoria.Nome;
-            ViewBag.CodSocio = socio.Cod;
+            ViewBag.CodSocio = socio.Codigo;
             ViewBag.Bairro = bairro.Nome;
             ViewBag.Endereco = socio.Endereco;
             ViewBag.Email = socio.Email;

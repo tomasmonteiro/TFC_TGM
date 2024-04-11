@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model SolicitacaoDeclaracaoViewModel;
+
+@{
+    ViewData["Title"] = "Imprimir declaração";
+}
+
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="container">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Main content -->
+                    <div class="invoice p-3 mb-3">
+                        <!-- title row -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="attachment-block clearfix">
+                                    <img class="attachment-img" src="~/img/logo_cpf-cacl.png" alt="Logotipo CPF-CACL">
+                                    <div class="attachment-pushed">
+                                        <br>
+                                        <h4 class="attachment-heading">
+                                            CAIXA DE PREVIDÊNCIA CPF-CACL
+                                        </h4>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                        <br>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h1 class=" text-center container card-title  text-bold">DECLARAÇÃO</h1>
+                                    </div>
+                                    
+                                    <div class="card-body">
+                                        <br>
+                                        <p class="text-justify">Para os devidos efeitos, declara-se que
+                                            o (a) Sr. (ª) <b>@ViewBag.SocioNome</b>, de nacionalidade Angolana, 
+                                            portador do Bilhete de Identidade n.º <b>@ViewBag.SocioBI</b>,
+                                            é Sócio desta Caixa de Previdência, com o código <b>@ViewBag.CodSocio</b>,
+                                            na categoria <b>"@ViewBag.Categoria"</b>.
+                                        </p>
+                                        <p class="text-justify">
+                                            Por ser verdade e me ter sido solicitada, mandei passar a presente 
+                                            declaração que por mim vai assinada e autenticada com carimbo a óleo em
+                                            uso nesta instituição.
+                                        </p>
+                                        <br>
+                                        <br>
+                                        <p class="text-center">
+                                            Caixa de Previdência CPF-CACL em Luanda, aos @ViewBag.Dia de @ViewBag.Mes de @ViewBag.Ano .
+                                        </p>
+                                        <br>
+                                        <br>
+                                        <p class="text-center">
+                                            O PRESIDENTE 
+                                        </p><br><br>
+                                        <p class="text-center">Orlando A. Paca</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!--Script-->
+@section Scripts{
+    <script>
+        window.addEventListener("load", window.print());
+    </script>
+}

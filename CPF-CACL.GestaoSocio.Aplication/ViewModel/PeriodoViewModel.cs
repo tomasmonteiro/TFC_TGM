@@ -10,7 +10,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
 
         [MinLength(2, ErrorMessage = "O Código precisa ter o mínimo de {0} caracteres")]
         [MaxLength(10, ErrorMessage = "O Código precisa ter o márixo de {0} caracteres")]
-        public string Cod { get; set; }
+        public string Codigo { get; set; }
         public int Ano { get; set; }
 
         [Required(ErrorMessage = "Preencha o campo Data de Início do Período")]

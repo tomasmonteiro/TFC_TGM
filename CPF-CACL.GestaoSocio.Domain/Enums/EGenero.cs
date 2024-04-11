@@ -8,7 +8,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Enums
 {
     public enum EGenero
     {
-        Masculino = 1,
-        Feminino = 2
+        M = 1,
+        F = 2
     }
 }

@@ -8,6 +8,7 @@ using CPF_CACL.GestaoSocio.Domain.Notifications;
 using CPF_CACL.GestaoSocio.UI.MVC.Controllers;
 using CPF_CACL.GestaoSocio.UI.MVC.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Socio.Controllers
 {
@@ -22,14 +23,18 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Socio.Controllers
         private readonly ISocioRepository _socioRepository;
         private readonly IBairroRepository _bairroRepository;
         private readonly ICategoriaSocioRepository _categoriaRepository;
-        public ApoioController(ISocioRepository socioRepository, IBairroRepository bairroRepository, ICategoriaSocioRepository categoriaRepository, IUsuarioSocioRepository usuarioSocioRepository, ISaldoAppService saldoAppService, IItemApoioAppService itemApoioAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+        private readonly ITipoApoioRepository _tipoApoioRepository;
+        private readonly ISolicitacaoApoioAppService _solicitacaoApoioAppService;
+        public ApoioController(ISolicitacaoApoioAppService solicitacaoApoioAppService, ITipoApoioRepository tipoApoioRepository, ISocioRepository socioRepository, IBairroRepository bairroRepository, ICategoriaSocioRepository categoriaRepository, IUsuarioSocioRepository usuarioSocioRepository, ISaldoAppService saldoAppService, IItemApoioAppService itemApoioAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
+            _solicitacaoApoioAppService = solicitacaoApoioAppService;
             _saldoAppService = saldoAppService;
             _usuarioSocioRepository = usuarioSocioRepository;
             _itemApoioAppService = itemApoioAppService;
             _socioRepository = socioRepository;
             _categoriaRepository = categoriaRepository;
             _bairroRepository = bairroRepository;
+            _tipoApoioRepository = tipoApoioRepository;
         }
 
         public IActionResult Index()
@@ -64,7 +69,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Socio.Controllers
             var categoria = _categoriaRepository.GetById(socio.CategoriaSocioId);
 
             ViewBag.Categoria = categoria.Nome;
-            ViewBag.CodSocio = socio.Cod;
+            ViewBag.CodSocio = socio.Codigo;
             ViewBag.Bairro = bairro.Nome;
             ViewBag.Endereco = socio.Endereco;
             ViewBag.Email = socio.Email;
@@ -76,7 +81,50 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Areas.Socio.Controllers
 
         public IActionResult Solicitar()
         {
+            //Buscar os Tipo de Declaracao
+            var viewModel = new SolicitacaoApoioViewModel();
+
+            //Buscar Tipo de Decaracao para preencher o Select
+            var tipos = _tipoApoioRepository.BuscarTodos();
+            tipos = tipos.OrderBy(m => m.Tipo).ToList();
+            ViewBag.TipoApoio = viewModel.TipoApoio
+                = tipos
+                .Select(item => new ItemDropDown
+                {
+                    Id = item.Id,
+                    Nome = item.Tipo
+                })
+                .ToList();
             return View();
+        }
+        [HttpPost]
+        public IActionResult Solicitar(SolicitacaoApoioViewModel solicitacaoApoio)
+        {
+            try
+            {
+                var usuarioSocio = _usuarioSocioRepository.BuscarPorUsuarioId(solicitacaoApoio.SocioId);
+                solicitacaoApoio.SocioId = usuarioSocio.SocioId;
+                if (solicitacaoApoio.Imagem != null)
+                {
+                    solicitacaoApoio.UrlAnexo = SalvarAnexo(solicitacaoApoio.Imagem);
+                }
+                _solicitacaoApoioAppService.Adicionar(solicitacaoApoio);
+
+                if (!ValidOperation())
+                {
+                    var sb = new StringBuilder();
+                    foreach (var item in BuscarMensagemErro())
+                    {
+                        sb.AppendLine($"x {item}\n");
+                    }
+                    return Json(sb.ToString());
+                }
+                return Json("Solicitação efectuada com sucesso!");
+            }
+            catch (Exception erro)
+            {
+                return Json($"x Ocorreu um erro: {erro.Message}");
+            }
         }
     }
 }

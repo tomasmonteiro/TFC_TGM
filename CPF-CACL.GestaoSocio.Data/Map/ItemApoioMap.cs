@@ -14,7 +14,7 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Valor).HasColumnType("money");
-            builder.Property(x => x.Quantidade).HasColumnType("int");
+            builder.Property(x => x.Quantidade).HasColumnType("tinyint");
 
             builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");

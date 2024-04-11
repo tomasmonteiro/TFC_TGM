@@ -1,0 +1,170 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model SolicitacaoApoioViewModel;
+
+@{
+    ViewData["Title"] = "Solicitar apoio";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="container">
+    <br>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-12 col-md-12 col-sm-12">
+                <nav class="col-12 col-md-12 col-sm-12" aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/Socio/Home/Index">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Apoio</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Solicitar Apoio</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="min-height-200px">
+
+        <div class="row espaco">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-12 col-sm-6 col-md-4 pb-5 espaco-input">
+                            <label asp-for="Mensagem" class="control-label required"> Descrição da solicitação </label>
+                            <textarea asp-for="Mensagem" id="descricao" class="form-control required" data-val-required=""></textarea>
+                            <span asp-validation-for="Mensagem" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="col-12 col-sm-6 col-md-4 pb-5 espaco-input">
+                            <label asp-for="TipoApoioId" class="control-label required"> Tipo de apoio </label>
+                            <select asp-for="TipoApoioId" id="tipoApoioId" class="form-control">
+                                <option>..Selecione um Tipo..</option>
+                                @foreach (var item in ViewBag.TipoApoio)
+                                {
+                                    <option value="@item.Id">@item.Nome</option>
+                                }
+                            </select>
+                            <span asp-validation-for="TipoApoioId" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 espaco-input">
+                            <label asp-for="Imagem" name="Foto" class="control-label imagem-upload">Anexar Imagem </label>
+                            <input asp-for="Imagem" type="file" accept=".jpg, .jpeg, .png" id="imagem" class="form-control btn-file" />
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" value="@HttpContextAccessor.HttpContext.Session.GetString("userId")" id="socioId" asp-for="SocioId">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" value="@DateTime.Now" id="dataCriacao" asp-for="DataCriacao">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" value="true" id="status" asp-for="Status">
+                        </div>
+
+                        <div class="form-group">
+                            <button type="button" onclick="PedirApoio()" class="btn btn-success">Solicitar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Script-->
+@section Scripts{
+    <script>
+
+
+        ///----Adicionar--
+
+        function PedirApoio() {
+
+            var Mensagem = $("#descricao").val();
+            var TipoApoioId = $("#tipoApoioId").val();
+
+            var fotoInput = document.getElementById('imagem');
+            var fotoArquivo = fotoInput.files[0];
+
+            var SocioId = $("#socioId").val();
+            var SocioId = $("#dataCriacao").val();
+            var Status = $("#status").val();
+
+            var formData = new FormData();
+            formData.append('Mensagem', Mensagem);
+            formData.append('TipoApoioId', TipoApoioId);
+            formData.append('Imagem', fotoArquivo);
+
+            formData.append('SocioId', SocioId);
+            formData.append('DataCriacao', DataCraicao);
+            formData.append('Status', Status);
+
+            if (!ValidarSolicitacaoApoio()) {
+                return;
+            }
+            else {
+                $('#loading-overlay').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/Socio/Apoio/Solicitar",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (result) {
+                        if (result.substring(0, 1) == "x") {
+                            NotificarErro("error", "Erro!", result);
+                            return false;
+                        }
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: "Sucesso",
+                            text: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        })
+                        $("#nome").val("");
+                    },
+                    error: function (result) {
+                        NotificarErro("error", "Erro!", result);
+                    }
+                });
+            }
+        }
+
+        function ValidarSolicitacaoApoio() {
+            if ($("#tipoApoioId").text() == "..Selecione um Tipo..") {
+                $("#tipoApoioId").focus();
+                NotificarErro("error", "Erro!", "Selecione o tipo de apoio que pretende solicitar.");
+                return false;
+            }
+            return true;
+        }
+
+
+
+        function NotificarErro(icone, titulo, mensagem) {
+            $('#loading-overlay').hide();
+            Swal.fire({
+                icon: icone,
+                title: titulo,
+                text: mensagem,
+                showConfirmButton: false,
+                iconSize: "10px",
+                timer: 2500
+            });
+        }
+
+    </script>
+} 
+

@@ -14,7 +14,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
 
         public Fornecedor BuscarPorCodigo(string codigo)
         {
-            return _gsContext.Fornecedor.Where(p => p.Cod == codigo && p.Status == true).FirstOrDefault();
+            return _gsContext.Fornecedor.Where(p => p.Codigo == codigo && p.Status == true).FirstOrDefault();
         }
 
         public Fornecedor BuscarPorNif(string nif)
@@ -35,9 +35,9 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
         public string ConsultarUltimoCodigo(string tipoEntidade)
         {
             var ultimoCodigo = _gsContext.Fornecedor
-            .Where(p => p.Cod.StartsWith($"{tipoEntidade}"))
-            .OrderByDescending(p => p.Cod)
-            .Select(p => p.Cod)
+            .Where(p => p.Codigo.StartsWith($"{tipoEntidade}"))
+            .OrderByDescending(p => p.Codigo)
+            .Select(p => p.Codigo)
             .FirstOrDefault();
 
             return ultimoCodigo;

@@ -1,0 +1,424 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.TipoApoioViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Tipos de Apoio";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev"><i class="icon ion ion-android-apps"></i> Lista de Tipos de Apoio</h3>
+
+                            <a class="btn btn-success  ml-auto" href="" data-toggle="modal" data-target="#adicionarTipoApoio">
+                                <i class="fas fa-plus"></i> Cadastrar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 4;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Registo</th>
+                                    <th scope="col">Actualização</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Acão</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (TipoApoioViewModel tipoApoio in Model)
+                                    {
+                                        <tr role="row" class="">
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@tipoApoio.Tipo</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@tipoApoio.DataCriacao</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@tipoApoio.DataAtualizacao</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@tipoApoio.Status</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link text-left font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="#" onclick="SetTipoApoioEditar('@tipoApoio.Id',  '@tipoApoio.Tipo', '@tipoApoio.DataCriacao','@tipoApoio.Status')" data-toggle="modal" data-target="#editarTipoApoio"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetTipoApoioInativar('@tipoApoio.Id', '@tipoApoio.Tipo')" data-toggle="modal" data-target="#inativarTipoApoio"><i class="dw dw-ban"></i> Inativar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetTipoApoioEliminar('@tipoApoio.Id', '@tipoApoio.Tipo')" data-toggle="modal" data-target="#eliminarTipoApoio"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--Modal-->
+<!--Cadastrar Tipo Apoio-->
+
+<div class="modal fade" id="adicionarTipoApoio" aria-hidden="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tipoApoioLabel">Criar Tipo de Apoio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div><div class="modal-body">
+                    <div class="form-group">
+                        <label for="nome">Nome do tipo</label>
+                        <input type="text" id="nome" class="form-control" placeholder="Digite o tipo de Apoio">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="@DateTime.Now" id="dataCriacao">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="true" id="status">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="AdicionarTipoApoio()" class="btn btn-success waves-effect">Cadastrar</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Editar Tipo Apoio-->
+
+<div class="modal fade" id="editarTipoApoio" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarTipoApoioLabel">Editar Tipo de Apoio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div><div class="modal-body">
+
+
+                    <input type="hidden" id="tipoId"/>
+
+                    <div class="form-group">
+                        <label >Nome do tipo</label>
+                        <input type="text" id="nomeEdit" class="form-control">
+                    </div>
+                    <div class="">
+                        <input type="hidden" id="dataCriacaoEdit">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="true" id="statusEdit">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="EditarTipoApoio()" class="btn btn-success waves-effect">Salvar</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para inativar----------->
+
+<div class="modal fade" id="inativarTipoApoio" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarTipoApoioLabel">Inativar Tipo de Apoio</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idInativar" name="id" />
+                <span>Desejas inativar o tipo de apoio <label id="nomeInativar"></label>?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="InativarTipoApoio()" class="btn btn-danger waves-effect">Inativar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para eliminar----------->
+
+<div class="modal fade" id="eliminarTipoApoio" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarApoioLabel">Eliminar Tipo de Apoio</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idEliminar" />
+                <p>Desejas eliminar permanentemente o tipo de apoio <label id="nomeEliminar"></label>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EliminarTipoApoio()" class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Script-->
+
+@section Scripts{
+    <script>
+
+
+        ///----Adicionar--
+
+        function AdicionarTipoApoio() {
+            if (!ValidarTipoApoio()) {
+                return;
+            }
+            else {
+                $('#loading-overlay').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/TipoApoio/Criar",
+                    data: {
+                        Tipo: $("#nome").val(),
+                        DataCriacao: $("#dataCriacao").val(),
+                        Status: $("#status").val()
+                    },
+                    success: function (result) {
+                        if (result.substring(0, 1) == "x") {
+                            NotificarErro("error", "Erro!", result);
+                            return false;
+                        }
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: "Sucesso",
+                            text: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        })
+                        $("#nome").val("");
+                    },
+                    error: function (result) {
+                        NotificarErro("error", "Erro!", result);
+                    }
+                });
+            }
+        }
+        function ValidarTipoApoio() {
+            if ($("#nome").val() == "") {
+                $("#nome").focus();
+                NotificarErro("error", "Erro!", "O Nome do Tipo de Apoio deve ser preenchido.");
+                return false;
+            }
+            return true;
+        }
+
+
+        /*------------------Inativar-------*/
+        function SetTipoApoioInativar(tipoApoioId, nometipoApoio) {
+
+            $("#idInativar").val(tipoApoioId);
+
+            $("#nomeInativar").text(nometipoApoio);
+        }
+        function InativarTipoApoio() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/TipoApoio/Inativar",
+                data: {
+                    id: $("#idInativar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Admin/TipoApoio/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+
+        /*------------------Eliminar-------*/
+        function SetTipoApoioEliminar(tipoApoioId, nomeTipoApoio) {
+
+            $("#idEliminar").val(tipoApoioId);
+
+            $("#nomeEliminar").text(nomeTipoApoio);
+        }
+        function EliminarTipoApoio() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/TipoApoio/Eliminar",
+                data: {
+                    id: $("#idEliminar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Admin/TipoApoio/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+ 
+        //------------------Editar-------
+        function SetTipoApoioEditar(tipoId, nome, dataCriacao, status) {
+            $("#tipoId").val(tipoId);
+            $("#nomeEdit").val(nome);
+            $("#dataCriacaoEdit").val(dataCriacao);
+            $("#statusEdit").val(status);
+        }
+        function EditarTipoApoio() {
+
+            if (!ValidarModalEditar()) {
+                return;
+            }
+            else{
+                $('#loading-overlay').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/TipoApoio/Editar",
+                    data: {
+                        Id: $("#tipoId").val(),
+                        Tipo: $("#nomeEdit").val(),
+                        DataCriacao: $("#dataCriacaoEdit").val(),
+                        Status: $("#statusEdit").val()
+                    },
+                    success: function (result) {
+                        if (result.substring(0, 1) == "x") {
+                            NotificarErro("error", "Erro!", result);
+                            return false;
+                        }
+                        setTimeout(function () {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Sucesso!",
+                                text: result,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then((result) => {
+                                window.location = "/Admin/TipoApoio/Index";
+                            });
+                        }, 2500);
+                    },
+                    error: function (result) {
+                        Notificar("error", "Erro!", result);
+                    }
+                });
+            }           
+        }
+        function ValidarModalEditar() {
+            if ($("#nomeEdit").val() == "") {
+                $("#nomeEdit").focus();
+                NotificarErro("error", "Erro!", "O Nome do Tipo de Apoio deve ser preenchido.");
+                return false;
+            }
+            return true;
+        }
+
+        function NotificarErro(icone, titulo, mensagem) {
+            Swal.fire({
+                icon: icone,
+                title: titulo,
+                text: mensagem,
+                showConfirmButton: false,
+                iconSize: "10px",
+                timer: 2500
+            });
+        }
+
+    </script>
+}

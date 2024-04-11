@@ -14,7 +14,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Entities
         public Guid TipoPagamentoId { get; set; }
         public virtual TipoPagamento TipoPagamento { get; set; }
 
-        public IEnumerable<ItemPagamento> ItemPagamnetos { get; set; }
+        public IEnumerable<PagamentoEmolumento> ItemPagamnetos { get; set; }
         public ICollection<Saldo> Saldo { get; set; }
     }
 }

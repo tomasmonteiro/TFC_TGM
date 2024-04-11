@@ -2,7 +2,7 @@
 {
     public class Fornecedor : BaseEntity
     {
-        public string Cod { get; set; }
+        public string Codigo { get; set; }
         public string Nome { get; set; }
         public string? NIF { get; set; }
         public string Telefone { get; set; }

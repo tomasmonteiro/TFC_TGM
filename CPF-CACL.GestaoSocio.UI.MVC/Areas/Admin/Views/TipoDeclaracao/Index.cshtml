@@ -1,0 +1,424 @@
+﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+
+@model IEnumerable<CPF_CACL.GestaoSocio.Aplication.ViewModel.TipoDeclaracaoViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Tipos de Declaracao";
+}
+
+<div id="loading-overlay" style="display: none;">
+    <div id="loading-circle">
+        <i class="fas fa-circle-notch fa-spin"></i> Carregando...
+    </div>
+</div>
+
+<div class="row espaco">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body cabecalho">
+                <div class=" container col-12 col-md-12 col-lg-12">
+                    <!--Para abrir o Modal-->
+                    <div id="PlaceHolderHere"></div>
+
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-startcol-12 col-md-12 col-lg-12 ">
+                            <h3 class="card-title testev"><i class="icon ion ion-android-apps"></i> Lista de Tipos de Declaração</h3>
+
+                            <a class="btn btn-success  ml-auto" href="" data-toggle="modal" data-target="#adicionarTipoDeclaracao">
+                                <i class="fas fa-plus"></i> Cadastrar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="margem-container card-body">
+                <div class="margens col-12 col-md-12 col-lg-12">
+                    <div class="text-center col-12 col-md-12 col-lg-12">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 4;" id="myDataTable">
+                            <thead class="navbar-blue">
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Registo</th>
+                                    <th scope="col">Actualização</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Acão</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (TipoDeclaracaoViewModel tipoDeclaracao in Model)
+                                    {
+                                        <tr role="row" class="">
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@tipoDeclaracao.Tipo</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@tipoDeclaracao.DataCriacao</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@tipoDeclaracao.DataAtualizacao</td>
+                                            <td class="table-plus sorting_1 text-left" tabindex="0">@tipoDeclaracao.Status</td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link text-left font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a class="dropdown-item" href="#" onclick="SetTipoDeclaracaoEditar('@tipoDeclaracao.Id',  '@tipoDeclaracao.Tipo', '@tipoDeclaracao.DataCriacao','@tipoDeclaracao.Status')" data-toggle="modal" data-target="#editarTipoDeclaracao"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetTipoDeclaracaoInativar('@tipoDeclaracao.Id', '@tipoDeclaracao.Tipo')" data-toggle="modal" data-target="#inativarTipoDeclaracao"><i class="dw dw-ban"></i> Inativar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetTipoDeclaracaoEliminar('@tipoDeclaracao.Id', '@tipoDeclaracao.Tipo')" data-toggle="modal" data-target="#eliminarTipoDeclaracao"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--Modal-->
+<!--Cadastrar Tipo Declaracao-->
+
+<div class="modal fade" id="adicionarTipoDeclaracao" aria-hidden="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tipoDeclaracaoLabel">Criar Tipo de Declaração</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div><div class="modal-body">
+                    <div class="form-group">
+                        <label for="nome">Nome do tipo</label>
+                        <input type="text" id="nome" class="form-control" placeholder="Digite o tipo de Declaração">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="@DateTime.Now" id="dataCriacao">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="true" id="status">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="AdicionarTipoDeclaracao()" class="btn btn-success waves-effect">Cadastrar</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Editar Tipo Declaracao-->
+
+<div class="modal fade" id="editarTipoDeclaracao" aria-hidden="false" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarTipoDeclaracaoLabel">Editar Tipo de Declaração</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div><div class="modal-body">
+
+
+                    <input type="hidden" id="tipoId"/>
+
+                    <div class="form-group">
+                        <label >Nome do tipo</label>
+                        <input type="text" id="nomeEdit" class="form-control">
+                    </div>
+                    <div class="">
+                        <input type="hidden" id="dataCriacaoEdit">
+                    </div>
+                    <div class="">
+                        <input type="hidden" value="true" id="statusEdit">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" onclick="EditarTipoDeclaracao()" class="btn btn-success waves-effect">Salvar</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para inativar----------->
+
+<div class="modal fade" id="inativarTipoDeclaracao" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarTipoDeclaracaoLabel">Inativar Tipo de Declaração</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idInativar" name="id" />
+                <span>Desejas inativar o tipo de declaração <label id="nomeInativar"></label>?</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="InativarTipoDeclaracao()" class="btn btn-danger waves-effect">Inativar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--------Modal para eliminar----------->
+
+<div class="modal fade" id="eliminarTipoDeclaracao" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="eliminarDeclaracaoLabel">Eliminar Tipo de Declaração</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label id="idEliminar" />
+                <p>Desejas eliminar permanentemente o tipo de declaração <label id="nomeEliminar"></label>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="EliminarTipoDeclaracao()" class="btn btn-danger waves-effect">Eliminar</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Script-->
+
+@section Scripts{
+    <script>
+
+
+        ///----Adicionar--
+
+        function AdicionarTipoDeclaracao() {
+            if (!ValidarTipoDeclaracao()) {
+                return;
+            }
+            else {
+                $('#loading-overlay').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/TipoDeclaracao/Criar",
+                    data: {
+                        Tipo: $("#nome").val(),
+                        DataCriacao: $("#dataCriacao").val(),
+                        Status: $("#status").val()
+                    },
+                    success: function (result) {
+                        if (result.substring(0, 1) == "x") {
+                            NotificarErro("error", "Erro!", result);
+                            return false;
+                        }
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: "Sucesso",
+                            text: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        })
+                        $("#nome").val("");
+                    },
+                    error: function (result) {
+                        NotificarErro("error", "Erro!", result);
+                    }
+                });
+            }
+        }
+        function ValidarTipoDeclaracao() {
+            if ($("#nome").val() == "") {
+                $("#nome").focus();
+                NotificarErro("error", "Erro!", "O Nome do Tipo de Declaração deve ser preenchido.");
+                return false;
+            }
+            return true;
+        }
+
+
+        /*------------------Inativar-------*/
+        function SetTipoDeclaracaoInativar(tipoDeclaracaoId, nometipoDeclaracao) {
+
+            $("#idInativar").val(tipoDeclaracaoId);
+
+            $("#nomeInativar").text(nometipoDeclaracao);
+        }
+        function InativarTipoDeclaracao() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/TipoDeclaracao/Inativar",
+                data: {
+                    id: $("#idInativar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Admin/TipoDeclaracao/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+
+        /*------------------Eliminar-------*/
+        function SetTipoDeclaracaoEliminar(tipoDeclaracaoId, nomeTipoDeclaracao) {
+
+            $("#idEliminar").val(tipoDeclaracaoId);
+
+            $("#nomeEliminar").text(nomeTipoDeclaracao);
+        }
+        function EliminarTipoDeclaracao() {
+            $('#loading-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/TipoDeclaracao/Eliminar",
+                data: {
+                    id: $("#idEliminar").val()
+                },
+                success: function (result) {
+                    if (result.substring(0, 1) == "x") {
+                        Notificar("error", "Erro!", result);
+                        return false;
+                    }
+                    setTimeout(function () {
+                        $('#loading-overlay').hide();
+                        Swal.fire({
+                            icon: "success",
+                            title: result,
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then((result) => {
+                            window.location = "/Admin/TipoDeclaracao/Index";
+                        });
+                    }, 2500);
+                },
+                error: function (result) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Erro!",
+                        text: result,
+                        showConfirmButton: false,
+                        iconSize: "10px",
+                        timer: 2500
+                    });
+                }
+            });
+        }
+ 
+        //------------------Editar-------
+        function SetTipoDeclaracaoEditar(tipoId, nome, dataCriacao, status) {
+            $("#tipoId").val(tipoId);
+            $("#nomeEdit").val(nome);
+            $("#dataCriacaoEdit").val(dataCriacao);
+            $("#statusEdit").val(status);
+        }
+        function EditarTipoDeclaracao() {
+
+            if (!ValidarModalEditar()) {
+                return;
+            }
+            else{
+                $('#loading-overlay').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/TipoDeclaracao/Editar",
+                    data: {
+                        Id: $("#tipoId").val(),
+                        Tipo: $("#nomeEdit").val(),
+                        DataCriacao: $("#dataCriacaoEdit").val(),
+                        Status: $("#statusEdit").val()
+                    },
+                    success: function (result) {
+                        if (result.substring(0, 1) == "x") {
+                            NotificarErro("error", "Erro!", result);
+                            return false;
+                        }
+                        setTimeout(function () {
+                            $('#loading-overlay').hide();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Sucesso!",
+                                text: result,
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then((result) => {
+                                window.location = "/Admin/TipoDeclaracao/Index";
+                            });
+                        }, 2500);
+                    },
+                    error: function (result) {
+                        Notificar("error", "Erro!", result);
+                    }
+                });
+            }           
+        }
+        function ValidarModalEditar() {
+            if ($("#nomeEdit").val() == "") {
+                $("#nomeEdit").focus();
+                NotificarErro("error", "Erro!", "O Nome do Tipo de Declaração deve ser preenchido.");
+                return false;
+            }
+            return true;
+        }
+
+        function NotificarErro(icone, titulo, mensagem) {
+            Swal.fire({
+                icon: icone,
+                title: titulo,
+                text: mensagem,
+                showConfirmButton: false,
+                iconSize: "10px",
+                timer: 2500
+            });
+        }
+
+    </script>
+}

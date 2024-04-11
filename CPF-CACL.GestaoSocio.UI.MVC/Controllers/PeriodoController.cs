@@ -101,7 +101,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
                 var tipoItem = new PeriodoViewModel()
                 {
                     Id = id,
-                    Cod = codigo,
+                    Codigo = codigo,
                     Ano = ano.Year,
                     DataInicio = dataInicio,
                     DataFim = dataFim,

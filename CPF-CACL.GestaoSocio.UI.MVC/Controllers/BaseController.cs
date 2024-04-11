@@ -30,6 +30,18 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             }
             return Path.Combine("IMG", nomeArquivo).Replace('\\','/');
         }
+        //Salvar Foto no servidor
+        public string SalvarAnexo(IFormFile foto)
+        {
+            string pastaUpload = Path.Combine(_env.WebRootPath, "IMG", "Anexos");
+            string nomeArquivo = $"{Guid.NewGuid().ToString()}{Path.GetExtension(foto.FileName)}";
+            string caminhoCompleto = Path.Combine(pastaUpload, nomeArquivo);
+            using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
+            {
+                foto.CopyTo(stream);
+            }
+            return Path.Combine("IMG", "Anexos", nomeArquivo).Replace('\\', '/');
+        }
 
         protected bool ValidOperation()
         {

@@ -134,6 +134,7 @@ $(document).ready(function () {
     });
 });
 
+
 //------Script do btnTopo para regressar no topo da página
 document.addEventListener("DOMContentLoaded", function () {
     var irAoTopoBtn = document.getElementById("irAoTopoBtn");
@@ -210,7 +211,6 @@ const swalSocio1 = Swal.mixin({
     },
     buttonsStyling: false
 });
-
 function AdicionarSocio() {
 
     var Nome = $("#Nome").val();
@@ -221,8 +221,6 @@ function AdicionarSocio() {
     var fotoArquivo = fotoInput.files[0];
     var EstadoCivil = $("#EstadoCivil").val();
     var Habilitacoes = $("#Habilitacoes").val();
-    var Nacionalidade = $("#Nacionalidade").val();
-    var Profissao = $("#Profissao").val();
     var NomeDoPai = $("#NomeDoPai").val();
     var NomeDaMae = $("#NomeDaMae").val();
     var Endereco = $("#Endereco").val();
@@ -246,8 +244,6 @@ function AdicionarSocio() {
     formData.append('Foto', fotoArquivo);
     formData.append('EstadoCivil', EstadoCivil);
     formData.append('Habilitacoes', Habilitacoes);
-    formData.append('Nacionalidade', Nacionalidade);
-    formData.append('Profissao', Profissao);
     formData.append('NomeDoPai', NomeDoPai);
     formData.append('NomeDaMae', NomeDaMae);
     formData.append('Endereco', Endereco);
@@ -321,6 +317,93 @@ function AdicionarSocio() {
         });
     }
 }
+/*---------------------------------------------*/
+
+/*-----------------Solicitar Apoio----------------------*/
+
+///----Adicionar--
+/*
+function SolicitarDeclaraca() {
+
+
+    //var Mensagem = $("#descricao").val();
+    //var TipoApoioId = $("#tipoApoioId").val();
+
+    //var fotoInput = document.getElementById('imagem');
+    //var fotoArquivo = fotoInput.files[0];
+
+    //var SocioId = $("#socioId").val();
+    //var DataCriacao = $("#dataCriacao").val();
+    //var Status = $("#status").val();
+
+    //var formData = new FormData();
+    //formData.append('Mensagem', Mensagem);
+    //formData.append('TipoApoioId', TipoApoioId);
+    //formData.append('Imagem', fotoArquivo);
+
+    //formData.append('SocioId', SocioId);
+    //formData.append('DataCriacao', DataCriacao);
+    //formData.append('Status', Status);
+
+
+    if (!ValidarSolicitacaoDeclaracao()) {
+        return;
+    }
+    else {
+        alert("Teste");
+        // $('#loading-overlay').show();
+        // $.ajax({
+        //     type: "POST",
+        //     url: "/Socio/Apoio/Solicitar",
+        //     dataType: "json",
+        //     data: formData,
+        //     processData: false,
+        //     contentType: false,
+        //     success: function (result) {
+        //         if (result.substring(0, 1) == "x") {
+        //             NotificarErro("error", "Erro!", result);
+        //             return false;
+        //         }
+        //         $('#loading-overlay').hide();
+        //         Swal.fire({
+        //             icon: "success",
+        //             title: "Sucesso",
+        //             text: result,
+        //             showConfirmButton: false,
+        //             timer: 2500
+        //         })
+        //         $("#nome").val("");
+        //     },
+        //     error: function (result) {
+        //         NotificarErro("error", "Erro!", result);
+        //     }
+        // });
+    }
+}
+function ValidarSolicitacaoDeclaracao() {
+    if ($("#tipoDeclaracaoId").text() == "..Selecione um Tipo..") {
+        $("#tipoDeclaracaoId").focus();
+        NotificarErro("error", "Erro!", "Selecione o tipo de declaração que pretende solicitar.");
+        return false;
+    }
+    return true;
+}
+
+
+
+function NotificarErro(icone, titulo, mensagem) {
+    $('#loading-overlay').hide();
+    Swal.fire({
+        icon: icone,
+        title: titulo,
+        text: mensagem,
+        showConfirmButton: false,
+        iconSize: "10px",
+        timer: 2500
+    });
+}
+*/
+/*---------------------------------------------*/
 
 function abrirModalAgregado(id) {
     
@@ -368,35 +451,28 @@ function validarFormSocio() {
         }
 
         else {
-            if ($("#Nacionalidade").val() == "") {
-                $("#Nacionalidade").focus();
-                NotificarErro("error", "Erro", "A Nacionalidade deve ser preenchida.");
+            if ($("#Telefone").val() == "") {
+                $("#Telefone").focus();
+                NotificarErro("error", "Erro", "O Telefone deve ser preenchido.");
                 return false;
             }
             else {
-                if ($("#Telefone").val() == "") {
-                    $("#Telefone").focus();
-                    NotificarErro("error", "Erro", "O Telefone deve ser preenchido.");
+                if ($("#bairro").val() == "..Selecione um Bairro..") {
+                    $("#bairro").focus();
+                    NotificarErro("error", "Erro!", "É necessário selecionar um Bairro.");
                     return false;
                 }
                 else {
-                    if ($("#bairro").val() == "..Selecione um Bairro..") {
-                        $("#bairro").focus();
-                        NotificarErro("error", "Erro!", "É necessário selecionar um Bairro.");
+                    if ($("#organismo").val() == "..Selecione um Organismo..") {
+                        $("#organismo").focus();
+                        NotificarErro("error", "Erro!", "É necessário selecionar um Organismo.");
                         return false;
                     }
                     else {
-                        if ($("#organismo").val() == "..Selecione um Organismo..") {
-                            $("#organismo").focus();
-                            NotificarErro("error", "Erro!", "É necessário selecionar um Organismo.");
+                        if ($("#Categoria").val() == "..Selecione uma Categoria..") {
+                            $("#Categoria").focus();
+                            NotificarErro("error", "Erro!", "É necessário selecionar uma Categoria.");
                             return false;
-                        }
-                        else {
-                            if ($("#Categoria").val() == "..Selecione uma Categoria..") {
-                                $("#Categoria").focus();
-                                NotificarErro("error", "Erro!", "É necessário selecionar uma Categoria.");
-                                return false;
-                            }
                         }
                     }
                 }
@@ -424,7 +500,6 @@ function AdicionarAgregado() {
                 BI: $("#biAgregado").val(),
                 Genero: $("#generoAgregado").val(),
                 DataNascimento: $("#dataNascimentoAgregado").val(),
-                Nacionalidade: $("#nacionalidadeAgregado").val(),
                 RelacaoId: $("#relacaoAgregado").val(),
                 SocioId: $("#SocioId").val(),
                 DataCriacao: $("#dataCriacaoAgregado").val(),
@@ -439,11 +514,9 @@ function AdicionarAgregado() {
                 $("#nomeAgregado").val("");
                 $("#biAgregado").val("");
                 $("#dataNascimentoAgregado").val("");
-                $("#nacionalidadeAgregado").val("");
             },
             error: function (result) {
                 Notificar("error", "Erro!", result);
-
             }
         });
     }
@@ -466,13 +539,6 @@ function ValidarAgregado() {
                 $("#dataNascimentoAgregado").focus();
                 NotificarErro("error", "Erro!", "A Data de Nascimento deve ser preenchida.");
                 return false;
-            }
-            else {
-                if ($("#nacionalidadeAgregado").val() == "") {
-                    $("#nacionalidadeAgregado").focus();
-                    NotificarErro("error", "Erro!", "A Nacionalidade do Agregado deve ser preenchida.");
-                    return false;
-                }
             }
         }
     }
@@ -747,7 +813,17 @@ function pesquisarPAApoio() {
     }).then((result) => {
         if (result.isConfirmed) {
             if (result.value.socioId) {
-                window.location = "/Apoio/Criar/" + result.value.socioId;
+                if (result.value.estado == "Pendente") {
+
+                    Swal.fire({
+                        title: 'Erro!',
+                        text: 'Sócio inativo ou pendente!',
+                        icon: 'error'
+                    });
+                }
+                else {
+                    window.location = "/Apoio/Criar/" + result.value.socioId;
+                }
             }
             else {
                 Swal.fire({
@@ -1597,40 +1673,6 @@ function EliminarTipoItem() {
     });
 }
 
-/*-----------Tipo de Pagamento -----------------*/
-
-//----------Adicionar----
-function AdicionarTipoPagamento() {
-    if ($("#Nome").val() == "") {
-        NotificarErro("error", "Erro!", "O Nome do Bairro deve ser preenchido.");
-    }
-    else {
-        $('#loading-overlay').show(); 
-        $.ajax({
-            type: "POST",
-            url: "/TipoPagamento/Create",
-            data: {
-                nome: $("#Nome").val(),
-                dataCriacao: $("#dataCriacao").val(),
-                status: $("#status").val()
-            },
-            success: function (result) {
-                if (result.substring(0, 1) == "x") {
-                    Notificar("error", "Erro!", result);
-                    return false;
-                }
-                Notificar("success", "Sucesso!", result);
-                $("#Nome").val("");
-                //window.location = "/TipoPagamento/Index/";
-            },
-            error: function (result) {
-                Notificar("error", "Erro!", result);
-
-            }
-        });
-    }
-
-}
 
 
 /*------------PERIODO-------------*/

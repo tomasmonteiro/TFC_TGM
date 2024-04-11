@@ -43,21 +43,21 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Configuration
             services.AddScoped<IRelacaoAppService, RelacaoAppService>();
             services.AddScoped<IRelacaoService, RelacaoService>();
 
-            services.AddScoped<IItemRepository, ItemRepository>();
-            services.AddScoped<IItemAppService, ItemAppService>();
-            services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<IEmolumentoRepository, EmolumentoRepository>();
+            services.AddScoped<IEmolumentoAppService, EmolumentoAppService>();
+            services.AddScoped<IEmolumentoService, EmolumentoService>();
 
-            services.AddScoped<ITipoItemRepository, TipoItemRepository>();
-            services.AddScoped<ITipoItemAppService, TipoItemAppService>();
-            services.AddScoped<ITipoItemService, TipoItemService>();
+            services.AddScoped<ITipoEmolumentoRepository, TipoEmolumentoRepository>();
+            services.AddScoped<ITipoEmolumentoAppService, TipoEmolumentoAppService>();
+            services.AddScoped<ITipoEmolumentoService, TipoEmolumentoService>();
 
             services.AddScoped<IPagamentoRepository, PagamentoRepository>();
             services.AddScoped<IPagamentoAppService, PagamentoAppService>();
             services.AddScoped<IPagamentoService, PagamentoService>();
 
-			services.AddScoped<IItemPagamentoRepository, ItemPagamentoRepository>();
-			services.AddScoped<IItemPagamentoAppService, ItemPagamentoAppService>();
-			services.AddScoped<IItemPagamentoService, ItemPagamentoService>();
+			services.AddScoped<IPagamentoEmolumentoRepository, PagamentoEmolumentoRepository>();
+			services.AddScoped<IPagamentoEmolumentoAppService, PagamentoEmolumentoAppService>();
+			services.AddScoped<IPagamentoEmolumentoService, PagamentoEmolumentoService>();
 
 			services.AddScoped<IPeriodoRepository, PeriodoRepository>();
             services.AddScoped<IPeriodoAppService, PeriodoAppService>();
@@ -104,8 +104,26 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Configuration
             services.AddScoped<IDespesaService, DespesaService>();
 
             services.AddScoped<IUsuarioSocioRepository, UsuarioSocioRepository>();
-            //services.AddScoped<IDespesaAppService, DespesaAppService>();
-            //services.AddScoped<IDespesaService, DespesaService>();
+            //services.AddScoped<IUsuarioSocioAppService, UsuarioSocioAppService>();
+            //services.AddScoped<IUsuarioSocioService, UsuarioSocioService>();
+
+
+            services.AddScoped<ITipoApoioRepository, TipoApoioRepository>();
+            services.AddScoped<ITipoApoioAppService, TipoApoioAppService>();
+            services.AddScoped<ITipoApoioService, TipoApoioService>();
+
+            services.AddScoped<ITipoDeclaracaoRepository, TipoDeclaracaoRepository>();
+            services.AddScoped<ITipoDeclaracaoAppService, TipoDeclaracaoAppService>();
+            services.AddScoped<ITipoDeclaracaoService, TipoDeclaracaoService>();
+
+            services.AddScoped<ISolicitacaoDeclaracaoRepository, SolicitacaoDeclaracaoRepository>();
+            services.AddScoped<ISolicitacaoDeclaracaoAppService, SolicitacaoDeclaracaoAppService>();
+            services.AddScoped<ISolicitacaoDeclaracaoService, SolicitacaoDeclaracaoService>();
+
+            services.AddScoped<ISolicitacaoApoioRepository, SolicitacaoApoioRepository>();
+            services.AddScoped<ISolicitacaoApoioAppService, SolicitacaoApoioAppService>();
+            services.AddScoped<ISolicitacaoApoioService, SolicitacaoApoioService>();
+
 
             return services;
         }

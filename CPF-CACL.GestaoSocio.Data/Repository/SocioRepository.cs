@@ -16,7 +16,7 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
 
         public Socio BuscarPorCodigo(string cod)
         {
-            return _gsContext.Socio.Where(p => p.Cod == cod && p.Status == true).FirstOrDefault();
+            return _gsContext.Socio.Where(p => p.Codigo == cod && p.Status == true).FirstOrDefault();
         }
 
         public ICollection<Socio> BuscarPorGenero(string genero)
@@ -42,9 +42,9 @@ namespace CPF_CACL.GestaoSocio.Data.Repository
         public string ConsultarUltimoCodigo(string tipoEntidade, int anoAtual)
         {
             var ultimoCodigo = _gsContext.Socio
-                .Where(p => p.Cod.StartsWith($"{tipoEntidade}{anoAtual}"))
-                .OrderByDescending(p => p.Cod)
-                .Select(p => p.Cod)
+                .Where(p => p.Codigo.StartsWith($"{tipoEntidade}{anoAtual}"))
+                .OrderByDescending(p => p.Codigo)
+                .Select(p => p.Codigo)
                 .FirstOrDefault();
 
             return ultimoCodigo;

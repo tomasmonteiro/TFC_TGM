@@ -11,28 +11,32 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.ToTable("Socio");
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Cod).HasColumnType("varchar(10)").IsRequired(true);
-            builder.HasIndex(i => i.Cod).IsUnique(true); // Setar a propriedade como única
+            builder.Property(x => x.Codigo).HasColumnType("varchar(10)").IsRequired(true);
+            builder.HasIndex(i => i.Codigo).IsUnique(true); // Setar a propriedade como única
 
-            builder.Property(x => x.Nome).HasColumnType("varchar(150)").IsRequired();
+            builder.Property(x => x.Nome).HasColumnType("varchar(50)").IsRequired();
             builder.Property(x => x.BI).HasColumnType("varchar(14)");
-            builder.Property(x => x.Genero).HasColumnType("varchar(9)").IsRequired();
+
+            builder.Property(x => x.Genero).HasColumnType("char(1)").IsRequired();
+
             builder.Property(x => x.DataNascimento).HasColumnType("date").IsRequired();
-            builder.Property(x => x.CaminhoFoto).HasColumnType("varchar(1000)");
-            builder.Property(x => x.EstadoCivil).HasColumnType("varchar(20)").IsRequired();
+            builder.Property(x => x.CaminhoFoto).HasColumnType("varchar(200)");
+
+            builder.Property(x => x.EstadoCivil).HasColumnType("varchar(10)").IsRequired();
+
             builder.Property(x => x.Telefone).HasColumnType("varchar(12)").IsRequired();
-            builder.Property(x => x.Email).HasColumnType("varchar(300)");
-            builder.Property(x => x.Endereco).HasColumnType("varchar(300)");
-            builder.Property(x => x.Profissao).HasColumnType("varchar(100)");
-            builder.Property(x => x.Habilitacoes).HasColumnType("varchar(20)");
-            builder.Property(x => x.Nacionalidade).HasColumnType("varchar(20)").IsRequired();
-            builder.Property(x => x.NomeDoPai).HasColumnType("varchar(150)");
-            builder.Property(x => x.NomeDaMae).HasColumnType("varchar(150)");
-            builder.Property(x => x.OrganismoId).HasColumnType("int").IsRequired(); 
-            builder.Property(x => x.LocalDeTrabalho).HasColumnType("varchar(100)");
-            builder.Property(x => x.EstadoSocio).HasColumnName("EstadoSocio").HasColumnType("varchar(10)");
-            builder.Property(x => x.Funcao).HasColumnType("varchar(100)");
-            builder.Property(x => x.Departamento).HasColumnType("varchar(100)");
+            builder.Property(x => x.Email).HasColumnType("varchar(50)");
+            builder.Property(x => x.Endereco).HasColumnType("varchar(50)");
+
+            builder.Property(x => x.Habilitacoes).HasColumnType("varchar(13)");
+
+
+            builder.Property(x => x.NomeDoPai).HasColumnType("varchar(50)");
+            builder.Property(x => x.NomeDaMae).HasColumnType("varchar(50)");
+            builder.Property(x => x.LocalDeTrabalho).HasColumnType("varchar(20)");
+            builder.Property(x => x.EstadoSocio).HasColumnType("varchar(8)");
+            builder.Property(x => x.Funcao).HasColumnType("varchar(30)");
+            builder.Property(x => x.Departamento).HasColumnType("varchar(30)");
             builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");
             builder.Property(x => x.Status).HasColumnType("bit").IsRequired();

@@ -13,7 +13,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.ViewModel
         [Key]
         public Guid Id { get; set; }
 
-        public string Cod { get; set; }
+        public string Codigo { get; set; }
 
         public string Nome { get; set; }
 

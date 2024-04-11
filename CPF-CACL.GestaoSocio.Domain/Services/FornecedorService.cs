@@ -15,7 +15,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
 
         public void Add(Fornecedor fornecedor)
         {
-            fornecedor.Cod = GerarDodigoDoFornecedor();
+            fornecedor.Codigo = GerarDodigoDoFornecedor();
             _fornecedorRepository.Add(fornecedor);
         }
 

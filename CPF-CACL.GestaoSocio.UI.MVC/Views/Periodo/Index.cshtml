@@ -39,7 +39,7 @@
             <div class="margem-container card-body">
                 <div class="margens col-12 col-md-12 col-lg-12">
                     <div class="text-center col-12 col-md-12 col-lg-12">
-                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 6;" id="myDataTable">
+                        <table class="table table-responsive stripe teste table-hover col-12 col-md-12 col-lg-12" style="--num-colunas: 5;" id="myDataTable">
                             <thead class="navbar-blue">
                                 <tr>
                                     <th scope="col">#COD</th>
@@ -55,7 +55,7 @@
                                     foreach (PeriodoViewModel periodo in Model)
                                     {
                                         <tr role="row" class="">
-                                            <th scope="row">@periodo.Cod</th>
+                                            <th scope="row">@periodo.Codigo</th>
                                             <td class="table-plus sorting_1" tabindex="0">@periodo.Ano</td>
                                             <td class="table-plus sorting_1" tabindex="0">@periodo.DataInicio</td>
                                             <td class="table-plus sorting_1" tabindex="0">@periodo.DataFim</td>
@@ -65,8 +65,8 @@
                                                         <i class="dw dw-more"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                                        <a class="dropdown-item" href="" onclick="SetPeriodo('@periodo.Id', '@periodo.Cod', '@periodo.Ano', '@periodo.DataInicio', '@periodo.DataFim', '@periodo.DataCriacao', '@periodo.DataAtualizacao')" data-toggle="modal" data-target="#editarSocio"><i class="dw dw-edit2"></i> Editar</a>
-                                                        <a class="dropdown-item" href="#" onclick="SetPeriodo('@periodo.Id', '@periodo.Cod', '@periodo.Ano')" data-toggle="modal" data-target="#eliminarSocio"><i class="dw dw-delete-3"></i> Eliminar</a>
+                                                        <a class="dropdown-item" href="" onclick="SetPeriodo('@periodo.Id', '@periodo.Codigo', '@periodo.Ano', '@periodo.DataInicio', '@periodo.DataFim', '@periodo.DataCriacao', '@periodo.DataAtualizacao')" data-toggle="modal" data-target="#editarSocio"><i class="dw dw-edit2"></i> Editar</a>
+                                                        <a class="dropdown-item" href="#" onclick="SetPeriodo('@periodo.Id', '@periodo.Codigo', '@periodo.Ano')" data-toggle="modal" data-target="#eliminarSocio"><i class="dw dw-delete-3"></i> Eliminar</a>
                                                     </div>
                                                 </div>
                                             </td>

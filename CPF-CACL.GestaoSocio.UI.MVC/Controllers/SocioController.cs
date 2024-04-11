@@ -21,11 +21,11 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         private readonly IMunicipioRepository _municipioRepository;
         private readonly ICategoriaSocioRepository _categoriaRepository;
         private readonly ISaldoAppService _saldoAppService;
-        private readonly IItemAppService _itemAppService;
+        private readonly IEmolumentoAppService _itemAppService;
         private readonly IItemApoioAppService _itemApoioAppService;
 		private readonly IDependenteAppService _agregadoAppService;
 
-		public SocioController(IItemApoioAppService itemApoioAppService, ISocioAppService socioAppService, ISocioRepository socioRepository, IItemAppService itemAppService, IOrganismoRepository organismoRepository,  IBairroRepository bairroRepository, ICategoriaSocioRepository categoriaRepository, IMunicipioRepository municipioRepository, ISaldoAppService saldoAppService, IDependenteAppService agregadoAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+		public SocioController(IItemApoioAppService itemApoioAppService, ISocioAppService socioAppService, ISocioRepository socioRepository, IEmolumentoAppService itemAppService, IOrganismoRepository organismoRepository,  IBairroRepository bairroRepository, ICategoriaSocioRepository categoriaRepository, IMunicipioRepository municipioRepository, ISaldoAppService saldoAppService, IDependenteAppService agregadoAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
         {
             _itemApoioAppService = itemApoioAppService;
             _socioAppService = socioAppService;
@@ -44,8 +44,6 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // GET: SocioController
         public ActionResult Index()
         {
-            
-
             var socio = _socioAppService.Buscar();
             return View(socio);
         }
@@ -65,7 +63,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 			IEnumerable<SaldoViewModel> saldos = _saldoAppService.BuscarDisponivel(idSaldo);
             ViewBag.Saldo = saldos;
 
-            IEnumerable<ItemViewModel> itens = _itemAppService.BuscarItemPorSocio(idItens);
+            IEnumerable<EmolumentoViewModel> itens = _itemAppService.BuscarItemPorSocio(idItens);
 			ViewBag.Itens = itens;
 
             IEnumerable<DependenteViewModel> agregado = _agregadoAppService.BuscarDependentePorSocio(idAgregado);
@@ -171,9 +169,18 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
                     }
                     
                     var novoSocioId = _socioAppService.Adicionar(socio);
-                    var detalhesUrl = Url.Action("Details", new { id = novoSocioId });
-                    //var resultado = Json( new { id = novoSocioId, url = detalhesUrl});
-                    var mensagem = "Registo adicionado com sucesso.";
+                    if (!ValidOperation())
+                    {
+                        var sb = new StringBuilder();
+                        foreach (var item in BuscarMensagemErro())
+                        {
+                            sb.AppendLine($"x {item}\n");
+                        }
+                        return Json(sb.ToString());
+                    }
+                // var detalhesUrl = Url.Action("Details", new { id = novoSocioId });
+                //var resultado = Json( new { id = novoSocioId, url = detalhesUrl});
+                var mensagem = "Registo adicionado com sucesso.";
                     var jsonData = new
                     {
                         novoSocioId,
@@ -214,9 +221,10 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         public ActionResult Pesquisar(string codigo)
         {
             var socio = _socioRepository.BuscarPorCodigo(codigo);
+
             if (socio!= null)
             {
-               return Json(new { socioId = socio.Id.ToString() });
+               return Json(new { socioId = socio.Id.ToString(), estado = socio.EstadoSocio.ToString() });
             }
             else
             {

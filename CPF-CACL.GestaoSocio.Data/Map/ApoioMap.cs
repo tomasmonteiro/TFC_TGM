@@ -18,10 +18,10 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.Id);
             builder.HasKey(x => x.Id);
 
-            builder.Property(x => x.Descricao).HasColumnType("varchar(300)");
+            builder.Property(x => x.Descricao).HasColumnType("varchar(50)");
             builder.Property(x => x.DataApoio).HasColumnType("date").IsRequired();
             builder.Property(x => x.Valor).HasColumnType("money");
-            builder.Property(x => x.EstadoApoio).HasColumnType("varchar(300)");
+            builder.Property(x => x.EstadoApoio).HasColumnType("varchar(9)");
 
             builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");

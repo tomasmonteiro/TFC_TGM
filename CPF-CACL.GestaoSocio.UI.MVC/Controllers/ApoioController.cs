@@ -52,7 +52,7 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
             var socio = _socioAppService.BuscarPorId(id);
             ViewBag.Socio = socio;
 
-            ViewBag.CodigoSocio = socio.Cod;
+            ViewBag.CodigoSocio = socio.Codigo;
             ViewBag.FotoSocio = socio.CaminhoFoto;
             ViewBag.NomeSocio = socio.Nome;
             ViewBag.EnderecoSocio = socio.Endereco;

@@ -1,5 +1,5 @@
 ﻿@using CPF_CACL.GestaoSocio.Aplication.ViewModel;
-@model IEnumerable<TipoItemViewModel>
+@model IEnumerable<TipoEmolumentoViewModel>
 
 @{
     ViewData["Title"] = "Listagem de Tipos de Item";
@@ -49,7 +49,7 @@
                             <tbody>
                                 @if (Model != null && Model.Any())
                                 {
-                                    foreach (TipoItemViewModel tipoItem in Model)
+                                    foreach (TipoEmolumentoViewModel tipoItem in Model)
                                     {
                                         <tr>
                                             <td>@tipoItem.Descricao</td>

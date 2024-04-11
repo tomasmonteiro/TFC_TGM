@@ -34,13 +34,17 @@ namespace CPF_CACL.GestaoSocio.Data.Context
         public DbSet<PedidoApoio> PedidoApoios { get; set; }
         public DbSet<Relacao> Relacao { get; set; }
 
-        public DbSet<TipoItem> TipoItem { get; set; }
-        public DbSet<Item> Item { get; set; }
-        public DbSet<ItemPagamento> ItemPagamento { get; set; }
+        public DbSet<TipoEmolumento> TipoItem { get; set; }
+        public DbSet<Emolumento> Item { get; set; }
+        public DbSet<PagamentoEmolumento> ItemPagamento { get; set; }
         public DbSet<Pagamento> Pagamento { get; set; }
         public DbSet<Periodo> Periodo { get; set; } 
         public DbSet<Saldo> Saldo { get; set; }
         public DbSet<UsuarioSocio> UsuarioSocio { get; set; }
+        public DbSet<SolicitacaoApoio> SolicitacaoApoio { get; set; }
+        public DbSet<TipoApoio> TipoApoio { get; set; }
+        public DbSet<SolicitacaoDeclaracao> SolicitacaoDeclaracao { get; set; }
+        public DbSet<TipoDeclaracao> TipoDeclaracao { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

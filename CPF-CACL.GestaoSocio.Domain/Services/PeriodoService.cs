@@ -9,9 +9,9 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
     public class PeriodoService : ServiceBase, IPeriodoService
     {
         private readonly IPeriodoRepository _periodoRepository;
-        private readonly IItemRepository _itemRepository;
+        private readonly IEmolumentoRepository _itemRepository;
 
-        public PeriodoService(IPeriodoRepository periodoRepository, IItemRepository itemRepository, INotificador notificador) : base(notificador)
+        public PeriodoService(IPeriodoRepository periodoRepository, IEmolumentoRepository itemRepository, INotificador notificador) : base(notificador)
         {
             _periodoRepository = periodoRepository;
             _itemRepository = itemRepository;
@@ -23,12 +23,12 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
         {
             try
             {
-                if (_periodoRepository.Find(a => a.Cod == periodo.Cod && a.Ano == periodo.Ano && a.Status == true).Count() > 0)
+                if (_periodoRepository.Find(a => a.Codigo == periodo.Codigo && a.Ano == periodo.Ano && a.Status == true).Count() > 0)
                 {
                     Notificar("O Período que pretende registar já existe.");
                     return;
                 }
-                periodo.Cod = GerarCodigoPeriodo(periodo.DataInicio);
+                periodo.Codigo = GerarCodigoPeriodo(periodo.DataInicio);
                 periodo.Ano = DateTime.Now.Year;
                 _periodoRepository.Add(periodo);
             }
@@ -51,11 +51,11 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
                 for (int i = 0; i < mesesAno.totalMese; i++)
                 {
 
-                    periodo.Cod = GerarCodigoPeriodo(mesesAno.Item1[i].DataInicio);
+                    periodo.Codigo = GerarCodigoPeriodo(mesesAno.Item1[i].DataInicio);
 
-                    if (_periodoRepository.Find(a => a.Cod == periodo.Cod && a.Ano == periodo.Ano && a.Status == true).Count() > 0)
+                    if (_periodoRepository.Find(a => a.Codigo == periodo.Codigo && a.Ano == periodo.Ano && a.Status == true).Count() > 0)
                     {
-                        Notificar("O Período "+periodo.Cod+" já existe.");return;
+                        Notificar("O Período "+periodo.Codigo+" já existe.");return;
                     }
 
                     periodo.Status = true;
