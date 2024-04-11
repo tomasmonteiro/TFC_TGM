@@ -1,4 +1,5 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+using CPF_CACL.GestaoSocio.Domain.Entities;
 
 namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
 {
@@ -6,6 +7,7 @@ namespace CPF_CACL.GestaoSocio.Aplication.Interfaces
     {
         public void Adicionar(SaldoViewModel saldo);
         public IEnumerable<SaldoViewModel> BuscarTodos();
+        public SaldoViewModel BuscarPorSocio(Guid idSocio);
         public IEnumerable<SaldoViewModel> BuscarDisponivel(Guid id);
         public SaldoViewModel BuscarPorId(Guid id);
         public void Atualizar(SaldoViewModel saldo);

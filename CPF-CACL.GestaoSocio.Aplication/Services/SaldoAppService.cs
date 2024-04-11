@@ -33,6 +33,12 @@ namespace CPF_CACL.GestaoSocio.Aplication.Services
         {
             return mapper.Map<SaldoViewModel>(saldoService.GetById(id));
         }
+
+        public SaldoViewModel BuscarPorSocio(Guid idSocio)
+        {
+            return mapper.Map<SaldoViewModel>(saldoService.BuscarPorSocio(idSocio));
+        }
+
         public IEnumerable<SaldoViewModel> BuscarTodos()
         {
             return mapper.Map<IEnumerable<SaldoViewModel>>(saldoService.BuscarTodos());

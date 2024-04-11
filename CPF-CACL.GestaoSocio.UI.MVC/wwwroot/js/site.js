@@ -1200,9 +1200,7 @@ function RegistarPagamento() {
     var saldoSelecionado = $('#tabelaSaldo input[name="opcaoSaldo"]:checked').closest('tr');
     var saldoId = saldoSelecionado.find('td:eq(0)').text();
     var dataPagamento = saldoSelecionado.find('td:eq(1)').text();
-    var recibo = saldoSelecionado.find('td:eq(2)').text();
-    var valorSaldo = parseFloat(saldoSelecionado.find('td:eq(3)').text());
-    var pagamentoId = saldoSelecionado.find('td:eq(4)').text();
+    var valorSaldo = parseFloat(saldoSelecionado.find('td:eq(2)').text());
 
 
     var itemSelecionado = $('#tabelaItem input[name="opcaoItem"]:checked').closest('tr');
@@ -1222,15 +1220,13 @@ function RegistarPagamento() {
             type: 'POST',
             data: {
                 DataInsercao: dataPagamento,
-                PagamentoId: pagamentoId,
                 ItemId: itemId,
                 DataCriacao: $("#dataCriacao").val(),
                 Status: $("#Status").val(),
                 idSaldo: saldoId,
                 saldoValor: valorSaldo,
                 itemValor: valorItem,
-                socioId: $("#idSocio").val(),
-                recibo: recibo
+                socioId: $("#idSocio").val()
             },
             success: function (result) {
                 if (result.substring(0, 1) == "x") {

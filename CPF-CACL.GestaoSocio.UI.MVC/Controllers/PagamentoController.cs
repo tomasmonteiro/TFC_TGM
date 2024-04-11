@@ -19,13 +19,15 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         private readonly ISaldoService _saldoService;
         private readonly IPagamentoAppService _pagamentoAppService;
         private readonly ITipoPagamentoRepository _tipoPagamentoRepository;
-        private readonly IEmolumentoAppService _itemAppService;
+		private readonly IPagamentoRepository _pagamentoRepository;
+		private readonly IEmolumentoAppService _itemAppService;
         private readonly IPagamentoEmolumentoAppService _itemPagamentoAppService;
 		private readonly IPagamentoEmolumentoRepository _itemPagamentoRepository;
 		private readonly ISocioAppService _socioAppService;
-        public PagamentoController(ITipoPagamentoRepository tipoPagamentoRepository, IPagamentoEmolumentoRepository itemPagamentoRepository, IPagamentoAppService pagamentoAppService, ISaldoService saldoService, IPagamentoEmolumentoAppService itemPagamentoAppService, IEmolumentoAppService itemAppService, ISaldoAppService saldoAppService, ISocioAppService socioAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
-        {
-            _tipoPagamentoRepository = tipoPagamentoRepository;
+        public PagamentoController(ITipoPagamentoRepository tipoPagamentoRepository, IPagamentoRepository pagamentoRepository, IPagamentoEmolumentoRepository itemPagamentoRepository, IPagamentoAppService pagamentoAppService, ISaldoService saldoService, IPagamentoEmolumentoAppService itemPagamentoAppService, IEmolumentoAppService itemAppService, ISaldoAppService saldoAppService, ISocioAppService socioAppService, INotificador notificador, IWebHostEnvironment env) : base(notificador, env)
+		{
+			_pagamentoRepository = pagamentoRepository;
+			_tipoPagamentoRepository = tipoPagamentoRepository;
             _saldoAppService = saldoAppService;
             _saldoService = saldoService;
             _pagamentoAppService = pagamentoAppService;
@@ -158,48 +160,49 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 		[Route("/Pagamento/Efectuar-Pagamento")]
 		public ActionResult RegistarPagamento(
             DateTime DataInsercao, 
-            Guid PagamentoId, 
             Guid ItemId, 
             DateTime DataCriacao,
             string Status,
             Guid idSaldo,
             double saldoValor,
             double itemValor,
-            Guid socioId,
-            string recibo
+            Guid socioId
             )
 		{
 			try
 			{
+                var pagamento = _pagamentoRepository.BuscarUltimoPagamento();
                 var itemPagamento = new PagamentoEmolumentoViewModel
                 {
                     DataInsercao = DataInsercao,
-                    PagamentoId = PagamentoId,
+                    PagamentoId = pagamento.Id,
                     ItemId = ItemId,
                     DataCriacao = DataCriacao,
                     Status = Status
                 };
 				_itemPagamentoAppService.Adicionar(itemPagamento);
 
+                _saldoService.DiminuirSaldo(socioId, itemValor);
+
                 //Transformar o Saldo em usado
-                _saldoService.TornarUsado(idSaldo);
+                //_saldoService.TornarUsado(idSaldo);
 
                 //Criar um novo saldo em caso de o valor do saldo for superior o valor do item
-                if (saldoValor > itemValor)
-                {
-                    var valor = saldoValor - itemValor;
-                    var novoSaldo = new SaldoViewModel
-                    {
-                        Recibo = recibo,
-                        Valor = valor,
-                        SocioId = socioId,
-                        PagamentoId = PagamentoId,
-                        DataPagamento = DataInsercao,
-                        DataCriacao = DateTime.Now,
-                        Status = "true"
-                    };
-                    _saldoAppService.Adicionar(novoSaldo);
-                }
+                //if (saldoValor > itemValor)
+                //{
+                //    var valor = saldoValor - itemValor;
+                //    var novoSaldo = new SaldoViewModel
+                //    {
+                //        Recibo = recibo,
+                //        Valor = valor,
+                //        SocioId = socioId,
+                //        PagamentoId = PagamentoId,
+                //        DataPagamento = DataInsercao,
+                //        DataCriacao = DateTime.Now,
+                //        Status = "true"
+                //    };
+                //    _saldoAppService.Adicionar(novoSaldo);
+                //}
 
 				if (!ValidOperation())
 				{

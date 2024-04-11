@@ -20,7 +20,7 @@ namespace CPF_CACL.GestaoSocio.Data.Map
             builder.Property(x => x.Genero).HasColumnType("char(1)").IsRequired();
 
             builder.Property(x => x.DataNascimento).HasColumnType("date").IsRequired();
-            builder.Property(x => x.CaminhoFoto).HasColumnType("varchar(200)");
+            builder.Property(x => x.CaminhoFoto).HasColumnType("varchar(80)");
 
             builder.Property(x => x.EstadoCivil).HasColumnType("varchar(10)").IsRequired();
 

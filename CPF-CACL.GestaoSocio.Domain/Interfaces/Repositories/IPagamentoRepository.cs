@@ -7,7 +7,8 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
         IEnumerable<Pagamento> BuscarTodos();
 		IEnumerable<Pagamento> BuscarDisponiveis(Guid id);
 		Pagamento BuscarPorCod(string codigo);
-        public string ConsultarUltimoCodigo(int anoAtual);
+		Pagamento BuscarUltimoPagamento();
+		public string ConsultarUltimoCodigo(int anoAtual);
         List<Pagamento> BuscarPagamentosPorIds(List<Guid> pagamentosIds);
         int ContarPagamentos();
     }

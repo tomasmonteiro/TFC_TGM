@@ -21,19 +21,26 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             _pagamentoRepository.Add(pagamento);
 
             //Adicionar automaticamente o Saldo
+            var saldo = _saldoRepository.BuscarPorSocio(pagamento.SocioId);
 
-            var saldo = new Saldo
+            if (saldo == null)
             {
-                Recibo = pagamento.Recibo,
-                Valor = pagamento.Valor,
-                SocioId = pagamento.SocioId,
-                PagamentoId = pagamento.Id,
-                DataPagamento = pagamento.DataPagamento,
-                DataCriacao = DateTime.Now,
-                Status = true
-            };
+                var novoSaldo = new Saldo
+                {
+                    Valor = pagamento.Valor,
+                    SocioId = pagamento.SocioId,
+                    DataCriacao = DateTime.Now,
+                    Status = true
+                };
+                _saldoRepository.Add(novoSaldo);
+            }
+            else
+            {
+                saldo.Valor = saldo.Valor + pagamento.Valor;
+                saldo.DataAtualizacao = DateTime.Now;
+                _saldoRepository.Update(saldo);
+            }
 
-            _saldoRepository.Add(saldo);
 
         }
 

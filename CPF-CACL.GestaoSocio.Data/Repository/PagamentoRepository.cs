@@ -34,7 +34,13 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
                 .Include(s => s.Socio)
                 .Where(p => p.Status == true);
         }
-        public string ConsultarUltimoCodigo(int anoAtual)
+
+		public Pagamento BuscarUltimoPagamento()
+		{
+            return _gsContext.Pagamento.OrderByDescending(e => e.Id).FirstOrDefault();
+		}
+
+		public string ConsultarUltimoCodigo(int anoAtual)
         {
             var ultimoCodigo = _gsContext.Pagamento
                 .Where(p => p.Recibo.StartsWith($"{anoAtual}"))

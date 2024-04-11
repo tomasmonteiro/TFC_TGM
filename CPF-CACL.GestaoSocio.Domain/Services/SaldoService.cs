@@ -39,14 +39,27 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             return _saldoRepository.BuscarDisponiveis(id);
         }
 
+        public Saldo BuscarPorSocio(Guid idSocio)
+        {
+            return _saldoRepository.BuscarPorSocio(idSocio);
+        }
+
         public IEnumerable<Saldo> BuscarTodos()
         {
-            throw new NotImplementedException();
+            return _saldoRepository.BuscarTodos();
+        }
+
+        public void DiminuirSaldo(Guid socioId, double valorPagamento)
+        {
+            var sado = _saldoRepository.BuscarPorSocio(socioId);
+            sado.Valor = sado.Valor - valorPagamento;
+            sado.DataAtualizacao = DateTime.Now;
+            _saldoRepository.Update(sado);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _saldoRepository.Dispose();
         }
 
         public void Eliminar(Guid id)
@@ -61,7 +74,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
 
         public Saldo GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return _saldoRepository.GetById(id);
         }
 
         public void Remove(Saldo obj)
@@ -94,12 +107,12 @@ namespace CPF_CACL.GestaoSocio.Domain.Services
             var novoSaldo = new Saldo
             {
                 //Cod = GerarCodigoPagamento(),
-                Recibo = saldos[0].Recibo,
+                //Recibo = saldos[0].Recibo,
                 Valor = valorTotal,
-                DataPagamento = saldos[0].DataPagamento,
+                //DataPagamento = saldos[0].DataPagamento,
                 Estado = Enums.EEstadoPagamento.Disponivel,
                 SocioId = saldos[0].SocioId,
-                PagamentoId = saldos[0].PagamentoId,
+                //PagamentoId = saldos[0].PagamentoId,
                 DataCriacao = DateTime.Now,
                 Status = true
             };

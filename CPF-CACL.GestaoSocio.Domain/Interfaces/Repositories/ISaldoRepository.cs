@@ -11,6 +11,7 @@ namespace CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories
     {
         IEnumerable<Saldo> BuscarTodos();
         IEnumerable<Saldo> BuscarDisponiveis(Guid id);
+        Saldo BuscarPorSocio(Guid idSocio);
         List<Saldo> BuscarPagamentosPorIds(List<Guid> saldosIds);
     }
 }
