@@ -57,8 +57,8 @@
                                             <div class="col-12 col-sm-6 col-md-3 espaco-input">
                                                 <label asp-for="Genero" class="control-label required"> Genero </label>
                                                 <select asp-for="Genero" id="Genero" class="form-control" data-val-required="">
-                                                    <option>F</option>
-                                                    <option>M</option>
+                                                    <option>Feminino</option>
+                                                    <option>Masculino</option>
                                                 </select>
                                                 <span asp-validation-for="Genero" class="text-danger"></span>
                                             </div>
@@ -92,7 +92,7 @@
                                                 <span asp-validation-for="Habilitacoes" class="text-danger"></span>
                                             </div>
 
-                                            <div class="col-12 col-sm-6 col-md-6 espaco-input">
+                                            <div class="col-12 col-sm-6 col-md-3 espaco-input">
                                                 <label asp-for="Foto" name="Foto" class="control-label imagem-upload">Adicionar Foto </label>
                                                 <input asp-for="Foto" type="file" accept=".jpg, .jpeg, .png" id="Foto" class="form-control btn-file" />
                                             </div>

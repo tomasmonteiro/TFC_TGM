@@ -12,7 +12,6 @@ namespace CPF_CACL.GestaoSocio.Domain.Entities
         public string Nome { get; set; }
         public string? BI { get; set; }
         public EGenero Genero { get; set; }
-        public string? Nacionalidade { get; set; }
         public DateTime DataNascimento { get; set; }
         public Guid SocioId { get; set; }
         public virtual Socio Socio { get; set; }

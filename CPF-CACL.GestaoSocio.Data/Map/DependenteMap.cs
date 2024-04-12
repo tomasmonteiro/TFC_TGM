@@ -18,7 +18,7 @@ namespace CPF_CACL.GestaoSocio.Data.Map
 
             builder.Property(x => x.DataNascimento).HasColumnType("date").IsRequired();
 
-            builder.Property(x => x.Nacionalidade).HasColumnType("varchar(20)").IsRequired(); //-------
+            //builder.Property(x => x.Nacionalidade).HasColumnType("varchar(20)").IsRequired(); //-------
 
             builder.Property(x => x.DataCriacao).HasColumnType("datetime").IsRequired();
             builder.Property(x => x.DataAtualizacao).HasColumnType("datetime");

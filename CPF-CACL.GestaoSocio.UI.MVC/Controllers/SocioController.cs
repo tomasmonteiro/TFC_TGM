@@ -67,12 +67,32 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
 			ViewBag.Itens = itens;
 
             IEnumerable<DependenteViewModel> agregado = _agregadoAppService.BuscarDependentePorSocio(idAgregado);
-            ViewBag.Agregado = agregado;
+            IEnumerable<DependenteViewModel> agreg = agregado.Select(ag =>
+            {
+                if (ag.Genero == "F")
+                {
+                    ag.Genero = "Feminino";
+                }
+                else
+                {
+                    ag.Genero = "Masculino";
+                }
+                return ag;
+            });
+            ViewBag.Agregado = agreg;
 
 			IEnumerable<ItemApoioViewModel> itemApoio = _itemApoioAppService.BuscarItemApoioPorSocio(idSocio);
 			ViewBag.ItemApoio = itemApoio;
 
 			var socio = _socioAppService.BuscarPorId(idSocio);
+            if (socio.Genero == "F")
+            {
+                socio.Genero = "Feminino";
+            }
+            else 
+            {
+				socio.Genero = "Masculino";
+			}
 
 			var viewModel = new SocioViewModel();
 
@@ -161,36 +181,40 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         {
             try
             {
-                //if (ModelState.IsValid)
-                //{
-                    if (socio.Foto != null)
-                    {
-                        socio.CaminhoFoto = SalvarFoto(socio.Foto);
-                    }
-                    
-                    var novoSocioId = _socioAppService.Adicionar(socio);
-                    if (!ValidOperation())
-                    {
-                        var sb = new StringBuilder();
-                        foreach (var item in BuscarMensagemErro())
-                        {
-                            sb.AppendLine($"x {item}\n");
-                        }
-                        return Json(sb.ToString());
-                    }
-                // var detalhesUrl = Url.Action("Details", new { id = novoSocioId });
-                //var resultado = Json( new { id = novoSocioId, url = detalhesUrl});
-                var mensagem = "Registo adicionado com sucesso.";
-                    var jsonData = new
-                    {
-                        novoSocioId,
-                        mensagem
-                    };
-                    return Json(jsonData);
+				//if (ModelState.IsValid)
+				//{
+				if (socio.Foto != null)
+				{
+					socio.CaminhoFoto = SalvarFoto(socio.Foto);
+				}
+				if (socio.Genero == "Feminino")
+				{
+					socio.Genero = "F";
+				}
+				else
+				{
+					socio.Genero = "M";
+				}
 
-                //}
-                //return View(socio);
-            }
+				var novoSocioId = _socioAppService.Adicionar(socio);
+				if (!ValidOperation())
+				{
+					var sb = new StringBuilder();
+					foreach (var item in BuscarMensagemErro())
+					{
+						sb.AppendLine($"x {item}\n");
+					}
+					return Json(sb.ToString());
+				}
+
+				var mensagem = "Registo adicionado com sucesso.";
+				var jsonData = new
+				{
+					novoSocioId,
+					mensagem
+				};
+				return Json(jsonData);
+			}
             catch (Exception erro)
             {
                 return Json($"x Ocorreu um erro: {erro.Message}");

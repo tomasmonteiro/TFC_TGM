@@ -487,18 +487,26 @@ function validarFormSocio() {
 
 ///----AGREGADO--
 function AdicionarAgregado() {
+    var genero;
+
     if (!ValidarAgregado()) {
         return;
     }
     else {
         $('#loading-overlay').show();
+        if ($("#generoAgregado").val() == "Masculino") {
+            genero = "M";
+        }
+        else {
+            genero = "F";
+        }
         $.ajax({
             type: "POST",
             url: "/Dependente/Criar",
             data: {
                 Nome: $("#nomeAgregado").val(),
                 BI: $("#biAgregado").val(),
-                Genero: $("#generoAgregado").val(),
+                Genero: genero,
                 DataNascimento: $("#dataNascimentoAgregado").val(),
                 RelacaoId: $("#relacaoAgregado").val(),
                 SocioId: $("#SocioId").val(),
@@ -1192,7 +1200,6 @@ function ValidarModalPagamento() {
     }
     return true;
 }
-
 
 //---------Registar Pagamento------------
 function RegistarPagamento() {

@@ -56,7 +56,7 @@
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Área Administrativa</a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                                 <li><a href="/Socio/Apoio/Solicitar" class="dropdown-item">Solicitar Apoio</a></li>
-                                <li><a href="@Url.Action("ExtratoApoio","Apoio", new {id = @HttpContextAccessor.HttpContext.Session.GetString("userId"), area = "Socio"})" class="dropdown-item">Consultar Apoio</a></li>
+                                <li><a href="@Url.Action("ExtratoApoio","Apoio", new {id = @HttpContextAccessor.HttpContext.Session.GetString("userId"), area = "Socio"})" class="dropdown-item">Consultar Apoios</a></li>
                                 <li><a href="/Socio/Declaracao/Solicitar" class="dropdown-item">Solicitar Declaração</a></li>
                             </ul>
                         </li>
@@ -85,7 +85,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item">
                                     <i class="fas fa-envelope mr-2"></i> Nenhuma notificação encontrada
-                                    <span class="float-right text-muted text-sm">3 mins</span> 
+                                    @* <span class="float-right text-muted text-sm">3 mins</span>  *@
                                 </a>
 @*                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item">

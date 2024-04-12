@@ -1,5 +1,6 @@
 ﻿using CPF_CACL.GestaoSocio.Aplication.Interfaces;
 using CPF_CACL.GestaoSocio.Aplication.ViewModel;
+using CPF_CACL.GestaoSocio.Domain.Entities;
 using CPF_CACL.GestaoSocio.Domain.Interfaces.Repositories;
 using CPF_CACL.GestaoSocio.Domain.Notifications;
 using CPF_CACL.GestaoSocio.UI.MVC.Extensions;
@@ -56,11 +57,11 @@ namespace CPF_CACL.GestaoSocio.UI.MVC.Controllers
         // POST: DependenteController/Criar
         [HttpPost]
         public ActionResult Criar(DependenteViewModel dependenteViewModel)
-        {
-            try
+		{
+			try
             {
 
-                _dependenteAppService.Adicionar(dependenteViewModel);
+				_dependenteAppService.Adicionar(dependenteViewModel);
 
                 if (!ValidOperation())
                 {
