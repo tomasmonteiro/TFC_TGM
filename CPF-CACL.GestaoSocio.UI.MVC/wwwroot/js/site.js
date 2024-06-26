@@ -1115,7 +1115,54 @@ function EliminarBeneficio() {
 
 
 
+//--------------------------------------------
+//------------TIPO DE PAGAMENTO---------------
 
+//---------------Adicionar----
+
+function AdicionarTipoPagamento() {
+    if (!ValidarTipoPagamento()) {
+        return;
+    }
+    else {
+        $('#loading-overlay').show();
+        $.ajax({
+            type: "POST",
+            url: "/TipoPagamento/Create",
+            data: {
+                Nome: $("#nome").val(),
+                DataCriacao: $("#dataCriacao").val(),
+                Status: $("#status").val()
+            },
+            success: function (result) {
+                if (result.substring(0, 1) == "x") {
+                    NotificarErro("error", "Erro!", result);
+                    return false;
+                }
+                $('#loading-overlay').hide();
+                Swal.fire({
+                    icon: "success",
+                    title: "Sucesso",
+                    text: result,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+                $("#nome").val("");
+            },
+            error: function (result) {
+                NotificarErro("error", "Erro!", result);
+            }
+        });
+    }
+}
+function ValidarTipoPagamento() {
+    if ($("#nome").val() == "") {
+        $("#nome").focus();
+        NotificarErro("error", "Erro!", "O Tipo de Pagamento deve ser preenchido.");
+        return false;
+    }
+    return true;
+}
 
 
 
@@ -1177,6 +1224,9 @@ function AdicionarPagamento() {
         });
     }
 }
+
+
+
 
 function ValidarModalPagamento() {
     if ($("#Recibo").val() == "") {

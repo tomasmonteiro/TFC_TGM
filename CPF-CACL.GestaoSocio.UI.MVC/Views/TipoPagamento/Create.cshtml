@@ -15,7 +15,7 @@
                     @* <form asp-asp-controller="TipoPagamento" asp-action="Create" method="post"> *@
                     <div class="form-group">
                         <label for="nome">Nome</label>
-                        <input type="text" asp-for="Nome" class="form-control" placeholder="Digite o tipo de pagamento">
+                        <input type="text" id="nome" class="form-control" placeholder="Digite o tipo de pagamento">
                     </div>
 
                     <br />
@@ -34,11 +34,18 @@
         </div>
     </div>
 </div>
+@*
+@section Scripts{
+    <script>
 
 
+        ///----Adicionar--
 
+    </script>
+ }
 
+*@
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+  @section Scripts {
+     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+ } 
